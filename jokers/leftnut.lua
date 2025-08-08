@@ -10,12 +10,21 @@ SMODS.Joker { --Left Nut
         ['name'] = 'Left Nut',
         ['text'] = {
             [1] = 'Played {C:attention}Stone{} or {C:attention}Sand{} cards give {X:mult,C:white}X#1#{} Mult',
-            [2] = 'if played to the left of {C:attention}Non-Stone{} cards'
+            [2] = 'if played to the left of {C:attention}Non-Stone/Sand{} cards'
         }
     },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_maxboism_sand
+        return { vars = { card.ability.extra.xmult } }
+    end,
     pos = {
+        x = 0,
+        y = 1
+    },
+    soul_pos = {
         x = 1,
-        y = 0
+        y = 1
     },
     cost = 20,
     rarity = 4,
@@ -24,11 +33,7 @@ SMODS.Joker { --Left Nut
     perishable_compat = true,
     unlocked = true,
     discovered = true,
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult } }
-    end,
-
+    atlas = 'CustomJokers',
     calculate = function(self, card, context)
         if context.before then
             for i = 1, #context.scoring_hand do
