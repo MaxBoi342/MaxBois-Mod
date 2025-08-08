@@ -1,0 +1,125 @@
+SMODS.Atlas({
+    key = "CustomJokers", 
+    path = "CustomJokers.png", 
+    px = 71,
+    py = 95, 
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
+SMODS.Atlas({
+    key = "CustomConsumables", 
+    path = "CustomConsumables.png", 
+    px = 71,
+    py = 95, 
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
+SMODS.Atlas({
+    key = "CustomEnhancements", 
+    path = "CustomEnhancements.png", 
+    px = 71,
+    py = 95, 
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
+
+--janky hack to let sand cards show their rank (otherwise same as SMODS.Enhancement)
+SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
+        set = 'Enhanced',
+        class_prefix = 'm',
+        atlas = 'centers',
+        pos = { x = 0, y = 0 },
+        required_params = {
+            'key',
+        },
+        register = function(self)
+            self.config = self.config or {}
+            assert(not (self.no_suit and self.any_suit), "Cannot have both \"no_suit\" and \"any_suit\" defined in a SMODS.Enhancement object.")
+            SMODS.Enhancement.super.register(self) --only actual difference is the removal of a line here
+        end,
+        generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            local always_show = self.config and self.config.always_show or {}
+            if specific_vars and specific_vars.nominal_chips and not self.replace_base_card then
+                localize { type = 'other', key = 'card_chips', nodes = desc_nodes, vars = { specific_vars.nominal_chips } }
+            end
+            SMODS.MaxBoi_Enhancement.super.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            if specific_vars and specific_vars.bonus_chips then
+                local remaining_bonus_chips = specific_vars.bonus_chips - (self.config.bonus or 0)
+                if remaining_bonus_chips ~= 0 then
+                    localize { type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = { SMODS.signed(remaining_bonus_chips) } }
+                end
+            end
+            if specific_vars and specific_vars.bonus_x_chips then
+                localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_x_chips}}
+            end
+            if specific_vars and specific_vars.bonus_mult then
+                localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_mult)}}
+            end
+            if specific_vars and specific_vars.bonus_x_mult then
+                localize{type = 'other', key = 'card_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_x_mult}}
+            end
+            if specific_vars and specific_vars.bonus_h_chips then
+                localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_chips)}}
+            end
+            if specific_vars and specific_vars.bonus_x_chips then
+                localize{type = 'other', key = 'card_h_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_chips}}
+            end
+            if specific_vars and specific_vars.bonus_h_mult then
+                localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_mult)}}
+            end
+            if specific_vars and specific_vars.bonus_h_x_mult then
+                localize{type = 'other', key = 'card_h_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_mult}}
+            end
+            if specific_vars and specific_vars.bonus_p_dollars then
+                localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_p_dollars)}}
+            end
+            if specific_vars and specific_vars.bonus_h_dollars then
+                localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_h_dollars)}}
+            end
+        end,
+    }
+
+
+local NFS = require("nativefs")
+to_big = to_big or function(a) return a end
+lenient_bignum = lenient_bignum or function(a) return a end
+
+local function load_jokers_folder()
+    local mod_path = SMODS.current_mod.path
+    local jokers_path = mod_path .. "/jokers"
+    local files = NFS.getDirectoryItemsInfo(jokers_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("jokers/" .. file_name))()
+        end
+    end
+end
+
+local function load_consumables_folder()
+    local mod_path = SMODS.current_mod.path
+    local consumables_path = mod_path .. "/consumables"
+    local files = NFS.getDirectoryItemsInfo(consumables_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("consumables/" .. file_name))()
+        end
+    end
+end
+
+local function load_enhancements_folder()
+    local mod_path = SMODS.current_mod.path
+    local consumables_path = mod_path .. "/enhancements"
+    local files = NFS.getDirectoryItemsInfo(consumables_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("enhancements/" .. file_name))()
+        end
+    end
+end
+
+load_jokers_folder()
+load_consumables_folder()
+load_enhancements_folder()

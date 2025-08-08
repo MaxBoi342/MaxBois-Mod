@@ -1,0 +1,9 @@
+{
+  "Lua.workspace.library": [
+    "C:\\Users\\maxim\\AppData\\Roaming\\Balatro\\Mods\\lovely\\dump", "C:\\Users\\maxim\\Desktop\\Balala-Sprites\\Source Code"
+  ],
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.diagnostics.enable": true,
+  "Lua.completion.enable": true
+}
