@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 SMODS.Joker { --test jerker
     key = "testjerker",
     config = {
