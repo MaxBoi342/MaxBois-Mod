@@ -1,0 +1,39 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+# Credits to Somethingcom515 (creator of Seals On Everything mod) for this patch!
+
+[[patches]]
+[patches.pattern]
+target = '''functions/state_events.lua'''
+pattern = '''
+for k, v in ipairs(G.play.cards) do
+    if (not v.shattered) and (not v.destroyed) then 
+        draw_card(G.play,G.discard, it*100/play_count,'down', false, v)
+        it = it + 1
+    end
+end
+'''
+position = "at"
+payload = '''
+local handcards = {}
+for k, v in ipairs(G.play.cards) do
+    if (not v.shattered) and (not v.destroyed) and not v.config.parked then 
+        draw_card(G.play,G.discard, it*100/play_count,'down', false, v)
+        it = it + 1
+    end
+    if (not v.shattered) and (not v.destroyed) and v.config.parked then
+        table.insert(handcards, v)
+        it = it + 1
+    end
+end
+if #handcards > 0 then
+    G.FUNCS.draw_from_play_to_hand(handcards)
+    for k, v in ipairs(G.play.cards) do
+        v.config.parked = false
+    end
+end
+'''
+overwrite = true
+match_indent = true

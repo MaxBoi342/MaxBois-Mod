@@ -22,6 +22,15 @@ SMODS.Atlas({
     atlas_table = "ASSET_ATLAS"
 }):register()
 
+SMODS.current_mod.optional_features = {
+    retrigger_joker = false,
+    post_trigger = false,
+    quantum_enhancements = false,
+    cardareas = {
+        discard = true,
+        deck = true
+    }
+}
 
 --janky hack to let sand cards show their rank (otherwise same as SMODS.Enhancement)
 SMODS.MaxBoi_Enhancement = SMODS.Center:extend {

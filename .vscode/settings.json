@@ -5,5 +5,7 @@
   "Lua.workspace.checkThirdParty": false,
   "Lua.runtime.version": "LuaJIT",
   "Lua.diagnostics.enable": true,
-  "Lua.completion.enable": true
+  "Lua.completion.enable": true,
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.nextEditSuggestions.fixes": false
 }
