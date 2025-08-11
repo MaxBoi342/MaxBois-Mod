@@ -20,7 +20,7 @@ SMODS.Joker { --Pickled Mask
     },
     cost = 20,
     rarity = 4,
-    blueprint_compat = true,
+    blueprint_compat = false,
     eternal_compat = true,
     perishable_compat = true,
     unlocked = true,
@@ -32,7 +32,7 @@ SMODS.Joker { --Pickled Mask
     },
 
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play then
+        if context.individual and context.cardarea == G.play and not context.blueprint then
             if context.other_card:is_face() then
                 context.other_card:set_edition("e_polychrome", true)
                 return {

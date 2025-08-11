@@ -25,12 +25,20 @@ SMODS.Joker { --Infinite Parking
     atlas = 'CustomJokers',
     calculate = function(self, card, context)
         if context.joker_main then
-            local parkedCard = context.full_hand[math.random(1, #context.full_hand)]
-            parkedCard.config.parked = true
-            return {
-                message = 'Parked!',
-                message_card = parkedCard,
-            }
+            local hand = {}
+            for _, pcard in ipairs(context.full_hand) do
+                if not pcard.config.parked then
+                    table.insert(hand, pcard)
+                end
+            end
+            if #hand > 0 then
+                local parkedCard = pseudorandom_element(hand, "seed")
+                parkedCard.config.parked = true
+                return {
+                    message = 'Parked!',
+                    message_card = parkedCard,
+                }
+            end
         end
     end
 }

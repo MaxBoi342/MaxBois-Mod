@@ -27,7 +27,7 @@ SMODS.MaxBoi_Enhancement {
 --I weep over this
 SMODS.DrawStep {
     key = 'sand_overlay',
-    order = 75,
+    order = 31,
     func = function(self, layer)
         if SMODS.has_enhancement(self, 'm_maxboism_sand') and not self.children.sand_overlay then
             self.children.sand_overlay = Sprite(self.T.x, self.T.y, self.T.w, self.T.h,

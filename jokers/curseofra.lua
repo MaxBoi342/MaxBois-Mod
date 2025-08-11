@@ -22,7 +22,7 @@ SMODS.Joker { --Curse Of Ra
     },
     cost = 6,
     rarity = 2,
-    blueprint_compat = true,
+    blueprint_compat = false,
     eternal_compat = true,
     perishable_compat = true,
     unlocked = true,
@@ -30,7 +30,7 @@ SMODS.Joker { --Curse Of Ra
     atlas = 'CustomJokers',
 
     calculate = function(self, card, context)
-        if context.hand_drawn then
+        if context.hand_drawn and not context.blueprint then
             local count = 0
             for _, v in ipairs(G.hand.cards) do
                 if SMODS.has_enhancement(v, 'm_stone') then

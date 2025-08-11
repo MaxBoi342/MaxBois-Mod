@@ -48,68 +48,72 @@ SMODS.Joker { --Bluetooth Grenade
     end,
 
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if (card.ability.extra.timer or 0) >= 5 then
-                return {
-                    dollars = card.ability.extra.dollars,
-                    extra = {
-                        func = function()
-                            card:start_dissolve()
-                            return true
-                        end,
-                        message = "Destroyed!",
-                        colour = G.C.RED
+        if not context.blueprint then
+            if context.end_of_round and context.game_over == false and context.main_eval then
+                if (card.ability.extra.timer or 0) >= 5 then
+                    return {
+                        dollars = card.ability.extra.dollars,
+                        extra = {
+                            func = function()
+                                card:start_dissolve()
+                                return true
+                            end,
+                            message = "Destroyed!",
+                            colour = G.C.RED
+                        }
                     }
+                end
+            end
+            if context.buying_card and context.card.config.center.key == self.key and context.cardarea == G.jokers then
+                play_sound("maxboism_throwinggrenade")
+                return {
+                    message = "Throwing!"
                 }
             end
-        end
-        if context.buying_card and context.card.config.center.key == self.key and context.cardarea == G.jokers then
-            play_sound("maxboism_throwinggrenade")
-            return {
-                message = "Throwing!"
-            }
-        end
-        if context.setting_blind then
-            if (card.ability.extra.timer or 0) >= 4 then
-                play_sound("maxboism_grenade")
-                local target_card = context.other_card
-                local function juice_card_until_(card, eval_func, first, delay) -- balatro function doesn't allow for custom scale and rotation
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = delay or 0.1,
-                        blocking = false,
-                        blockable = false,
-                        timer = 'REAL',
-                        func = (function()
-                            if eval_func(card) then
-                                if not first or first then card:juice_up(card.ability.extra.scale,
-                                        card.ability.extra.rotation) end; juice_card_until_(card, eval_func, nil, 0.8)
-                            end
+            if context.setting_blind then
+                if (card.ability.extra.timer or 0) >= 4 then
+                    play_sound("maxboism_grenade")
+                    local target_card = context.other_card
+                    local function juice_card_until_(card, eval_func, first, delay) -- balatro function doesn't allow for custom scale and rotation
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = delay or 0.1,
+                            blocking = false,
+                            blockable = false,
+                            timer = 'REAL',
+                            func = (function()
+                                if eval_func(card) then
+                                    if not first or first then
+                                        card:juice_up(card.ability.extra.scale,
+                                            card.ability.extra.rotation)
+                                    end; juice_card_until_(card, eval_func, nil, 0.8)
+                                end
+                                return true
+                            end)
+                        }))
+                    end
+                    return {
+                        func = function()
+                            local eval = function() return not G.RESET_JIGGLES end
+                            juice_card_until_(card, eval, true)
                             return true
-                        end)
-                    }))
-                end
-                return {
-                    func = function()
-                        local eval = function() return not G.RESET_JIGGLES end
-                        juice_card_until_(card, eval, true)
-                        return true
-                    end,
-                    extra = {
+                        end,
+                        extra = {
+                            func = function()
+                                card.ability.extra.timer = (card.ability.extra.timer) + 1
+                                return true
+                            end,
+                            colour = G.C.GREEN
+                        }
+                    }
+                else
+                    return {
                         func = function()
                             card.ability.extra.timer = (card.ability.extra.timer) + 1
                             return true
-                        end,
-                        colour = G.C.GREEN
+                        end
                     }
-                }
-            else
-                return {
-                    func = function()
-                        card.ability.extra.timer = (card.ability.extra.timer) + 1
-                        return true
-                    end
-                }
+                end
             end
         end
     end

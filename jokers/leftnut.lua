@@ -3,7 +3,7 @@ SMODS.Joker { --Left Nut
     config = {
         extra = {
             xmult = 2,
-            nonStonePlayed = 0
+            list = {}
         }
     },
     loc_txt = {
@@ -35,25 +35,26 @@ SMODS.Joker { --Left Nut
     discovered = true,
     atlas = 'CustomJokers',
     calculate = function(self, card, context)
-        if context.before then
-            for i = 1, #context.scoring_hand do
-                if not SMODS.has_enhancement(context.scoring_hand[i], 'm_stone') and not SMODS.has_enhancement(context.scoring_hand[i], 'm_maxboism_sand') then 
-                    card.ability.extra.nonStonePlayed = i
+        if context.before and not context.blueprint then
+            for i = 1, #context.full_hand do
+                if SMODS.has_enhancement(context.full_hand[i], 'm_stone') or SMODS.has_enhancement(context.full_hand[i], 'm_maxboism_sand') then 
+                    table.insert(card.ability.extra.list, context.full_hand[i])
+                else
                     return true
                 end
             end
         end
         if context.individual and context.cardarea == G.play then
-            if SMODS.has_enhancement(context.other_card, 'm_stone') or SMODS.has_enhancement(context.other_card, 'm_maxboism_sand') then 
-                if card.ability.extra.nonStonePlayed > 1 then
-                    card.ability.extra.nonStonePlayed  = card.ability.extra.nonStonePlayed - 1
+            for _, v in ipairs(card.ability.extra.list) do
+                if context.other_card == v then
                     return {
                         xmult = card.ability.extra.xmult
                     }
-                else
                 end
-            else
             end
+        end
+        if context.after and not context.blueprint then
+            card.ability.extra.list = {}
         end
     end
 }
