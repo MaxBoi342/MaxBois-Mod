@@ -6,12 +6,12 @@ SMODS.Joker { --test jerker
             debt_amount = 20
         }
     },
-    loc_txt = {
-        ['name'] = 'test jerker',
-        ['text'] = {
-            [1] = 'A {C:page}black{} joker with {C:red}unique{} effects.'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'test jerker',
+    --     ['text'] = {
+    --         [1] = 'A {C:page}black{} joker with {C:red}unique{} effects.'
+    --     }
+    -- },
     pos = {
         x = 6,
         y = 0

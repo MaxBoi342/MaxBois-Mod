@@ -4,13 +4,13 @@ SMODS.Joker { --Infinite Parking
         extra = {
         }
     },
-    loc_txt = {
-        ['name'] = 'Infinite Parking',
-        ['text'] = {
-            [1] = '{C:attention}1{} card from played hand',
-            [2] = 'will not be {C:attention}discarded{}'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'Infinite Parking',
+    --     ['text'] = {
+    --         [1] = '{C:attention}1{} card from played hand',
+    --         [2] = 'will not be {C:attention}discarded{}'
+    --     }
+    -- },
     pos = {
         x = 2,
         y = 1
@@ -35,7 +35,7 @@ SMODS.Joker { --Infinite Parking
                 local parkedCard = pseudorandom_element(hand, "seed")
                 parkedCard.config.parked = true
                 return {
-                    message = 'Parked!',
+                    message = localize("maxboism_joker_infiniteparking_parked"),
                     message_card = parkedCard,
                 }
             end

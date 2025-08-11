@@ -11,14 +11,14 @@ SMODS.Consumable {
         info_queue[#info_queue + 1] = { key = 'tag_coupon', set = 'Tag' }
         return { vars = { localize { type = 'name_text', set = 'Tag', key = 'tag_coupon' } } }
     end,
-    loc_txt = {
-        name = 'Page 2',
-        text = {
-            [1] = '{C:inactive}Passive:{} Lose {C:money}$1{} per hand played',
-            [2] = '{C:default}Active:{} Create a {C:attention}#1#{}',
-            [3] = '{C:inactive}(If used inside shop. trigger the tag){}'
-        }
-    },
+    -- loc_txt = {
+    --     name = 'Page 2',
+    --     text = {
+    --         [1] = '{C:inactive}Passive:{} Lose {C:money}$1{} per hand played',
+    --         [2] = '{C:default}Active:{} Create a {C:attention}#1#{}',
+    --         [3] = '{C:inactive}(If used inside shop. trigger the tag){}'
+    --     }
+    -- },
     cost = 5,
     unlocked = true,
     discovered = true,

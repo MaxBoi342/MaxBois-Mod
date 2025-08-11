@@ -10,13 +10,13 @@ SMODS.Consumable {
             most = 0
         }
     },
-    loc_txt = {
-        name = 'Page 4',
-        text = {
-            [1] = '{C:inactive}Passive:{} {C:green}#1# in #2#{} chance to decrease level of played hand',
-            [2] = '{C:default}Active:{} Level up {C:attention}most played hand{} 6 times'
-        }
-    },
+    -- loc_txt = {
+    --     name = 'Page 4',
+    --     text = {
+    --         [1] = '{C:inactive}Passive:{} {C:green}#1# in #2#{} chance to decrease level of played hand',
+    --         [2] = '{C:default}Active:{} Level up {C:attention}most played hand{} 6 times'
+    --     }
+    -- },
 
     cost = 5,
     unlocked = true,

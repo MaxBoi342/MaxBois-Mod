@@ -9,13 +9,13 @@ SMODS.Joker { --Curse Of Ra
         info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
         info_queue[#info_queue + 1] = G.P_CENTERS.m_maxboism_sand
     end,
-    loc_txt = {
-        ['name'] = 'Curse Of Ra',
-        ['text'] = {
-            [1] = 'Converts {C:attention}Stone{} cards in hand to {C:attention}Sand{} cards',
-            [2] = '{C:attention}Stone Joker{} also counts {C:attention}Sand{} cards now'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'Curse Of Ra',
+    --     ['text'] = {
+    --         [1] = 'Converts {C:attention}Stone{} cards in hand to {C:attention}Sand{} cards',
+    --         [2] = '{C:attention}Stone Joker{} also counts {C:attention}Sand{} cards now'
+    --     }
+    -- },
     pos = {
         x = 2,
         y = 0
@@ -43,7 +43,7 @@ SMODS.Joker { --Curse Of Ra
                 return true
             else
                 return {
-                    message = "They crumble..."
+                    message = localize("maxboism_joker_curseofra_message")
                 }
             end
         end

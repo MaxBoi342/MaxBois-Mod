@@ -5,14 +5,14 @@ SMODS.Joker { --The Peasant
             mult = 1.1
         }
     },
-    loc_txt = {
-        ['name'] = 'The Peasant',
-        ['text'] = {
-            [1] = 'Score {X:mult,C:white}X#1# {} when a {C:orange}face{} card is scored,',
-            [2] = 'then increase Mult by {X:mult,C:white}X0.1{}',
-            [3] = '(Mult resets after hand)'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'The Peasant',
+    --     ['text'] = {
+    --         [1] = 'Score {X:mult,C:white}X#1# {} when a {C:orange}face{} card is scored,',
+    --         [2] = 'then increase Mult by {X:mult,C:white}X0.1{}',
+    --         [3] = '(Mult resets after hand)'
+    --     }
+    -- },
     pos = {
         x = 7,
         y = 0
@@ -46,7 +46,7 @@ SMODS.Joker { --The Peasant
                     card.ability.extra.mult = 1.1
                     return true
                 end,
-                message = "Reset!"
+                message = localize("maxboism_joker_thepeasant_message")
             }
         end
     end

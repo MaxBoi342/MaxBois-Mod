@@ -6,13 +6,13 @@ SMODS.Joker { --Left Nut
             list = {}
         }
     },
-    loc_txt = {
-        ['name'] = 'Left Nut',
-        ['text'] = {
-            [1] = 'Played {C:attention}Stone{} or {C:attention}Sand{} cards give {X:mult,C:white}X#1#{} Mult',
-            [2] = 'if played to the left of {C:attention}Non-Stone/Sand{} cards'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'Left Nut',
+    --     ['text'] = {
+    --         [1] = 'Played {C:attention}Stone{} or {C:attention}Sand{} cards give {X:mult,C:white}X#1#{} Mult',
+    --         [2] = 'if played to the left of {C:attention}Non-Stone/Sand{} cards'
+    --     }
+    -- },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
         info_queue[#info_queue + 1] = G.P_CENTERS.m_maxboism_sand

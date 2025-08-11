@@ -7,13 +7,13 @@ SMODS.Joker { --Pickled Mask
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
     end,
-    loc_txt = {
-        ['name'] = 'Pickled Mask',
-        ['text'] = {
-            [1] = 'All played {C:attention}face{} cards',
-            [2] = 'become {C:dark_edition}Polychrome{} cards when scored'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'Pickled Mask',
+    --     ['text'] = {
+    --         [1] = 'All played {C:attention}face{} cards',
+    --         [2] = 'become {C:dark_edition}Polychrome{} cards when scored'
+    --     }
+    -- },
     pos = {
         x = 4,
         y = 0
@@ -36,7 +36,7 @@ SMODS.Joker { --Pickled Mask
             if context.other_card:is_face() then
                 context.other_card:set_edition("e_polychrome", true)
                 return {
-                    message = "Colorful!"
+                    message = localize("maxboism_joker_pickledmask_message")
                 }
             end
         end

@@ -6,12 +6,12 @@ SMODS.Joker { --VS MaxBoi
             emult = 1.5
         }
     },
-    loc_txt = {
-        ['name'] = 'VS MaxBoi',
-        ['text'] = {
-            [1] = '{C:green}#1# in #2#{} chance to give {X:red,C:white}^1.5{} mult.'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'VS MaxBoi',
+    --     ['text'] = {
+    --         [1] = '{C:green}#1# in #2#{} chance to give {X:red,C:white}^1.5{} mult.'
+    --     }
+    -- },
     pos = {
         x = 8,
         y = 0

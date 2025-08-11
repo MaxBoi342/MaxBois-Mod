@@ -10,13 +10,13 @@ SMODS.Joker { --Homophobic Slenderman
             rate = 4
         }
     },
-    loc_txt = {
-        ['name'] = 'Homophobic Slenderman',
-        ['text'] = {
-            [1] = 'Collect my {C:attention}Page{} cards from the {C:attention}shop{}',
-            [2] = '{C:inactive}(Currently #1#/7){}'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'Homophobic Slenderman',
+    --     ['text'] = {
+    --         [1] = 'Collect my {C:attention}Page{} cards from the {C:attention}shop{}',
+    --         [2] = '{C:inactive}(Currently #1#/7){}'
+    --     }
+    -- },
     pos = {
         x = 3,
         y = 0
@@ -53,7 +53,7 @@ SMODS.Joker { --Homophobic Slenderman
                         end
                         if created_consumable then
                             card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
-                                { message = "Freebie!", colour = G.C.PURPLE })
+                                { message = localize("maxboism_joker_homophobicslenderman_freebie"), colour = G.C.PURPLE })
                         end
                         return true
                     end,
@@ -62,7 +62,7 @@ SMODS.Joker { --Homophobic Slenderman
                             card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
                             return true
                         end,
-                        message = "Found!",
+                        message = localize("maxboism_joker_homophobicslenderman_found"),
                         colour = G.C.GREEN
                     }
                 }
@@ -74,7 +74,7 @@ SMODS.Joker { --Homophobic Slenderman
                             card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
                             return true
                         end,
-                        message = "Found!"
+                        message = localize("maxboism_joker_homophobicslenderman_found")
                     }
                 end
             end
@@ -85,7 +85,7 @@ SMODS.Joker { --Homophobic Slenderman
                             card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
                             return true
                         end,
-                        message = "Lost..."
+                        message = localize("maxboism_joker_homophobicslenderman_lost")
                     }
                 end
             end
@@ -95,7 +95,7 @@ SMODS.Joker { --Homophobic Slenderman
                         card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
                         return true
                     end,
-                    message = "Lost..."
+                    message = localize("maxboism_joker_homophobicslenderman_lost")
                 }
             end
             if context.cardarea == G.jokers and context.joker_main then

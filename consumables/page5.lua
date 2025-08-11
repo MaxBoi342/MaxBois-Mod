@@ -6,14 +6,14 @@ SMODS.Consumable {
         cards_amount = 1,
         xchips = 0.5
     } },
-    loc_txt = {
-        name = 'Page 5',
-        text = {
-            [1] = '{C:inactive}Passive:{} Apply {X:chips,C:white}X#1#{} {C:blue}Chips{} before scoring concludes',
-            [2] = '{C:default}Active:{} Apply {C:dark_edition}Foil{} to all cards held in hand',
-            [3] = '{C:inactive}(Overrides existing editions){}'
-        }
-    },
+    -- loc_txt = {
+    --     name = 'Page 5',
+    --     text = {
+    --         [1] = '{C:inactive}Passive:{} Apply {X:chips,C:white}X#1#{} {C:blue}Chips{} before scoring concludes',
+    --         [2] = '{C:default}Active:{} Apply {C:dark_edition}Foil{} to all cards held in hand',
+    --         [3] = '{C:inactive}(Overrides existing editions){}'
+    --     }
+    -- },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
         return { vars = { card.ability.extra.xchips } }

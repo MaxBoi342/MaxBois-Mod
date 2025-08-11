@@ -5,13 +5,13 @@ SMODS.Consumable {
     config = { extra = {
         hand_size_value = 1
     } },
-    loc_txt = {
-        name = 'Page 3',
-        text = {
-            [1] = '{C:inactive}Passive:{} {C:red}-1{} hand size',
-            [2] = '{C:default}Active:{} {C:attention}+1{} hand size'
-        }
-    },
+    -- loc_txt = {
+    --     name = 'Page 3',
+    --     text = {
+    --         [1] = '{C:inactive}Passive:{} {C:red}-1{} hand size',
+    --         [2] = '{C:default}Active:{} {C:attention}+1{} hand size'
+    --     }
+    -- },
     cost = 5,
     unlocked = true,
     discovered = true,

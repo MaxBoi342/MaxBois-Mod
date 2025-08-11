@@ -6,14 +6,14 @@ SMODS.Consumable {
     config = { extra = {
         add_cards_count = 2
     } },
-    loc_txt = {
-        name = 'Page 7',
-        text = {
-            [1] = '{C:inactive}Passive:{} Debuff a random card {C:attention}rank{}',
-            [2] = '{C:default}Active:{} Give {C:attention}2{} {C:dark_edition}Negative{} cards of the given {C:attention}rank{}',
-            [3] = '{C:inactive}(Resets every hand; Currently {C:attention}#1#s{}){}'
-        }
-    },
+    -- loc_txt = {
+    --     name = 'Page 7',
+    --     text = {
+    --         [1] = '{C:inactive}Passive:{} Debuff a random card {C:attention}rank{}',
+    --         [2] = '{C:default}Active:{} Give {C:attention}2{} {C:dark_edition}Negative{} cards of the given {C:attention}rank{}',
+    --         [3] = '{C:inactive}(Resets every hand; Currently {C:attention}#1#s{}){}'
+    --     }
+    -- },
     cost = 5,
     unlocked = true,
     discovered = true,

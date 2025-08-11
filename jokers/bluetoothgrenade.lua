@@ -19,13 +19,6 @@ SMODS.Joker { --Bluetooth Grenade
             constant = 0
         }
     },
-    loc_txt = {
-        ['name'] = 'Bluetooth Grenade',
-        ['text'] = {
-            [1] = 'After {C:attention}5{} rounds, this card {C:attention}explodes{} and gives {C:money}$50{}',
-            [2] = '{C:inactive}(Currently {C:attention}#1#{}/5){}'
-        }
-    },
     pos = {
         x = 0,
         y = 0
@@ -58,16 +51,16 @@ SMODS.Joker { --Bluetooth Grenade
                                 card:start_dissolve()
                                 return true
                             end,
-                            message = "Destroyed!",
+                            message = localize("maxboism_bluetooth_explode"),
                             colour = G.C.RED
                         }
                     }
                 end
             end
             if context.buying_card and context.card.config.center.key == self.key and context.cardarea == G.jokers then
-                play_sound("maxboism_throwinggrenade")
+                play_sound("maxboism_joker_bluetoothgrenade_explode")
                 return {
-                    message = "Throwing!"
+                    message = localize("maxboism_joker_bluetoothgreande_buy")
                 }
             end
             if context.setting_blind then

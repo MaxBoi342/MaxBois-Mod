@@ -5,13 +5,13 @@ SMODS.Consumable {
     config = { extra = {
         edition_amount = 1
     } },
-    loc_txt = {
-        name = 'Page 6',
-        text = {
-            [1] = '{C:inactive}Passive:{} {C:attention}Shuffle{} all jokers when a hand is played',
-            [2] = '{C:default}Active:{} Apply {C:dark_edition}Negative{} to a random joker'
-        }
-    },
+    -- loc_txt = {
+    --     name = 'Page 6',
+    --     text = {
+    --         [1] = '{C:inactive}Passive:{} {C:attention}Shuffle{} all jokers when a hand is played',
+    --         [2] = '{C:default}Active:{} Apply {C:dark_edition}Negative{} to a random joker'
+    --     }
+    -- },
     cost = 5,
     unlocked = true,
     discovered = true,
