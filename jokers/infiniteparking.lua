@@ -33,11 +33,13 @@ SMODS.Joker { --Infinite Parking
             end
             if #hand > 0 then
                 local parkedCard = pseudorandom_element(hand, "seed")
-                parkedCard.config.parked = true
-                return {
-                    message = localize("maxboism_joker_infiniteparking_parked"),
-                    message_card = parkedCard,
-                }
+                if parkedCard ~= nil then
+                    parkedCard.config.parked = true
+                    return {
+                        message = localize("maxboism_joker_infiniteparking_parked"),
+                        message_card = parkedCard,
+                    }
+                end
             end
         end
     end
