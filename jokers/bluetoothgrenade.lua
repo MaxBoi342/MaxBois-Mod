@@ -51,14 +51,14 @@ SMODS.Joker { --Bluetooth Grenade
                                 card:start_dissolve()
                                 return true
                             end,
-                            message = localize("maxboism_bluetooth_explode"),
+                            message = localize("maxboism_joker_bluetoothgrenade_explode"),
                             colour = G.C.RED
                         }
                     }
                 end
             end
             if context.buying_card and context.card.config.center.key == self.key and context.cardarea == G.jokers then
-                play_sound("maxboism_joker_bluetoothgrenade_explode")
+                play_sound("maxboism_throwinggrenade")
                 return {
                     message = localize("maxboism_joker_bluetoothgreande_buy")
                 }

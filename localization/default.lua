@@ -72,6 +72,13 @@ return {
                     '{C:green}#1# in #2#{} chance to give {X:red,C:white}^1.5{} mult.'
                 }
             },
+            j_maxboism_noentry = {
+                name = 'No Entry',
+                text = {
+                    'Gives {X:mult,C:white}X#1#{} Mult if Poker Hand held in hand is {C:attention}#2#{}',
+                    '{C:inactive}(Each higher tier gives{} {X:mult,C:white}+X#3#{} {C:inactive}Mult){}',
+                }
+            },
         },
         page = {
             c_maxboism_page1 = {
@@ -127,8 +134,19 @@ return {
                 }
             },
         },
+        Edition = {
+            e_maxboism_sepia = {
+                name = 'Sepia',
+                text = {
+                    'Balances {C:attention}#1#%{} of chips and mult'
+                },
+            }
+        }
     },
     misc = {
+        labels = {
+            maxboism_sepia = 'Sepia'
+        },
         dictionary = {
             maxboism_joker_bluetoothgrenade_explode = 'Explosion.sfx',
             maxboism_joker_bluetoothgreande_buy = 'Throwing!',
