@@ -18,3 +18,18 @@ SMODS.ConsumableType {
         collection = "Page Cards",
     }
 }
+
+SMODS.ConsumableType {
+    key = 'game',
+    primary_colour = HEX('c8640f'),
+    secondary_colour = HEX('8c470b'),
+    collection_rows = { 5, 6 },
+    shop_rate = 0,
+    cards = {
+        ['c_maxboism_lingo'] = true,
+    },
+    loc_txt = {
+        name = "Game",
+        collection = "Game Cards",
+    }
+}

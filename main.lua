@@ -1,3 +1,36 @@
+---
+--- Instantiate variables that need to be used
+---
+
+if not MaxBoiSM then
+	MaxBoiSM = {}
+end
+
+if not MaxBoiSM.ENTERED_LINGO_WORD then
+    MaxBoiSM.ENTERED_LINGO_WORD = ''
+end
+
+if not MaxBoiSM.COLORS then
+    MaxBoiSM.COLORS = {
+        RD = HEX('FF0000'), --1
+        BL = HEX('0000FF'), --2
+        YE = HEX('ffef00'), --3
+        WH = HEX('FFFFFF'), --4
+        BK = HEX('000000'), --5
+        PU = HEX('7A1B7A'), --6
+        BR = HEX('593B0C'), --7
+        MA = HEX('E60283'), --8
+        LI = HEX('40D61A'), --9
+        LA = HEX('B2A4D4'), --10
+        OR = HEX('F96815'), -- this one might be evil
+        GR = HEX('00FF00'), -- evil 2
+        MI = HEX('5ec7a1'), -- evil 3
+        XX = HEX('555555'), -- disabled
+    }
+end
+
+MaxBoiSM.path = '' .. SMODS.current_mod.path
+
 SMODS.Atlas({
     key = "CustomJokers", 
     path = "CustomJokers.png", 
