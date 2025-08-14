@@ -6,16 +6,16 @@ SMODS.Sound {
 SMODS.Consumable {
     key = 'lingo',
     set = 'game',
-    pos = { x = 0, y = 0 },
+    pos = { x = 7, y = 0 },
     config = { extra = {
         hand_size_value = 1
     } },
-    cost = 5,
+    cost = 8,
     unlocked = true,
     discovered = true,
     hidden = false,
     can_repeat_soul = false,
-    --  atlas = 'CustomConsumables',
+    atlas = 'CustomConsumables',
     use = function(self, card, area, copier)
         G.E_MANAGER:add_event(Event({
             func = function()
@@ -40,7 +40,7 @@ function create_UIBox_lingo()
                 nodes = {
                     create_lingo_puzzle()
                 },
-                config = { minw = 1, minh = 1, colour = G.C.RED, padding = 0.15, align = "cm" },
+                config = { minw = 1, minh = 1, colour = HEX('c8640f'), padding = 0.15, align = "cm" },
             },
             {
                 n = G.UIT.R,
@@ -119,12 +119,20 @@ function puzzleToTable(TT, MT, BT, TC, MC, BC, A)
     return puzzleFormat
 end
 
-function create_lingo_puzzle()
+function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'ANSWER'),
 
     local puzzleDatabase = {
         puzzleToTable('HIGH', 'HI', 'HELLO', 'WH', 'WH', 'WH', 'HI'),
         puzzleToTable('', 'EVIL', 'DIE', 'XX', 'BK', 'BK', 'LIVE'),
         puzzleToTable('', '', 'CLOCKWISE', 'XX', 'XX', 'BK', 'COUNTERCLOCKWISE'),
+        puzzleToTable('', 'HOT CRUST', 'CIRCUMVENT', 'XX', 'YE', 'WH', 'SHORTCUT'),
+        puzzleToTable('MALE', '', 'MAILBOX', 'WH', 'XX', 'RD', 'MAIL'),
+        puzzleToTable('MENACE', 'SANITY', 'JOKER', 'BL', 'BK', 'LI', 'MADNESS'),
+        puzzleToTable('TREBUCHET', 'BLUE LEGENDARY', '', 'WH', 'GR', 'XX', 'TRIBOULET'),
+        puzzleToTable('', 'BOARD', 'SHIP', 'XX', 'BL', 'RD', 'STARBOARD'),
+        puzzleToTable('WHINE', '', 'GRAPE', 'WH', 'XX', 'BR', 'WINE'),
+        puzzleToTable('FACEPALM', 'CAP', '', 'PU', 'MA', 'XX', 'BASEBALL'),
+        puzzleToTable('CHOKER', '@', 'YOU', 'PU', 'XX', 'WH', 'JOKER'), --todo: add more because im fucking mazy rn lmfao
     }
 
     local selectedPuzzle = pseudorandom_element(puzzleDatabase, 'Linger')
@@ -135,30 +143,30 @@ function create_lingo_puzzle()
         nodes = {
             {
                 n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.topColor], padding = 0.15, align = "cm" },
+                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.topColor], padding = 0.15, align = "cm", r = 0.05 },
                 nodes = {
-                    {n = G.UIT.T, config = { colour = selectedPuzzle.topColor ~= 'BK' and G.C.BLACK or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 1.0, text = selectedPuzzle.topText or '' }},
+                    {n = G.UIT.T, config = { colour = (selectedPuzzle.topColor ~= 'BK' and selectedPuzzle.topColor ~= 'GR' and selectedPuzzle.topColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.topText or '' }},
                 }
 
             },
             {
                 n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.middleColor], padding = 0.15, align = "cm" },
+                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.middleColor], padding = 0.15, align = "cm", r = 0.05 },
                 nodes = {
-                    {n = G.UIT.T, config = { colour = selectedPuzzle.middleColor ~= 'BK' and G.C.BLACK or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 1.0, text = selectedPuzzle.middleText or '' }},
+                    {n = G.UIT.T, config = { colour = (selectedPuzzle.middleColor ~= 'BK' and selectedPuzzle.middleColor ~= 'GR' and selectedPuzzle.middleColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.middleText or '' }},
                 }
 
             },
             {
                 n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.bottomColor], padding = 0.15, align = "cm" },
+                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.bottomColor], padding = 0.15, align = "cm", r = 0.05 },
                 nodes = {
-                    {n = G.UIT.T, config = { colour = selectedPuzzle.bottomColor ~= 'BK' and G.C.BLACK or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 1.0, text = selectedPuzzle.bottomText or '' }},
+                    {n = G.UIT.T, config = { colour = (selectedPuzzle.bottomColor ~= 'BK' and selectedPuzzle.bottomColor ~= 'GR' and selectedPuzzle.bottomColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.bottomText or '' }},
                 }
 
             },
         },
-        config = { minw = 2, minh = 6, colour = G.C.RED, padding = 0.15, align = "cm" },
+        config = { minw = 2, minh = 6, colour = MaxBoiSM.COLORS.XX, padding = 0.15, align = "cm", r = 0.05 },
     }
     return t
 end

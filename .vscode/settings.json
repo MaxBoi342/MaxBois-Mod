@@ -1,6 +1,8 @@
 {
   "Lua.workspace.library": [
-    "C:\\Users\\maxim\\AppData\\Roaming\\Balatro\\Mods\\lovely\\dump", "C:\\Users\\maxim\\Desktop\\Balala-Sprites\\Source Code"
+    "C:\\Users\\maxim\\AppData\\Roaming\\Balatro\\Mods\\lovely\\dump",
+    "C:\\Users\\maxim\\Desktop\\Balala-Sprites\\Source Code",
+    "C:\\Users\\maxim\\AppData\\Roaming\\Balatro\\Mods\\Steamodded"
   ],
   "Lua.workspace.checkThirdParty": false,
   "Lua.runtime.version": "LuaJIT",

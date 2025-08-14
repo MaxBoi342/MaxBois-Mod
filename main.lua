@@ -20,10 +20,10 @@ if not MaxBoiSM.COLORS then
         PU = HEX('7A1B7A'), --6
         BR = HEX('593B0C'), --7
         MA = HEX('E60283'), --8
-        LI = HEX('40D61A'), --9
+        LI = HEX('00FF00'), --9
         LA = HEX('B2A4D4'), --10
         OR = HEX('F96815'), -- this one might be evil
-        GR = HEX('00FF00'), -- evil 2
+        GR = HEX('004225'), -- evil 2
         MI = HEX('5ec7a1'), -- evil 3
         XX = HEX('555555'), -- disabled
     }
@@ -54,16 +54,6 @@ SMODS.Atlas({
     py = 95, 
     atlas_table = "ASSET_ATLAS"
 }):register()
-
-SMODS.current_mod.optional_features = {
-    retrigger_joker = false,
-    post_trigger = false,
-    quantum_enhancements = false,
-    cardareas = {
-        discard = true,
-        deck = true
-    }
-}
 
 --janky hack to let sand cards show their rank (otherwise same as SMODS.Enhancement)
 SMODS.MaxBoi_Enhancement = SMODS.Center:extend {

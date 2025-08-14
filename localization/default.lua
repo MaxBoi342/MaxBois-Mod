@@ -133,6 +133,16 @@ return {
                     '{C:inactive}(Resets every hand; Currently {C:attention}#1#s{}){}'
                 }
             },
+
+        },
+        game = {
+            c_maxboism_lingo = {
+                name = 'Lingo',
+                text = {
+                    'Solve a {C:attention}puzzle{} for a {C:attention}reward{}',
+                    '{C:inactive}(Reward:{} {C:money}20${C:money} {C:inactive}| Penalty:{} {C:money}-2${}{C:inactive}){}'
+                }
+            },
         },
         Edition = {
             e_maxboism_sepia = {

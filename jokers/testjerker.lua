@@ -1,61 +1,61 @@
----@diagnostic disable: need-check-nil
-SMODS.Joker { --test jerker
-    key = "testjerker",
-    config = {
-        extra = {
-            debt_amount = 20
-        }
-    },
-    -- loc_txt = {
-    --     ['name'] = 'test jerker',
-    --     ['text'] = {
-    --         [1] = 'A {C:page}black{} joker with {C:red}unique{} effects.'
-    --     }
-    -- },
-    pos = {
-        x = 6,
-        y = 0
-    },
-    cost = 4,
-    rarity = 1,
-    blueprint_compat = true,
-    eternal_compat = true,
-    perishable_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'CustomJokers',
+-- ---@diagnostic disable: need-check-nil
+-- SMODS.Joker { --test jerker
+--     key = "testjerker",
+--     config = {
+--         extra = {
+--             debt_amount = 20
+--         }
+--     },
+--     -- loc_txt = {
+--     --     ['name'] = 'test jerker',
+--     --     ['text'] = {
+--     --         [1] = 'A {C:page}black{} joker with {C:red}unique{} effects.'
+--     --     }
+--     -- },
+--     pos = {
+--         x = 6,
+--         y = 0
+--     },
+--     cost = 4,
+--     rarity = 1,
+--     blueprint_compat = true,
+--     eternal_compat = true,
+--     perishable_compat = true,
+--     unlocked = true,
+--     discovered = true,
+--     atlas = 'CustomJokers',
 
-    set_ability = function(self, card, initial)
-        G.GAME.current_round.debuffRank_card = { rank = '7', id = 7 }
-    end,
+--     set_ability = function(self, card, initial)
+--         G.GAME.current_round.debuffRank_card = { rank = '7', id = 7 }
+--     end,
 
-    calculate = function(self, card, context)
-        if context.hand_drawn then
-            if G.playing_cards then
-                local valid_debuffRank_cards = {}
-                for _, v in ipairs(G.playing_cards) do
-                    if not SMODS.has_no_rank(v) then
-                        valid_debuffRank_cards[#valid_debuffRank_cards + 1] = v
-                    end
-                end
-                if valid_debuffRank_cards[1] then
-                    local debuffRank_card = pseudorandom_element(valid_debuffRank_cards,
-                        pseudoseed('debuffRank' .. G.GAME.round_resets.ante))
-                    G.GAME.current_round.debuffRank_card.rank = debuffRank_card.base.value
-                    G.GAME.current_round.debuffRank_card.id = debuffRank_card.base.id
-                end
-            end
-            return {
-                message = 'Debuff!'
-            }
-        end
-    end,
+--     calculate = function(self, card, context)
+--         if context.hand_drawn then
+--             if G.playing_cards then
+--                 local valid_debuffRank_cards = {}
+--                 for _, v in ipairs(G.playing_cards) do
+--                     if not SMODS.has_no_rank(v) then
+--                         valid_debuffRank_cards[#valid_debuffRank_cards + 1] = v
+--                     end
+--                 end
+--                 if valid_debuffRank_cards[1] then
+--                     local debuffRank_card = pseudorandom_element(valid_debuffRank_cards,
+--                         pseudoseed('debuffRank' .. G.GAME.round_resets.ante))
+--                     G.GAME.current_round.debuffRank_card.rank = debuffRank_card.base.value
+--                     G.GAME.current_round.debuffRank_card.id = debuffRank_card.base.id
+--                 end
+--             end
+--             return {
+--                 message = 'Debuff!'
+--             }
+--         end
+--     end,
 
-    add_to_deck = function(self, card, from_debuff)
-        G.GAME.bankrupt_at = G.GAME.bankrupt_at - (card.ability.extra.debt_amount)
-    end,
+--     add_to_deck = function(self, card, from_debuff)
+--         G.GAME.bankrupt_at = G.GAME.bankrupt_at - (card.ability.extra.debt_amount)
+--     end,
 
-    remove_from_deck = function(self, card, from_debuff)
-        G.GAME.bankrupt_at = G.GAME.bankrupt_at + (card.ability.extra.debt_amount)
-    end
-}
+--     remove_from_deck = function(self, card, from_debuff)
+--         G.GAME.bankrupt_at = G.GAME.bankrupt_at + (card.ability.extra.debt_amount)
+--     end
+-- }
