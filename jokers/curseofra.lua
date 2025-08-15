@@ -40,7 +40,7 @@ SMODS.Joker { --Curse Of Ra
                 end
             end
             if count == 0 then
-                return true
+                return
             else
                 return {
                     message = localize("maxboism_joker_curseofra_message")

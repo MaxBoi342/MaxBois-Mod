@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 SMODS.Sound {
     key = "lingosolve",
     path = "lingosolve.ogg"
@@ -127,12 +128,23 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
         puzzleToTable('', '', 'CLOCKWISE', 'XX', 'XX', 'BK', 'COUNTERCLOCKWISE'),
         puzzleToTable('', 'HOT CRUST', 'CIRCUMVENT', 'XX', 'YE', 'WH', 'SHORTCUT'),
         puzzleToTable('MALE', '', 'MAILBOX', 'WH', 'XX', 'RD', 'MAIL'),
-        puzzleToTable('MENACE', 'SANITY', 'JOKER', 'BL', 'BK', 'LI', 'MADNESS'),
+        puzzleToTable('MENACE', '', 'SANITY', 'BL', 'XX', 'BK', 'MADNESS'),
         puzzleToTable('TREBUCHET', 'BLUE LEGENDARY', '', 'WH', 'GR', 'XX', 'TRIBOULET'),
         puzzleToTable('', 'BOARD', 'SHIP', 'XX', 'BL', 'RD', 'STARBOARD'),
         puzzleToTable('WHINE', '', 'GRAPE', 'WH', 'XX', 'BR', 'WINE'),
-        puzzleToTable('FACEPALM', 'CAP', '', 'PU', 'MA', 'XX', 'BASEBALL'),
+        puzzleToTable('FACEPALM', '', 'CAP', 'PU', 'XX', 'MA', 'BASEBALL'),
         puzzleToTable('CHOKER', '@', 'YOU', 'PU', 'XX', 'WH', 'JOKER'), --todo: add more because im fucking mazy rn lmfao
+        puzzleToTable('', 'RETRY', 'VINTAGE', 'XX', 'PU', 'WH', 'RETRO'),
+        puzzleToTable('VANTABLACK', 'MISTER', 'INCREDIBLE', 'PU', 'MA', 'WH', 'FANTASTIC'),
+        puzzleToTable('', 'BLUE', 'JOKER', 'XX', 'BL', 'MA', 'BLUEPRINT'),
+        puzzleToTable('SELL', '', 'CLUB SODA', 'BL', 'XX', 'PU', 'SELTZER'),
+        puzzleToTable('', 'ENTRAPMENT', 'JOKER', 'XX', 'RE', 'MA', 'RAMEN'),
+        puzzleToTable('DECOMPARTMENTALIZATION', '', 'AUDITORY', 'PU', 'XX', 'LI', 'HALLUCINATION'), -- to be checked by the council
+        puzzleToTable('JUMBO', '', 'PHOTOCHAD', 'PU', 'XX', 'LI', 'COMBO'),
+        puzzleToTable('HOLLOW', 'HOG', '', 'BL', 'BL', 'XX', 'HOLOGRAM'),
+        puzzleToTable('CARD', '', 'FORTUNE TELLER', 'BL', 'XX', 'MA', 'CARTOMANCER'),
+        puzzleToTable('SCHISM', 'PAR', 'OUTBURST', 'BL', 'BL', 'WH', 'PAROXYSM'),
+
     }
 
     local selectedPuzzle = pseudorandom_element(puzzleDatabase, 'Linger')
@@ -143,7 +155,7 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
         nodes = {
             {
                 n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.topColor], padding = 0.15, align = "cm", r = 0.05 },
+                config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.topColor], padding = 0.15, align = "cm", r = 0.05 },
                 nodes = {
                     {n = G.UIT.T, config = { colour = (selectedPuzzle.topColor ~= 'BK' and selectedPuzzle.topColor ~= 'GR' and selectedPuzzle.topColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.topText or '' }},
                 }
@@ -151,7 +163,7 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
             },
             {
                 n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.middleColor], padding = 0.15, align = "cm", r = 0.05 },
+                config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.middleColor], padding = 0.15, align = "cm", r = 0.05 },
                 nodes = {
                     {n = G.UIT.T, config = { colour = (selectedPuzzle.middleColor ~= 'BK' and selectedPuzzle.middleColor ~= 'GR' and selectedPuzzle.middleColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.middleText or '' }},
                 }
@@ -159,7 +171,7 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
             },
             {
                 n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.bottomColor], padding = 0.15, align = "cm", r = 0.05 },
+                config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.bottomColor], padding = 0.15, align = "cm", r = 0.05 },
                 nodes = {
                     {n = G.UIT.T, config = { colour = (selectedPuzzle.bottomColor ~= 'BK' and selectedPuzzle.bottomColor ~= 'GR' and selectedPuzzle.bottomColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.bottomText or '' }},
                 }

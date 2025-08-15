@@ -46,7 +46,6 @@ SMODS.Consumable {
                 end
             }))
             card.triggered = true
-            return true
         else
             G.E_MANAGER:add_event(Event({
                 func = function()
