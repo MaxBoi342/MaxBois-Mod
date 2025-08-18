@@ -151,11 +151,21 @@ return {
                     'Balances {C:attention}#1#%{} of chips and mult'
                 },
             }
+        },
+        Other = {
+            maxboism_lockseal_seal = {
+                name = 'Sleeve',
+                text = {
+                    '{C:attention}Sleeved{} cards can not be {C:red}destroyed{}.',
+                    '{C:red}Debuffed{} {C:attention}Sleeved{} cards are {C:red}destroyed{} immediately.'
+                }
+            }
         }
     },
     misc = {
         labels = {
-            maxboism_sepia = 'Sepia'
+            maxboism_sepia = 'Sepia',
+            maxboism_lockseal_seal = 'Sleeve'
         },
         dictionary = {
             maxboism_joker_bluetoothgrenade_explode = 'Explosion.sfx',

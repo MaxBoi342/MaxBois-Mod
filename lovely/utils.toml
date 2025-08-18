@@ -37,3 +37,83 @@ end
 '''
 overwrite = true
 match_indent = true
+
+# Pattern to not destroy cards with this seal
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+local dissolve_time = 0.7*(dissolve_time_fac or 1)
+    self.dissolve = 0
+    self.dissolve_colours = dissolve_colours
+'''
+position = "at"
+payload = '''
+if self.seal == 'maxboism_lockseal' and not self.debuff then
+    for i, v in ipairs(G.play.cards) do
+        if v == self then
+            table.remove(G.play.cards, i)
+           G.play:remove_from_highlighted(self, true)
+        end
+    end
+    for i, v in ipairs(G.hand.cards) do
+        if v == self then
+            table.remove(G.hand.cards, i)
+            G.hand:remove_from_highlighted(self, true)
+        end
+    end
+    if G.STATE == G.STATES.SHOP or G.STATE == G.STATES.SMODS_BOOSTER_OPENED then
+        G.deck:emplace(self)
+    else
+        G.discard:emplace(self)
+    end
+    return
+end
+local dissolve_time = 0.7*(dissolve_time_fac or 1)
+    self.dissolve = 0
+    self.dissolve_colours = dissolve_colours
+'''
+overwrite = true
+match_indent = true
+
+#Same patch as above but for glass cards
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+local dissolve_time = 0.7
+    self.shattered = true
+    self.dissolve = 0
+    self.dissolve_colours = {{1,1,1,0.8}}
+'''
+position = "at"
+payload = '''
+if self.seal == 'maxboism_lockseal' and not self.debuff then
+    for i, v in ipairs(G.play.cards) do
+        if v == self then
+            table.remove(G.play.cards, i)
+           G.play:remove_from_highlighted(self, true)
+        end
+    end
+    for i, v in ipairs(G.hand.cards) do
+        if v == self then
+            table.remove(G.hand.cards, i)
+            G.hand:remove_from_highlighted(self, true)
+        end
+    end
+    if G.STATE == G.STATES.SHOP or G.STATE == G.STATES.SMODS_BOOSTER_OPENED then
+        G.deck:emplace(self)
+    else
+        G.discard:emplace(self)
+    end
+    return
+end
+local dissolve_time = 0.7
+    self.shattered = true
+    self.dissolve = 0
+    self.dissolve_colours = {{1,1,1,0.8}}
+'''
+overwrite = true
+match_indent = true

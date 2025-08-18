@@ -152,6 +152,7 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
     MaxBoiSM.CUR_LINGO_ANSWER = selectedPuzzle.answer
     local t = {
         n = G.UIT.C,
+        config = { minw = 2, minh = 6, colour = MaxBoiSM.COLORS.XX, padding = 0.15, align = "cm", r = 0.05 },
         nodes = {
             {
                 n = G.UIT.R,
@@ -178,7 +179,6 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
 
             },
         },
-        config = { minw = 2, minh = 6, colour = MaxBoiSM.COLORS.XX, padding = 0.15, align = "cm", r = 0.05 },
     }
     return t
 end
