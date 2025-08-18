@@ -7,13 +7,6 @@ SMODS.Seal {
     discovered = true,
     no_collection = false,
     calculate = function(self, card, context)
-        if context.before then
-            for _, v in ipairs(G.play.cards) do
-                if v.debuff then
-                    SMODS.destroy_cards(v, false, true)
-                end
-            end
-        end
     end,
     update = function(self, card, dt)
             if card.debuff then
@@ -32,7 +25,7 @@ SMODS.DrawStep {
         end
             
     end,
-    conditions = { vortex = false },
+    conditions = { vortex = false, facing = 'front' },
 }
 
 

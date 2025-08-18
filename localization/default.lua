@@ -79,6 +79,12 @@ return {
                     '{C:inactive}(Each higher tier gives{} {X:mult,C:white}+X#3#{} {C:inactive}Mult){}',
                 }
             },
+            j_maxboism_sleevedjoker = {
+                name = 'Sleeved Joker',
+                text = {
+                    '{C:attention}Sleeves{} a random non-scoring playing card',
+                }
+            },
         },
         page = {
             c_maxboism_page1 = {
@@ -177,6 +183,7 @@ return {
             maxboism_joker_infiniteparking_parked = 'Parked!',
             maxboism_joker_pickledmask_message = 'Colorful!',
             maxboism_joker_thepeasant_message = 'Reset!',
+            maxboism_joker_sleevedjoker_message = 'Sleeved!'
         },
     }
 }
