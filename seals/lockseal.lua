@@ -7,6 +7,8 @@ SMODS.Seal {
     discovered = true,
     no_collection = false,
     calculate = function(self, card, context)
+        if context.destroying_Card then
+        end
     end,
     update = function(self, card, dt)
             if card.debuff then
@@ -23,7 +25,6 @@ SMODS.DrawStep {
         if self.seal == 'maxboism_lockseal' then
             self.children.center:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
         end
-            
     end,
     conditions = { vortex = false, facing = 'front' },
 }
