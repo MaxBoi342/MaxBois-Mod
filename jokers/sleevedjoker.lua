@@ -5,8 +5,8 @@ SMODS.Joker { --Sleeved Joker
         }
     },
     pos = {
-        x = 1,
-        y = 0
+        x = 3,
+        y = 1
     },
     cost = 4,
     rarity = 1,
@@ -15,7 +15,7 @@ SMODS.Joker { --Sleeved Joker
     perishable_compat = true,
     unlocked = true,
     discovered = true,
-    -- atlas = 'CustomJokers',
+    atlas = 'CustomJokers',
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = { key = 'maxboism_lockseal_seal', set = 'Other' }
     end,
@@ -53,5 +53,8 @@ SMODS.Joker { --Sleeved Joker
                 }
             end
         end
+    end,
+    draw = function(self, card, layer)
+        card.children.center:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
     end
 }
