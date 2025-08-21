@@ -2,7 +2,6 @@ SMODS.Joker { --Homophobic Slenderman
     key = "homophobicslenderman",
     config = {
         extra = {
-            hand_change = 0,
             heldPages = 0,
             echips = 7,
             emult = 7,
@@ -36,37 +35,6 @@ SMODS.Joker { --Homophobic Slenderman
 
     calculate = function(self, card, context)
         if not context.blueprint then
-            if context.buying_card and context.card.config.center.key == self.key and context.cardarea == G.jokers then
-                return {
-                    func = function()
-                        local created_consumable = false
-                        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                            created_consumable = true
-                            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                            G.E_MANAGER:add_event(Event({
-                                func = function()
-                                    SMODS.add_card { set = 'page', key = nil, key_append = 'joker_forge_page' }
-                                    G.GAME.consumeable_buffer = 0
-                                    return true
-                                end
-                            }))
-                        end
-                        if created_consumable then
-                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
-                                { message = localize("maxboism_joker_homophobicslenderman_freebie"), colour = G.C.PURPLE })
-                        end
-                        return true
-                    end,
-                    extra = {
-                        func = function()
-                            card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
-                            return true
-                        end,
-                        message = localize("maxboism_joker_homophobicslenderman_found"),
-                        colour = G.C.GREEN
-                    }
-                }
-            end
             if context.buying_card then
                 if context.card and (context.card.ability.set == 'page' or context.card.ability.set == 'page') then
                     return {
@@ -140,11 +108,27 @@ SMODS.Joker { --Homophobic Slenderman
     end,
 
     add_to_deck = function(self, card, from_debuff)
-        G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hand_change
         G.E_MANAGER:add_event(Event({
             func = function()
                 G.GAME.page_rate = card.ability.extra.rate
-                return true
+                local created_consumable = false
+                        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                            created_consumable = true
+                            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    SMODS.add_card { set = 'page', key = nil, key_append = 'joker_forge_page' }
+                                    G.GAME.consumeable_buffer = 0
+                                    return true
+                                end
+                            }))
+                        end
+                        if created_consumable then
+                            card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
+                            card_eval_status_text(card, 'extra', nil, nil, nil,
+                                { message = localize("maxboism_joker_homophobicslenderman_freebie"), colour = G.C.PURPLE })
+                        end
+                    return true
             end
         }))
     end,
@@ -156,5 +140,18 @@ SMODS.Joker { --Homophobic Slenderman
                 return true
             end
         }))
+    end,
+
+    joker_display_def = function(JokerDisplay)
+        ---@type JDJokerDefinition
+        return {
+            text = {
+                { text = "(" },
+                { ref_table = "card.ability.extra", ref_value = "heldPages" },
+                { text = "/7)" }
+
+            },
+        text_config = { colour = G.C.GREY }
+        }
     end
 }

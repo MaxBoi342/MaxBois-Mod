@@ -11,13 +11,13 @@ SMODS.MaxBoi_Enhancement {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.x_chips } }
     end,
-    loc_txt = {
-        ['name'] = 'Sand Card',
-        ['text'] = {
-            [1] = '{X:chips,C:white}X#1#{} chips',
-            [2] = 'no suit or rank'
-        }
-    },
+    -- loc_txt = {
+    --     ['name'] = 'Sand Card',
+    --     ['text'] = {
+    --         [1] = '{X:chips,C:white}X#1#{} chips',
+    --         [2] = 'no suit or rank'
+    --     }
+    -- },
     calculate = function(self, card, context)
 
     end,

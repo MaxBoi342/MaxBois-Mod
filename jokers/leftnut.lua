@@ -37,7 +37,7 @@ SMODS.Joker { --Left Nut
     calculate = function(self, card, context)
         if context.before and not context.blueprint then
             for i = 1, #context.full_hand do
-                if SMODS.has_enhancement(context.full_hand[i], 'm_stone') or SMODS.has_enhancement(context.full_hand[i], 'm_maxboism_sand') then 
+                if SMODS.has_enhancement(context.full_hand[i], 'm_stone') or SMODS.has_enhancement(context.full_hand[i], 'm_maxboism_sand') then
                     table.insert(card.ability.extra.list, context.full_hand[i])
                 else
                     return true
@@ -56,5 +56,49 @@ SMODS.Joker { --Left Nut
         if context.after and not context.blueprint then
             card.ability.extra.list = {}
         end
+    end,
+
+    joker_display_def = function(JokerDisplay)
+        ---@type JDJokerDefinition
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = "X" },
+                        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
+                    }
+                }
+            },
+            reminder_text = {
+                { text = "(" },
+                { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+                { text = "/" },
+                { ref_table = "card.joker_display_values", ref_value = "localized_text2", colour = G.C.ORANGE },
+                { text = ")" },
+            },
+            calc_function = function(card)
+                local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+                local stone_cards_on_left = {}
+                local total_retriggers = 0
+                if text ~= 'Unknown' then
+                    for i, scoring_card in pairs(scoring_hand) do
+                        if SMODS.has_enhancement(scoring_card, 'm_stone') or SMODS.has_enhancement(scoring_card, 'm_maxboism_sand') then
+                            table.insert(stone_cards_on_left, scoring_card)
+                        else
+                            break
+                        end
+                    end
+                end
+                local stone_card = JokerDisplay.calculate_leftmost_card(stone_cards_on_left)
+                for _, v in ipairs(stone_cards_on_left) do
+                    total_retriggers = total_retriggers + JokerDisplay.calculate_card_triggers(v, scoring_hand)
+                end
+
+                card.joker_display_values.x_mult = stone_card and
+                    (card.ability.extra.xmult ^ total_retriggers) or to_big(1)
+                card.joker_display_values.localized_text = localize { type = 'name_text', set = 'Enhanced', key = 'm_stone' }
+                card.joker_display_values.localized_text2 = localize { type = 'name_text', set = 'Enhanced', key = 'm_maxboism_sand' }
+            end
+        }
     end
 }

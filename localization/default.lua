@@ -158,6 +158,15 @@ return {
                 },
             }
         },
+        Enhanced = {
+            m_maxboism_sand = {
+                name= 'Sand Card',
+                text = {
+                    '{X:chips,C:white}X#1#{} chips',
+                    'no suit or rank'
+                }
+            }
+        },
         Other = {
             maxboism_lockseal_seal = {
                 name = 'Sleeve',
