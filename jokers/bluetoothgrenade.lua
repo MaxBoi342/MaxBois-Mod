@@ -109,5 +109,17 @@ SMODS.Joker { --Bluetooth Grenade
                 end
             end
         end
+    end,
+    joker_display_def = function(JokerDisplay)
+        ---@type JDJokerDefinition
+        return {
+            text = {
+                { text = "(" },
+                { ref_table = "card.ability.extra", ref_value = "timer" },
+                { text = "/5)" }
+
+            },
+        text_config = { colour = G.C.GREY }
+        }
     end
 }
