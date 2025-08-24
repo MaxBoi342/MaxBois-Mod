@@ -67,6 +67,7 @@ SMODS.Consumable {
                         delay = 0.0,
                         func = function()
                             SMODS.debuff_card(v, true, 'c_maxboism_page7')
+                            SMODS.recalc_debuff(v)
                             v:juice_up()
                             return true
                         end
@@ -77,6 +78,7 @@ SMODS.Consumable {
                         delay = 0.0,
                         func = function()
                             SMODS.debuff_card(v, false, 'c_maxboism_page7')
+                            SMODS.recalc_debuff(v)
                             return true
                         end
                     }))
@@ -104,6 +106,7 @@ SMODS.Consumable {
                 delay = 0.0,
                 func = function()
                     SMODS.debuff_card(v, false, 'c_maxboism_page7')
+                    SMODS.recalc_debuff(v)
                     return true
                 end
             }))

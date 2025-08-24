@@ -11,7 +11,7 @@ SMODS.Edition({
         percent = 50
     },
     in_shop = true,
-    weight = 8,
+    weight = 5,
     extra_cost = 4,
     apply_to_float = true,
     loc_vars = function(self)

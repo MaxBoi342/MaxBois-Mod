@@ -3,7 +3,8 @@ SMODS.Joker { --Left Nut
     config = {
         extra = {
             xmult = 2,
-            list = {}
+            list = {},
+            repetitions = 2,
         }
     },
     -- loc_txt = {
@@ -43,13 +44,20 @@ SMODS.Joker { --Left Nut
                     return true
                 end
             end
+            card.ability.extra.list = {}
         end
-        if context.individual and context.cardarea == G.play then
+        if context.repetition and context.cardarea == G.play then
             for _, v in ipairs(card.ability.extra.list) do
                 if context.other_card == v then
-                    return {
-                        xmult = card.ability.extra.xmult
-                    }
+                    if SMODS.has_enhancement(v, 'm_stone') and SMODS.has_enhancement(v, 'm_maxboism_sand') then
+                        return {
+                            repetitions = card.ability.extra.repetitions * 2
+                        }
+                    else
+                        return {
+                            repetitions = card.ability.extra.repetitions
+                        }
+                    end
                 end
             end
         end
@@ -62,40 +70,36 @@ SMODS.Joker { --Left Nut
         ---@type JDJokerDefinition
         return {
             text = {
-                {
-                    border_nodes = {
-                        { text = "X" },
-                        { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" }
-                    }
-                }
+                { ref_table = "card.joker_display_values", ref_value = "localized_response", colour = G.C.GREY },
             },
             reminder_text = {
                 { text = "(" },
-                { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.ORANGE },
+                { ref_table = "card.joker_display_values", ref_value = "localized_text",  colour = G.C.ORANGE },
                 { text = "/" },
                 { ref_table = "card.joker_display_values", ref_value = "localized_text2", colour = G.C.ORANGE },
                 { text = ")" },
             },
             calc_function = function(card)
-                local text, _, scoring_hand = JokerDisplay.evaluate_hand()
-                local stone_cards_on_left = {}
-                local total_retriggers = 0
+                local text, _, _ = JokerDisplay.evaluate_hand()
+                local response = ''
+                local endLeft = true
                 if text ~= 'Unknown' then
-                    for i, scoring_card in pairs(scoring_hand) do
-                        if SMODS.has_enhancement(scoring_card, 'm_stone') or SMODS.has_enhancement(scoring_card, 'm_maxboism_sand') then
-                            table.insert(stone_cards_on_left, scoring_card)
+                    for _, v in ipairs(JokerDisplay.current_hand) do
+                    if (SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_maxboism_sand')) and endLeft then
+                        if SMODS.has_enhancement(v, 'm_stone') and SMODS.has_enhancement(v, 'm_maxboism_sand') then
+                            response = response .. ' (B) '
                         else
-                            break
+                            response = response .. ' (O) '
                         end
+                    else
+                    endLeft = false
+                        response = response .. ' (X) '
                     end
                 end
-                local stone_card = JokerDisplay.calculate_leftmost_card(stone_cards_on_left)
-                for _, v in ipairs(stone_cards_on_left) do
-                    total_retriggers = total_retriggers + JokerDisplay.calculate_card_triggers(v, scoring_hand)
                 end
+                
 
-                card.joker_display_values.x_mult = stone_card and
-                    (card.ability.extra.xmult ^ total_retriggers) or to_big(1)
+                card.joker_display_values.localized_response = response
                 card.joker_display_values.localized_text = localize { type = 'name_text', set = 'Enhanced', key = 'm_stone' }
                 card.joker_display_values.localized_text2 = localize { type = 'name_text', set = 'Enhanced', key = 'm_maxboism_sand' }
             end

@@ -30,6 +30,12 @@ SMODS.Joker { --Curse Of Ra
     atlas = 'CustomJokers',
 
     calculate = function(self, card, context)
+        if context.check_enhancement and context.other_card.ability.name == 'm_maxboism_sand' then
+            return {
+                m_stone = true,
+                m_maxboism_sand = true,
+            }
+        end
         if context.hand_drawn and not context.blueprint then
             local count = 0
             for _, v in ipairs(G.hand.cards) do
@@ -50,49 +56,49 @@ SMODS.Joker { --Curse Of Ra
     end,
 }
 
-SMODS.Joker:take_ownership('j_stone',
-    {
-        loc_vars = function(self, info_queue, card)
-            return {
-                vars = { 25, ((function()
-                    local count = 0;
-                    for _, card in ipairs(G.playing_cards or {}) do
-                        if next(SMODS.find_card('j_maxboism_curseofra')) then
-                            if SMODS.has_enhancement(card, 'm_stone') or SMODS.has_enhancement(card, 'm_maxboism_sand') then
-                                count = count + 1
-                            end
-                        else
-                            if SMODS.has_enhancement(card, 'm_stone') then
-                                count = count + 1
-                            end
-                        end
-                    end;
-                    return count
-                end)()
-                ) * 25 }
-            }
-        end,
+-- SMODS.Joker:take_ownership('j_stone',
+--     {
+--         loc_vars = function(self, info_queue, card)
+--             return {
+--                 vars = { 25, ((function()
+--                     local count = 0;
+--                     for _, card in ipairs(G.playing_cards or {}) do
+--                         if next(SMODS.find_card('j_maxboism_curseofra')) then
+--                             if SMODS.has_enhancement(card, 'm_stone') or SMODS.has_enhancement(card, 'm_maxboism_sand') then
+--                                 count = count + 1
+--                             end
+--                         else
+--                             if SMODS.has_enhancement(card, 'm_stone') then
+--                                 count = count + 1
+--                             end
+--                         end
+--                     end;
+--                     return count
+--                 end)()
+--                 ) * 25 }
+--             }
+--         end,
 
-        calculate = function(self, card, context)
-            if context.cardarea == G.jokers and context.joker_main then
-                return {
-                    chips = ((function()
-                        local count = 0;
-                        for _, card in ipairs(G.playing_cards or {}) do
-                            if next(SMODS.find_card('j_maxboism_curseofra')) then
-                                if SMODS.has_enhancement(card, 'm_stone') or SMODS.has_enhancement(card, 'm_maxboism_sand') then
-                                    count = count + 1
-                                end
-                            else
-                                if SMODS.has_enhancement(card, 'm_stone') then
-                                    count = count + 1
-                                end
-                            end
-                        end;
-                        return count
-                    end)()
-                    ) * 25
-                }
-            end
-        end,
-    }, true)
+--         calculate = function(self, card, context)
+--             if context.cardarea == G.jokers and context.joker_main then
+--                 return {
+--                     chips = ((function()
+--                         local count = 0;
+--                         for _, pcard in ipairs(G.playing_cards or {}) do
+--                             if next(SMODS.find_card('j_maxboism_curseofra')) then
+--                                 if SMODS.has_enhancement(pcard, 'm_stone') or SMODS.has_enhancement(pcard, 'm_maxboism_sand') then
+--                                     count = count + 1
+--                                 end
+--                             else
+--                                 if SMODS.has_enhancement(pcard, 'm_stone') then
+--                                     count = count + 1
+--                                 end
+--                             end
+--                         end;
+--                         return count
+--                     end)()
+--                     ) * 25
+--                 }
+--             end
+--         end,
+--     }, true)

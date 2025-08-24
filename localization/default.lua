@@ -21,7 +21,7 @@ return {
                 name = 'Curse Of Ra',
                 text = {
                     'Converts {C:attention}Stone{} cards in hand to {C:attention}Sand{} cards',
-                    '{C:attention}Stone Joker{} also counts {C:attention}Sand{} cards now'
+                    '{C:attention}Sand{} cards also count as {C:attention}Stone{} cards while this joker is held'
                 }
             },
             j_maxboism_homophobicslenderman = {
@@ -41,7 +41,7 @@ return {
             j_maxboism_leftnut = {
                 name = 'Left Nut',
                 text = {
-                    'Played {C:attention}Stone{} or {C:attention}Sand{} cards give {X:mult,C:white}X#1#{} Mult',
+                    'Played {C:attention}Stone{} or {C:attention}Sand{} cards are retriggered {C:attention}2{} times',
                     'if played to the left of {C:attention}Non-Stone/Sand{} cards'
                 }
             },

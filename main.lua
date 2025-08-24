@@ -85,6 +85,15 @@ end
 
 MaxBoiSM.path = '' .. SMODS.current_mod.path
 
+SMODS.current_mod.optional_features = {
+    retrigger_joker = false,
+    post_trigger = false,
+    quantum_enhancements = true,
+    cardareas = {
+        discard = false,
+        deck = false
+    }
+}
 
 
 --janky hack to let sand cards show their rank (otherwise same as SMODS.Enhancement)

@@ -36,13 +36,7 @@ function create_UIBox_lingo()
         colour = HEX('c8640f'),
         outline_colour = HEX('8c470b'),
         contents = {
-            {
-                n = G.UIT.R,
-                nodes = {
-                    create_lingo_puzzle()
-                },
-                config = { minw = 1, minh = 1, colour = HEX('c8640f'), padding = 0.15, align = "cm" },
-            },
+            create_lingo_puzzle(),
             {
                 n = G.UIT.R,
                 config = { align = "cm" },
@@ -147,38 +141,47 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
 
     }
 
-    local selectedPuzzle = pseudorandom_element(puzzleDatabase, 'Linger')
+    -- local selectedPuzzle = pseudorandom_element(puzzleDatabase, 'Linger')
+
+    -- n = G.UIT.R,
+    --             nodes = {
+    --                 create_lingo_puzzle()
+    --             },
+    --             config = { minw = 1, minh = 1, colour = HEX('c8640f'), padding = 0.15, align = "cm" },
+    local selectedPuzzle = {}
+
+    local t = {}
     
-    MaxBoiSM.CUR_LINGO_ANSWER = selectedPuzzle.answer
-    local t = {
-        n = G.UIT.C,
-        config = { minw = 2, minh = 6, colour = MaxBoiSM.COLORS.XX, padding = 0.15, align = "cm", r = 0.05 },
-        nodes = {
-            {
-                n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.topColor], padding = 0.15, align = "cm", r = 0.05 },
-                nodes = {
-                    {n = G.UIT.T, config = { colour = (selectedPuzzle.topColor ~= 'BK' and selectedPuzzle.topColor ~= 'GR' and selectedPuzzle.topColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.topText or '' }},
-                }
+    -- MaxBoiSM.CUR_LINGO_ANSWER = selectedPuzzle.answer
+    -- local t = {
+    --     n = G.UIT.C,
+    --     config = { minw = 2, minh = 6, colour = MaxBoiSM.COLORS.XX, padding = 0.15, align = "cm", r = 0.05 },
+    --     nodes = {
+    --         {
+    --             n = G.UIT.R,
+    --             config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.topColor], padding = 0.15, align = "cm", r = 0.05 },
+    --             nodes = {
+    --                 {n = G.UIT.T, config = { colour = (selectedPuzzle.topColor ~= 'BK' and selectedPuzzle.topColor ~= 'GR' and selectedPuzzle.topColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.topText or '' }},
+    --             }
 
-            },
-            {
-                n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.middleColor], padding = 0.15, align = "cm", r = 0.05 },
-                nodes = {
-                    {n = G.UIT.T, config = { colour = (selectedPuzzle.middleColor ~= 'BK' and selectedPuzzle.middleColor ~= 'GR' and selectedPuzzle.middleColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.middleText or '' }},
-                }
+    --         },
+    --         {
+    --             n = G.UIT.R,
+    --             config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.middleColor], padding = 0.15, align = "cm", r = 0.05 },
+    --             nodes = {
+    --                 {n = G.UIT.T, config = { colour = (selectedPuzzle.middleColor ~= 'BK' and selectedPuzzle.middleColor ~= 'GR' and selectedPuzzle.middleColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.middleText or '' }},
+    --             }
 
-            },
-            {
-                n = G.UIT.R,
-                config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.bottomColor], padding = 0.15, align = "cm", r = 0.05 },
-                nodes = {
-                    {n = G.UIT.T, config = { colour = (selectedPuzzle.bottomColor ~= 'BK' and selectedPuzzle.bottomColor ~= 'GR' and selectedPuzzle.bottomColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.bottomText or '' }},
-                }
+    --         },
+    --         {
+    --             n = G.UIT.R,
+    --             config = { minw = 2.5, minh = 2.5, maxw = 2.5, maxh = 2.5, colour = MaxBoiSM.COLORS[selectedPuzzle.bottomColor], padding = 0.15, align = "cm", r = 0.05 },
+    --             nodes = {
+    --                 {n = G.UIT.T, config = { colour = (selectedPuzzle.bottomColor ~= 'BK' and selectedPuzzle.bottomColor ~= 'GR' and selectedPuzzle.bottomColor ~= 'BR' and G.C.BLACK) or HEX('FFFFFF'), padding = 0.15, align = "cm", scale = 0.5, text = selectedPuzzle.bottomText or '' }},
+    --             }
 
-            },
-        },
-    }
-    return t
+    --         },
+    --     },
+    -- }
+     return t
 end

@@ -33,7 +33,7 @@ SMODS.Consumable {
         if context.cardarea == G.jokers and context.joker_main then
             if true then
                 if SMODS.pseudorandom_probability(card, 'group_0_f7403c99', 1, card.ability.extra.odds, 'c_maxboism_page4') then
-                    target_hand2 = context.scoring_name
+                    local target_hand2 = context.scoring_name
                     SMODS.calculate_effect({
                         level_up = card.ability.extra.levels2,
                         level_up_hand = target_hand2

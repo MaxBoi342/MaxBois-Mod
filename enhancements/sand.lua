@@ -19,7 +19,7 @@ SMODS.MaxBoi_Enhancement {
     --     }
     -- },
     calculate = function(self, card, context)
-
+        
     end,
     weight = 2
 }
