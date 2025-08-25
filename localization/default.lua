@@ -150,6 +150,26 @@ return {
                 }
             },
         },
+        friend = {
+            c_maxboism_thetram = {
+                name = 'The Tram',
+                text = {
+                    "Creates a",
+                    "{C:maxboism_friendendary,E:1}Friendendary{} Joker",
+                    "from the {C:attention}Tram{} pool.",
+                    "{C:inactive}(Must have room){}"
+                }
+            },
+            c_maxboism_thezaza = {
+                name = 'The Zaza',
+                text = {
+                    "Creates a",
+                    "{C:maxboism_friendendary,E:1}Friendendary{} Joker",
+                    "from the {C:attention}Zaza{} pool.",
+                    "{C:inactive}(Must have room){}"
+                }
+            },
+        },
         Edition = {
             e_maxboism_sepia = {
                 name = 'Sepia',

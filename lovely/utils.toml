@@ -136,3 +136,141 @@ local flags = SMODS.calculate_context(context)
 '''
 overwrite = true
 match_indent = false
+
+# friendendary hook
+
+[[patches]]
+[patches.pattern]
+target = '''functions/UI_definitions.lua'''
+pattern = '''
+if card.ability.consumeable then
+    if (card.area == G.pack_cards and G.pack_cards) then
+'''
+position = "at"
+payload = '''
+if card.ability.consumeable then
+    if (card.area == G.pack_cards and G.pack_cards) and card.ability.name == 'The Soul' then
+       return {
+      n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
+        {n=G.UIT.C, config={padding = 0.15, align = 'cl'}, nodes={
+          {n=G.UIT.R, config={align = 'cl'}, nodes={
+                {n=G.UIT.C, config={align = "cr"}, nodes={
+      
+      {n=G.UIT.C, config={ref_table = card, align = "cr",maxw = 1.25, padding = 0.1, r=0.08, minw = 1.25, minh = (card.area and card.area.config.type == 'joker') and 0 or 1, hover = true, shadow = true, colour = G.C.ORANGE, one_press = true, button = 'transform_soul'}, nodes={
+        {n=G.UIT.B, config = {w=0.1,h=0.6}},
+        {n=G.UIT.T, config={text = '???',colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
+      }}
+    }}
+          }},
+          {n=G.UIT.R, config={align = 'cl'}, nodes={
+            {n=G.UIT.C, config={align = "cr"}, nodes={
+      
+      {n=G.UIT.C, config={ref_table = card, align = "cr",maxw = 1.25, padding = 0.1, r=0.08, minw = 1.25, minh = (card.area and card.area.config.type == 'joker') and 0 or 1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_use_consumeable'}, nodes={
+        {n=G.UIT.B, config = {w=0.1,h=0.6}},
+        {n=G.UIT.T, config={text = localize('b_use'),colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
+      }}
+    }}
+          }},
+        }},
+    }}
+    elseif (card.area == G.pack_cards and G.pack_cards) then
+'''
+overwrite = true
+match_indent = false
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+local x_off = (self.ability.consumeable and -0.1 or 0)
+            self.children.use_button = UIBox{
+                definition = G.UIDEF.use_and_sell_buttons(self), 
+                config = {align=
+                        ((self.area == G.jokers) or (self.area == G.consumeables)) and "cr" or
+                        "bmi"
+                    , offset = 
+                        ((self.area == G.jokers) or (self.area == G.consumeables)) and {x=x_off - 0.4,y=0} or
+                        {x=0,y=0.65},
+                    parent =self}
+            }
+'''
+position = "at"
+payload = '''
+local x_off = (self.ability.consumeable and -0.1 or 0)
+    if self.ability.name == 'The Soul' then
+        self.children.use_button = UIBox{
+                definition = G.UIDEF.use_and_sell_buttons(self), 
+                config = {align= "cr", offset = {x=x_off - 0.4,y=0}, parent = self}
+            }
+    else
+            self.children.use_button = UIBox{
+                definition = G.UIDEF.use_and_sell_buttons(self), 
+                config = {align=
+                        ((self.area == G.jokers) or (self.area == G.consumeables)) and "cr" or
+                        "bmi"
+                    , offset = 
+                        ((self.area == G.jokers) or (self.area == G.consumeables)) and {x=x_off - 0.4,y=0} or
+                        {x=0,y=0.65},
+                    parent =self}
+            }
+    end
+'''
+overwrite = true
+match_indent = false
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+end
+
+        return true end }))
+    end
+'''
+position = "at"
+payload = '''
+end
+
+        return true end }))
+    elseif self.ability.name == 'The Soul' then
+        stop_use()
+        
+        G.GAME.pack_size = 2
+        G.GAME.pack_choices = 2
+        self.states.hover.can = false
+
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            self:explode()
+            local pack_cards = {}
+
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 1.3*math.sqrt(G.SETTINGS.GAMESPEED), blockable = false, blocking = false, func = function()
+                local _size = 2
+                
+                for i = 1, _size do
+                    local card = nil  
+                        card = create_card("friend", G.pack_cards, nil, nil, true, true, nil, 'fre')
+
+                    card.T.x = self.T.x
+                    card.T.y = self.T.y
+                    card:start_materialize({G.C.WHITE, G.C.WHITE}, nil, 1.5*G.SETTINGS.GAMESPEED)
+                    pack_cards[i] = card
+                end
+                return true
+            end}))
+
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 1.3*math.sqrt(G.SETTINGS.GAMESPEED), blockable = false, blocking = false, func = function()
+                if G.pack_cards then 
+                    if G.pack_cards and G.pack_cards.VT.y < G.ROOM.T.h then 
+                    for k, v in ipairs(pack_cards) do
+                        G.pack_cards:emplace(v)
+                    end
+                    return true
+                    end
+                end
+            end}))
+
+        return true end }))
+    end
+'''
+overwrite = true
+match_indent = false

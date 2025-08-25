@@ -28,7 +28,10 @@ SMODS.Joker { --Left Nut
         y = 1
     },
     cost = 20,
-    rarity = 4,
+    rarity = "maxboism_friendendary",
+    pools = {
+        ['maxboism_tram'] = true
+    },
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,

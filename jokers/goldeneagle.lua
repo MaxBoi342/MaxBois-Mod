@@ -1,12 +1,12 @@
 SMODS.Joker { --Pickled Mask
-    key = "pickledmask",
+    key = "goldeneagle",
     config = {
         extra = {
         }
     },
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
-    end,
+    -- loc_vars = function(self, info_queue, card)
+    --     info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
+    -- end,
     -- loc_txt = {
     --     ['name'] = 'Pickled Mask',
     --     ['text'] = {
@@ -16,12 +16,12 @@ SMODS.Joker { --Pickled Mask
     -- },
     pos = {
         x = 4,
-        y = 0
+        y = 1
     },
     cost = 20,
     rarity = "maxboism_friendendary",
     pools = {
-        ['maxboism_tram'] = true
+        ['maxboism_zaza'] = true
     },
     blueprint_compat = false,
     eternal_compat = true,
@@ -31,17 +31,9 @@ SMODS.Joker { --Pickled Mask
     atlas = 'CustomJokers',
     soul_pos = {
         x = 5,
-        y = 0
+        y = 1
     },
 
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and not context.blueprint then
-            if context.other_card:is_face() then
-                context.other_card:set_edition("e_polychrome", true)
-                return {
-                    message = localize("maxboism_joker_pickledmask_message")
-                }
-            end
-        end
     end
 }
