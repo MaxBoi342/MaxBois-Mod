@@ -42,14 +42,6 @@ SMODS.Atlas({
     atlas_table = "ASSET_ATLAS"
 }):register()
 
-SMODS.Atlas({
-    key = "CustomBoosters", 
-    path = "CustomBoosters.png", 
-    px = 71,
-    py = 95, 
-    atlas_table = "ASSET_ATLAS"
-}):register()
-
 ---
 ---Instantiate MaxBoiSM as global variable storage and related tables
 ---
