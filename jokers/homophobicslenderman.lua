@@ -6,7 +6,7 @@ SMODS.Joker { --Homophobic Slenderman
             echips = 7,
             emult = 7,
             page = 0,
-            rate = 4
+            rate = 1
         }
     },
     -- loc_txt = {
@@ -35,37 +35,74 @@ SMODS.Joker { --Homophobic Slenderman
 
     calculate = function(self, card, context)
         if not context.blueprint then
-            if context.buying_card then
-                if context.card and (context.card.ability.set == 'page' or context.card.ability.set == 'page') then
-                    return {
-                        func = function()
-                            card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
-                            return true
-                        end,
-                        message = localize("maxboism_joker_homophobicslenderman_found")
-                    }
-                end
-            end
-            if context.using_consumeable then
-                if context.consumeable and (context.consumeable.ability.set == 'page' or context.consumeable.ability.set == 'page') then
-                    return {
-                        func = function()
-                            card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
-                            return true
-                        end,
-                        message = localize("maxboism_joker_homophobicslenderman_lost")
-                    }
-                end
-            end
-            if context.selling_card and (context.card.config.center.set == 'page' or context.card.config.center.set == 'page') then --modify existing sell rules
-                return {
-                    func = function()
-                        card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
-                        return true
-                    end,
-                    message = localize("maxboism_joker_homophobicslenderman_lost")
-                }
-            end
+        --     if context.buying_card then
+        --         if context.card and (context.card.ability.set == 'page' or context.card.ability.set == 'page') then
+        --             return {
+        --                 func = function()
+        --                     card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
+        --                     return true
+        --                 end,
+        --                 message = localize("maxboism_joker_homophobicslenderman_found")
+        --             }
+        --         end
+        --     end
+        --     if context.using_consumeable then
+        --         if context.consumeable and (context.consumeable.ability.set == 'page' or context.consumeable.ability.set == 'page') then
+        --             return {
+        --                 func = function()
+        --                     card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
+        --                     return true
+        --                 end,
+        --                 message = localize("maxboism_joker_homophobicslenderman_lost")
+        --             }
+        --         end
+        --     end
+        --     if context.selling_card and (context.card.config.center.set == 'page' or context.card.config.center.set == 'page') then --modify existing sell rules
+        --         return {
+        --             func = function()
+        --                 card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
+        --                 return true
+        --             end,
+        --             message = localize("maxboism_joker_homophobicslenderman_lost")
+        --         }
+        --     end
+            -- if context.buying_card or context.using_consumable or context.selling_card then --fix when selling it actually go down mfer
+            --     local newCount = 0
+            --     for _, v in ipairs(G.consumeables.cards) do
+            --         if v.ability.set == 'page' then
+            --             newCount = newCount + 1
+            --         end
+            --     end
+
+            --     if (context.selling_card and context.card.config.center.set == 'page') or (context.using_consumeable and context.consumeable.ability.set == 'page') then
+            --         newCount = newCount - 1
+            --     end
+
+            --     if newCount > card.ability.extra.heldPages then
+            --         return {
+            --             func = function()
+            --                 card.ability.extra.heldPages = math.max(0, newCount)
+            --                 return true
+            --             end,
+            --             message = localize("maxboism_joker_homophobicslenderman_found")
+            --         }
+            --     elseif newCount < card.ability.extra.heldPages then
+            --         return {
+            --             func = function()
+            --                 card.ability.extra.heldPages = math.max(0, newCount)
+            --                 return true
+            --             end,
+            --             message = localize("maxboism_joker_homophobicslenderman_lost")
+            --         }
+            --     else
+            --         return {
+            --             func = function()
+            --                 card.ability.extra.heldPages = math.max(0, newCount)
+            --                 return true
+            --             end,
+            --         }
+            --     end
+            -- end
             if context.cardarea == G.jokers and context.joker_main then
                 if (card.ability.extra.heldPages or 0) >= 7 then
                     return {
@@ -124,7 +161,6 @@ SMODS.Joker { --Homophobic Slenderman
                             }))
                         end
                         if created_consumable then
-                            card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
                             card_eval_status_text(card, 'extra', nil, nil, nil,
                                 { message = localize("maxboism_joker_homophobicslenderman_freebie"), colour = G.C.PURPLE })
                         end

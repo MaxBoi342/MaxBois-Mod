@@ -7,7 +7,7 @@ SMODS.Joker { --No Entry
         }
     },
     pos = {
-        x = 0,
+        x = 9,
         y = 0
     },
     cost = 7,
@@ -17,7 +17,7 @@ SMODS.Joker { --No Entry
     perishable_compat = true,
     unlocked = true,
     discovered = true,
-
+    atlas = 'CustomJokers',
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.baseMult, localize('High Card', 'poker_hands'), card.ability.extra.modifier } }

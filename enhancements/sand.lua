@@ -1,4 +1,4 @@
-SMODS.MaxBoi_Enhancement {
+SMODS.Enhancement {
     key = 'maxboism_sand',
     pos = { x = 1, y = 0 },
     config = { x_chips = 1.5 },
@@ -24,22 +24,23 @@ SMODS.MaxBoi_Enhancement {
     weight = 2
 }
 
---I weep over this
+-- I weep over this
+-- Update: I no longer weep over this
 SMODS.DrawStep {
     key = 'sand_overlay',
-    order = 31,
+    order = 29,
     func = function(self, layer)
-        if SMODS.has_enhancement(self, 'm_maxboism_sand') and not self.children.sand_overlay then
-            self.children.sand_overlay = Sprite(self.T.x, self.T.y, self.T.w, self.T.h,
+        if not G.sand_overlay then
+            G.sand_overlay = Sprite(0, 0, G.CARD_W, G.CARD_H,
                 G.ASSET_ATLAS['maxboism_CustomEnhancements'], { x = 0, y = 0 })
-            self.children.sand_overlay.states.hover = self.states.hover
-            self.children.sand_overlay.states.click = self.states.click
-            self.children.sand_overlay.states.drag = self.states.drag
-            self.children.sand_overlay.states.collide.can = false
-            self.children.sand_overlay:set_role({ major = self, role_type = 'Glued', draw_major = self })
-            self.base.nominal = 0
         end
-        if (not SMODS.has_enhancement(self, 'm_maxboism_sand') and self.children.sand_overlay) or self.facing == "back" then
+        
+        if SMODS.has_enhancement(self, 'm_maxboism_sand') then
+            G.sand_overlay.role.draw_major = self
+            G.sand_overlay:draw_shader('dissolve', nil, nil, nil, self.children.center)
+            self.base.nominal = 0;
+        end
+        if not SMODS.has_enhancement(self, 'm_maxboism_sand') then
             self.children.sand_overlay = nil
             if self.base.value == '2' then
                 self.base.nominal = 2; self.base.id = 2
