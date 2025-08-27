@@ -2,9 +2,10 @@ SMODS.Consumable {
     key = 'page1',
     set = 'page',
     pos = { x = 0, y = 0 },
-    config = { extra = {
-        edition_amount = 1,
-        mult = 2
+    config = { 
+        extra = {
+            edition_amount = 1,
+            mult = 0
     } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_mult
@@ -79,18 +80,16 @@ SMODS.Consumable {
     end,
 
     calculate = function(self, card, context)
+        local multTable = {}
         if context.before then
             for _, check_card in ipairs(context.scoring_hand) do
-                if SMODS.get_enhancements(check_card)["m_mult"] == true then
+                    multTable[_] = check_card.ability.mult
                     check_card.ability.mult = card.ability.extra.mult
-                end
             end
         end
         if context.final_scoring_step then
             for _, check_card in ipairs(context.scoring_hand) do
-                if SMODS.get_enhancements(check_card)["m_mult"] == true then
-                    check_card.ability.mult = 4
-                end
+                    check_card.ability.mult = multTable[_]
             end
         end
     end,

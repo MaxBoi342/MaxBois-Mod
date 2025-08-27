@@ -28,7 +28,8 @@ return {
                 name = 'Homophobic Slenderman',
                 text = {
                     'Collect my {C:attention}Page{} cards from the {C:attention}shop{}',
-                    '{C:inactive}(Currently #1#/7){}'
+                    '{C:inactive}(Currently #1#/7){}',
+                    '{C:inactive}(Currently{} {X:chips,C:white}X#2#{} {C:inactive}Chips and{} {X:mult,C:white}X#2#{} {C:inactive}Mult){}'
                 }
             },
             j_maxboism_infiniteparking = {
@@ -90,7 +91,7 @@ return {
             c_maxboism_page1 = {
                 name = 'Page 1',
                 text = {
-                    '{C:inactive}Passive:{} All {X:mult,C:white}#1#s{} only provide {C:red}+2{} Mult',
+                    '{C:inactive}Passive:{} All {C:mult}+Mult{} from {C:attention}Enhancements{} is set to {C:attention}0{}',
                     '{C:default}Active:{} Make a random joker {C:dark_edition}Holographic{}'
                 }
             },
@@ -99,7 +100,7 @@ return {
                 text = {
                     '{C:inactive}Passive:{} Lose {C:money}$1{} per hand played',
                     '{C:default}Active:{} Create a {C:attention}#1#{}',
-                    '{C:inactive}(If used inside shop, trigger the tag){}'
+                    '{C:inactive}(If used inside shop, mimic the effect of the tag instead){}'
                 }
             },
             c_maxboism_page3 = {

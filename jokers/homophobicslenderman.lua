@@ -5,7 +5,7 @@ SMODS.Joker { --Homophobic Slenderman
             heldPages = 0,
             echips = 7,
             emult = 7,
-            page = 0,
+            costIncrease = 5,
             rate = 1
         }
     },
@@ -30,22 +30,23 @@ SMODS.Joker { --Homophobic Slenderman
     atlas = 'CustomJokers',
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.heldPages } }
+        return { vars = { card.ability.extra.heldPages, math.max(1, card.ability.extra.heldPages) } }
     end,
 
     calculate = function(self, card, context)
         if not context.blueprint then
-        --     if context.buying_card then
-        --         if context.card and (context.card.ability.set == 'page' or context.card.ability.set == 'page') then
-        --             return {
-        --                 func = function()
-        --                     card.ability.extra.heldPages = (card.ability.extra.heldPages) + 1
-        --                     return true
-        --                 end,
-        --                 message = localize("maxboism_joker_homophobicslenderman_found")
-        --             }
-        --         end
-        --     end
+            if context.buying_card then
+                if context.card and (context.card.ability.set == 'page' or context.card.ability.set == 'page') then
+                    if not G.GAME.homophobic_inflation then
+                        G.GAME.homophobic_inflation = card.ability.extra.costIncrease
+                    else
+                        G.GAME.homophobic_inflation = G.GAME.homophobic_inflation + card.ability.extra.costIncrease
+                    end
+                    for _,v in ipairs(G.I.CARD) do
+                        if v.set_cost then v:set_cost() end
+                    end
+                end
+            end
         --     if context.using_consumeable then
         --         if context.consumeable and (context.consumeable.ability.set == 'page' or context.consumeable.ability.set == 'page') then
         --             return {
@@ -112,6 +113,11 @@ SMODS.Joker { --Homophobic Slenderman
                             colour = G.C.DARK_EDITION
                         }
                     }
+                else
+                    return {
+                        xchips = math.max(1,card.ability.extra.heldPages),
+                        xmult = math.max(1,card.ability.extra.heldPages),
+                    }   
                 end
             end
             if context.setting_blind and (card.ability.extra.heldPages or 0) >= 7 then

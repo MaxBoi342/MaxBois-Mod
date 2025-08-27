@@ -137,7 +137,7 @@ local flags = SMODS.calculate_context(context)
 overwrite = true
 match_indent = false
 
-# friendendary hook
+# friendendary hook(s)
 
 [[patches]]
 [patches.pattern]
@@ -271,6 +271,25 @@ end
 
         return true end }))
     end
+'''
+overwrite = true
+match_indent = false
+
+#set cost hook my beloved
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+self.extra_cost = 0 + G.GAME.inflation
+'''
+position = "at"
+payload = '''
+if self.ability.set == 'page' then
+    self.extra_cost = 0 + G.GAME.inflation + (G.GAME.homophobic_inflation or 0)
+else
+    self.extra_cost = 0 + G.GAME.inflation 
+end
 '''
 overwrite = true
 match_indent = false
