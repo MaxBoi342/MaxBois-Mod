@@ -3,7 +3,7 @@ SMODS.Consumable {
     set = 'page',
     pos = { x = 5, y = 0 },
     config = { extra = {
-        edition_amount = 1
+        edition_amount = 1,
     } },
     -- loc_txt = {
     --     name = 'Page 6',
@@ -13,6 +13,9 @@ SMODS.Consumable {
     --     }
     -- },
     cost = 5,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { (G.GAME.homophobic_sticker or 1) } }
+    end,
     unlocked = true,
     discovered = true,
     hidden = false,
@@ -58,7 +61,9 @@ SMODS.Consumable {
     use = function(self, card, area, copier)
         local used_card = copier or card
         local jokers_to_edition = {}
+        local jokers_to_sticker = {}
         local eligible_jokers = {}
+        local eligible_stickerable_jokers = {}
 
         if 'editionless' == 'editionless' then
             eligible_jokers = SMODS.Edition:get_edition_cards(G.jokers, true)
@@ -69,6 +74,11 @@ SMODS.Consumable {
                 end
             end
         end
+
+        for _, joker in pairs(G.jokers.cards) do
+            eligible_stickerable_jokers[#eligible_stickerable_jokers + 1] = joker
+        end
+
 
         if #eligible_jokers > 0 then
             local temp_jokers = {}
@@ -81,6 +91,12 @@ SMODS.Consumable {
             for i = 1, math.min(card.ability.extra.edition_amount, #temp_jokers) do
                 jokers_to_edition[#jokers_to_edition + 1] = temp_jokers[i]
             end
+        end
+
+        pseudoshuffle(eligible_stickerable_jokers, 91929)
+
+        for i = 1, math.min((G.GAME.homophobic_sticker or 1), #eligible_stickerable_jokers) do
+            jokers_to_sticker[#jokers_to_sticker + 1] = eligible_stickerable_jokers[i]
         end
 
         G.E_MANAGER:add_event(Event({
@@ -103,6 +119,32 @@ SMODS.Consumable {
                 end
             }))
         end
+
+        for _, joker in pairs(jokers_to_sticker) do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.2,
+                func = function()
+                    local stickerTable = copy_table(SMODS.Sticker.obj_buffer)
+                    pseudoshuffle(stickerTable, 10219)
+
+                    for i = 1, #stickerTable do
+                        if not joker.ability[stickerTable[i]] then
+                            if ((stickerTable[i] == 'pinned' and joker.pinned)) then
+
+                            else
+                                joker:add_sticker(stickerTable[i], true)
+                                return true
+                            end
+                        end
+                    end
+                    return true
+                end
+            }))
+        end
+
+                G.GAME.homophobic_sticker = G.GAME.homophobic_sticker or 1
+                G.GAME.homophobic_sticker = G.GAME.homophobic_sticker + 1
         delay(0.6)
     end,
     can_use = function(self, card)
@@ -111,7 +153,7 @@ SMODS.Consumable {
     set_ability = function(self, card, initial)
         card:set_edition("e_negative", true)
     end,
-        add_to_deck = function(self, card, from_debuff)
+    add_to_deck = function(self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
                 local newCount = 0
@@ -123,9 +165,9 @@ SMODS.Consumable {
                 for _, v in ipairs(SMODS.find_card('j_maxboism_homophobicslenderman', true)) do
                     v.ability.extra.heldPages = newCount
                     card_eval_status_text(v, 'extra', nil, nil, nil,
-                                { message = localize("maxboism_joker_homophobicslenderman_found"), colour = G.C.GREEN })
+                        { message = localize("maxboism_joker_homophobicslenderman_found"), colour = G.C.GREEN })
                 end
-                    return true
+                return true
             end
         }))
     end,
@@ -142,9 +184,9 @@ SMODS.Consumable {
                 for _, v in ipairs(SMODS.find_card('j_maxboism_homophobicslenderman', true)) do
                     v.ability.extra.heldPages = newCount
                     card_eval_status_text(v, 'extra', nil, nil, nil,
-                                { message = localize("maxboism_joker_homophobicslenderman_lost"), colour = G.C.RED })
+                        { message = localize("maxboism_joker_homophobicslenderman_lost"), colour = G.C.RED })
                 end
-                    return true
+                return true
             end
         }))
     end,

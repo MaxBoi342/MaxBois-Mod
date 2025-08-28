@@ -129,7 +129,8 @@ return {
                 name = 'Page 6',
                 text = {
                     '{C:inactive}Passive:{} {C:attention}Shuffle{} all jokers when a hand is played',
-                    '{C:default}Active:{} Apply {C:dark_edition}Negative{} to a random joker'
+                    '{C:default}Active:{} Apply {C:dark_edition}Negative{} to a random joker',
+                    'Apply a random {C:attention}sticker{} to {C:attention}#1#{} joker(s)'
                 }
             },
             c_maxboism_page7 = {
