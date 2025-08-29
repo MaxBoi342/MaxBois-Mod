@@ -70,6 +70,10 @@ SMODS.Joker { --Left Nut
     end,
 
     joker_display_def = function(JokerDisplay)
+        
+        local endLeft
+        local leftPos
+
         ---@type JDJokerDefinition
         return {
             text = {
@@ -85,26 +89,48 @@ SMODS.Joker { --Left Nut
             calc_function = function(card)
                 local text, _, _ = JokerDisplay.evaluate_hand()
                 local response = ''
-                local endLeft = true
+                endLeft = true
                 if text ~= 'Unknown' then
                     for _, v in ipairs(JokerDisplay.current_hand) do
-                    if (SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_maxboism_sand')) and endLeft then
-                        if SMODS.has_enhancement(v, 'm_stone') and SMODS.has_enhancement(v, 'm_maxboism_sand') then
-                            response = response .. ' (B) '
+                        if (SMODS.has_enhancement(v, 'm_stone') or SMODS.has_enhancement(v, 'm_maxboism_sand')) and endLeft then
+                            if SMODS.has_enhancement(v, 'm_stone') and SMODS.has_enhancement(v, 'm_maxboism_sand') then
+                                response = response .. ' (B) '
+                            else
+                                response = response .. ' (O) '
+                            end
                         else
-                            response = response .. ' (O) '
+                            endLeft = false
+                            leftPos = _
+                            response = response .. ' (X) '
                         end
-                    else
-                    endLeft = false
+                    end
+                end
+
+                if endLeft == true then
+                    response = ''
+                    for _, v in ipairs(JokerDisplay.current_hand) do
                         response = response .. ' (X) '
                     end
                 end
-                end
-                
 
                 card.joker_display_values.localized_response = response
                 card.joker_display_values.localized_text = localize { type = 'name_text', set = 'Enhanced', key = 'm_stone' }
                 card.joker_display_values.localized_text2 = localize { type = 'name_text', set = 'Enhanced', key = 'm_maxboism_sand' }
+            end,
+            retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+                if held_in_hand then return 0 end
+                for _, v in ipairs(JokerDisplay.current_hand) do
+                    if v == playing_card and leftPos and _ < leftPos then
+                        if (SMODS.has_enhancement(playing_card, 'm_stone') or SMODS.has_enhancement(playing_card, 'm_maxboism_sand')) then
+                            if SMODS.has_enhancement(playing_card, 'm_stone') and SMODS.has_enhancement(playing_card, 'm_maxboism_sand') then
+                                return JokerDisplay.calculate_joker_triggers(joker_card) * 4
+                            else
+                                return JokerDisplay.calculate_joker_triggers(joker_card) * 2
+                            end
+                        end
+                    end
+                end
+                return 0
             end
         }
     end

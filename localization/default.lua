@@ -63,7 +63,7 @@ return {
                 name = 'The Peasant',
                 text = {
                     'Score {X:mult,C:white}X#1# {} when a {C:orange}face{} card is scored,',
-                    'then increase Mult by {X:mult,C:white}X0.1{}',
+                    'then multiply Mult by {X:mult,C:white}X0.1{}',
                     '(Mult resets after hand)'
                 }
             },

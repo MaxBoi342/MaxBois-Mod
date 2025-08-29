@@ -293,3 +293,41 @@ end
 '''
 overwrite = true
 match_indent = false
+
+#FUCKING SNAD FIX
+
+# [[patches]]
+# [patches.pattern]
+# target = '''card.lua'''
+# pattern = '''
+#                 if self.children.front and self.ability.effect ~= 'Stone Card' then
+#                     self.children.front:draw_shader('negative', nil, self.ARGS.send_to_shader)
+#                 end
+# '''
+# position = "at"
+# payload = '''
+#                 if self.children.front then
+#                     self.children.front:draw_shader('negative', nil, self.ARGS.send_to_shader)
+#                 end
+# '''
+# overwrite = true
+# match_indent = false
+
+# #FUCKING SNAD FIX 2
+
+# [[patches]]
+# [patches.pattern]
+# target = '''card.lua'''
+# pattern = '''
+#                 if self.children.front and self.ability.effect ~= 'Stone Card' then
+#                     self.children.front:draw_shader('dissolve')
+#                 end
+# '''
+# position = "at"
+# payload = '''
+#                 if self.children.front then
+#                     self.children.front:draw_shader('dissolve')
+#                 end
+# '''
+# overwrite = true
+# match_indent = false

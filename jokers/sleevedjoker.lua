@@ -8,8 +8,8 @@ SMODS.Joker { --Sleeved Joker
         x = 3,
         y = 1
     },
-    cost = 4,
-    rarity = 1,
+    cost = 5,
+    rarity = 2,
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,
