@@ -33,7 +33,7 @@
 --             {
 --                 n = G.UIT.R,
 --                 nodes = {
---                     create_lingo2_puzzle()
+--                     create_easternfarmers_code()
 --                 },
 --                 config = { minw = 1, minh = 1, colour = HEX('c8640f'), padding = 0.15, align = "cm" },
 --             },
@@ -43,87 +43,140 @@
 --     return t
 -- end
 
--- function create_lingo2_puzzle()
-
--- if not MaxBoiSM.Gears then --becauuse I fucking suck rn
--- MaxBoiSM.Gears = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 0, y = 0 })
--- MaxBoiSM.Times = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 1, y = 0 })
--- MaxBoiSM.Basket = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 2, y = 0 })
--- MaxBoiSM.Waterlemon = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 3, y = 0 })
--- MaxBoiSM.Nest = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 4, y = 0 })
--- MaxBoiSM.Crown = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 5, y = 0 })
--- MaxBoiSM.Eye = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 6, y = 0 })
--- MaxBoiSM.Cube = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 7, y = 0 })
--- MaxBoiSM.Pyramid = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 8, y = 0 })
--- MaxBoiSM.Plump = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 9, y = 0 })
--- MaxBoiSM.Press = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 10, y = 0 })
--- MaxBoiSM.Flower = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 11, y = 0 })
--- MaxBoiSM.Map = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 12, y = 0 })
--- MaxBoiSM.Stars = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 13, y = 0 })
--- MaxBoiSM.Sun = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 14, y = 0 })
--- MaxBoiSM.Bracket = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 15, y = 0 })
--- MaxBoiSM.Squiggly = Sprite(0, 0, 1, 1,
---     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 16, y = 0 })
--- end
-
---     local glyph = MaxBoiSM.Stars
---     local t = {n= G.UIT.C, config={align = "cm", padding = 0}, nodes={
---         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
---         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
---         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
---         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
---             {
---                 n = G.UIT.R,
---                 config = { align = "cm" },
+-- function create_easternfarmers_code()
+--   return {
+--     n = G.UIT.ROOT,
+--     config = { r = 0.1, minw = 8, minh = 6, align = "tm", padding = 0.2, colour = G.C.BLACK },
+--     nodes = {
+--       {
+--         n = G.UIT.C,
+--         config = { minw = 4, minh = 4, colour = G.C.MONEY, padding = 0.15 },
+--         nodes = {
+--           {
+--             n = G.UIT.R,
+--             config = { minw = 2, minh = 2, colour = G.C.RED, padding = 0.15 },
+--             nodes = {
+--               {
+--                 n = G.UIT.C,
+--                 config = { minw = 1, minh = 1, colour = G.C.BLUE, padding = 0.15 },
 --                 nodes = {
---                     create_text_input({
---                         colour = HEX('8c470b'),
---                         hooked_colour = darken(HEX('8c470b'), 0.3),
---                         w = 4.5,
---                         h = 1,
---                         max_length = 100,
---                         prompt_text = 'ENTER ANSWER',
---                         ref_table = MaxBoiSM,
---                         ref_value = "ENTERED_LINGO2_WORD",
---                         keyboard_offset = 1,
---                         all_caps = true
---                     })
---                 },
---             },
---             {
---                 n = G.UIT.R,
---                 config = { align = "cm" },
---                 nodes = {
---                     UIBox_button({
---                         colour = G.C.RED,
---                         button = "lingo2_check",
---                         label = { 'GUESS' },
---                         minw = 4.5,
---                         focus_args = { snap_to = true },
---                     }),
---                 },
+
+--                 }
+--               }, {
+--               n = G.UIT.C,
+--               config = { minw = 1, minh = 1, colour = G.C.BLUE, padding = 0.15 },
+--               nodes = {
+
+--               }
 --             }
---     },
+--             }
+--           }, {
+--           n = G.UIT.R,
+--           config = { minw = 2, minh = 1, colour = G.C.RED, padding = 0.15 },
+--           nodes = {
+--             {
+--               n = G.UIT.C,
+--               config = { minw = 1, minh = 1, colour = G.C.BLUE, padding = 0.15 },
+--               nodes = {
+
+--               }
+--             }, {
+--             n = G.UIT.C,
+--             config = { minw = 1, minh = 1, colour = G.C.BLUE, padding = 0.15 },
+--             nodes = {
+
+--             }
+--           }
+--           }
+--         }
+--         }
+--       }
 --     }
---     table.insert(t.nodes[1].nodes, {n=G.UIT.T, config={text = 'LINGER', scale = 1.0, colour = HEX('000000'), align = "cm"}})
---     table.insert(t.nodes[2].nodes, {n=G.UIT.O, config={object = MaxBoiSM.Bracket, w = 1, h = 1, align = "bm"}})
---     table.insert(t.nodes[3].nodes, {n=G.UIT.O, config={object = MaxBoiSM.Sun, w = 2, h = 2, align = "cm"}})
---     table.insert(t.nodes[4].nodes, {n=G.UIT.O, config={object = MaxBoiSM.Squiggly, w = 1, h = 1, align = "tm"}})
---     return t
+--   }
 -- end
+
+
+-- -- function create_lingo2_puzzle()
+
+-- -- if not MaxBoiSM.Gears then --becauuse I fucking suck rn
+-- -- MaxBoiSM.Gears = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 0, y = 0 })
+-- -- MaxBoiSM.Times = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 1, y = 0 })
+-- -- MaxBoiSM.Basket = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 2, y = 0 })
+-- -- MaxBoiSM.Waterlemon = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 3, y = 0 })
+-- -- MaxBoiSM.Nest = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 4, y = 0 })
+-- -- MaxBoiSM.Crown = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 5, y = 0 })
+-- -- MaxBoiSM.Eye = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 6, y = 0 })
+-- -- MaxBoiSM.Cube = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 7, y = 0 })
+-- -- MaxBoiSM.Pyramid = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 8, y = 0 })
+-- -- MaxBoiSM.Plump = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 9, y = 0 })
+-- -- MaxBoiSM.Press = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 10, y = 0 })
+-- -- MaxBoiSM.Flower = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 11, y = 0 })
+-- -- MaxBoiSM.Map = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 12, y = 0 })
+-- -- MaxBoiSM.Stars = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 13, y = 0 })
+-- -- MaxBoiSM.Sun = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 14, y = 0 })
+-- -- MaxBoiSM.Bracket = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 15, y = 0 })
+-- -- MaxBoiSM.Squiggly = Sprite(0, 0, 1, 1,
+-- --     G.ASSET_ATLAS['maxboism_Lingo2Glyphs'], { x = 16, y = 0 })
+-- -- end
+
+-- --     local glyph = MaxBoiSM.Stars
+-- --     local t = {n= G.UIT.C, config={align = "cm", padding = 0}, nodes={
+-- --         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
+-- --         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
+-- --         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
+-- --         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes = {}},
+-- --             {
+-- --                 n = G.UIT.R,
+-- --                 config = { align = "cm" },
+-- --                 nodes = {
+-- --                     create_text_input({
+-- --                         colour = HEX('8c470b'),
+-- --                         hooked_colour = darken(HEX('8c470b'), 0.3),
+-- --                         w = 4.5,
+-- --                         h = 1,
+-- --                         max_length = 100,
+-- --                         prompt_text = 'ENTER ANSWER',
+-- --                         ref_table = MaxBoiSM,
+-- --                         ref_value = "ENTERED_LINGO2_WORD",
+-- --                         keyboard_offset = 1,
+-- --                         all_caps = true
+-- --                     })
+-- --                 },
+-- --             },
+-- --             {
+-- --                 n = G.UIT.R,
+-- --                 config = { align = "cm" },
+-- --                 nodes = {
+-- --                     UIBox_button({
+-- --                         colour = G.C.RED,
+-- --                         button = "lingo2_check",
+-- --                         label = { 'GUESS' },
+-- --                         minw = 4.5,
+-- --                         focus_args = { snap_to = true },
+-- --                     }),
+-- --                 },
+-- --             }
+-- --     },
+-- --     }
+-- --     table.insert(t.nodes[1].nodes, {n=G.UIT.T, config={text = 'LINGER', scale = 1.0, colour = HEX('000000'), align = "cm"}})
+-- --     table.insert(t.nodes[2].nodes, {n=G.UIT.O, config={object = MaxBoiSM.Bracket, w = 1, h = 1, align = "bm"}})
+-- --     table.insert(t.nodes[3].nodes, {n=G.UIT.O, config={object = MaxBoiSM.Sun, w = 2, h = 2, align = "cm"}})
+-- --     table.insert(t.nodes[4].nodes, {n=G.UIT.O, config={object = MaxBoiSM.Squiggly, w = 1, h = 1, align = "tm"}})
+-- --     return t
+-- -- end

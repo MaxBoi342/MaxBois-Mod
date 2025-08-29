@@ -23,6 +23,7 @@ SMODS.DrawStep {
     order = 32,
     func = function(self, layer)
         if self.seal == 'maxboism_lockseal' then
+            G.shared_seals[self.seal]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
             self.children.center:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
         end
     end,
