@@ -2,7 +2,8 @@ SMODS.Joker { --The Peasant
     key = "thepeasant",
     config = {
         extra = {
-            mult = 1.1
+            mult = 1.1,
+            multiplier = 1.1
         }
     },
     -- loc_txt = {
@@ -34,7 +35,7 @@ SMODS.Joker { --The Peasant
         if context.individual and context.cardarea == G.play then
             if context.other_card:is_face() then
                 local mult_value = card.ability.extra.mult
-                card.ability.extra.mult = (card.ability.extra.mult) * 1.1
+                card.ability.extra.mult = (card.ability.extra.mult) * card.ability.extra.multiplier
                 return {
                     Xmult = mult_value
                 }
@@ -49,5 +50,36 @@ SMODS.Joker { --The Peasant
                 message = localize("maxboism_joker_thepeasant_message")
             }
         end
+    end,
+    joker_display_def = function(JokerDisplay)
+        ---@type JDJokerDefinition
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = "X" },
+                        { ref_table = "card.joker_display_values", ref_value = "xmult", retrigger_type = "exp" },
+                    },
+                    border_colour = G.C.MULT
+                }
+            },
+            calc_function = function(card)
+                local face_triggers = 0
+                local final_mult = 1
+                local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+                if text ~= 'Unknown' then
+                    for _, scoring_card in pairs(scoring_hand) do
+                        if scoring_card:is_face() then
+                            face_triggers = face_triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                        end
+                    end
+
+                    for i = 1, face_triggers do
+                        final_mult = final_mult * 1.1^i
+                    end
+                end
+                card.joker_display_values.xmult = final_mult
+            end,
+        }
     end
 }

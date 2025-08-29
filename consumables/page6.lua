@@ -133,8 +133,10 @@ SMODS.Consumable {
                             if ((stickerTable[i] == 'pinned' and joker.pinned)) then
 
                             else
+                                --TODO: PROPER CHECKS BECAUSE FUCK SMODS ON THIS ONE PARTICLAR ISSUE I LOVE IT OTHERWISE
                                 joker:add_sticker(stickerTable[i], true)
                                 return true
+
                             end
                         end
                     end

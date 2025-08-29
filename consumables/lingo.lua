@@ -136,13 +136,13 @@ function create_lingo_puzzle() -- puzzleToTable('', '', '', 'XX', 'XX', 'XX', 'A
         puzzleToTable('FACEPALM', '', 'CAP', 'PU', 'XX', 'MA', 'BASEBALL'),
         puzzleToTable('CHOKER', '@', 'YOU', 'PU', 'XX', 'WH', 'JOKER'), --todo: add more because im fucking mazy rn lmfao
         puzzleToTable('', 'RETRY', 'VINTAGE', 'XX', 'PU', 'WH', 'RETRO'),
-        puzzleToTable('VANTABLACK', 'MISTER', 'INCREDIBLE', 'PU', 'MA', 'WH', 'FANTASTIC'),
+        puzzleToTable('VANTABLACK', '', 'INCREDIBLE', 'PU', 'XX', 'WH', 'FANTASTIC'),
         puzzleToTable('', 'BLUE', 'JOKER', 'XX', 'BL', 'MA', 'BLUEPRINT'),
         puzzleToTable('SELL', '', 'CLUB SODA', 'BL', 'XX', 'PU', 'SELTZER'),
         puzzleToTable('', 'ENTRAPMENT', 'JOKER', 'XX', 'RE', 'MA', 'RAMEN'),
         puzzleToTable('DECOMPARTMENTALIZATION', '', 'AUDITORY', 'PU', 'XX', 'LI', 'HALLUCINATION'), -- to be checked by the council
         puzzleToTable('JUMBO', '', 'PHOTOCHAD', 'PU', 'XX', 'LI', 'COMBO'),
-        puzzleToTable('HOLLOW', 'HOG', '', 'BL', 'BL', 'XX', 'HOLOGRAM'),
+        puzzleToTable('HOLLOW', 'HOG', 'JOKER', 'BL', 'BL', 'MA', 'HOLOGRAM'),
         puzzleToTable('CARD', '', 'FORTUNE TELLER', 'BL', 'XX', 'MA', 'CARTOMANCER'),
         puzzleToTable('SCHISM', 'PAR', 'OUTBURST', 'BL', 'BL', 'WH', 'PAROXYSM'),
 
