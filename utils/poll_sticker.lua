@@ -1,89 +1,106 @@
--- WE GETTING INSPIRED BY POLL_EDITION WITH THIS ONE
---_key: the seed for generation (presets: black, orange, gold, vanilla)
---_mod: chance to apply the sticker
---_no_pin: boolean to ignore pinned because PINNED IS A STICKER #JUSTICEFORPINNED
---_guaranteed: boolean to guarantee a sticker actually gets applied.
---_options: a list of keys (default is SMODS.Stickers.obj_buffer (all stickers known to SMODS))
---_rates: modify the rates of the stickers for this specific poll. (default uses the self.rate for each sticker (except pinned, which gets the rate of 1)) (requires options to exist)
---_card: card (used to perform card specific compat)
--- everything is optional lol
-
-function poll_sticker(_key, _mod, _no_pin, _guaranteed, _options, _rates, _card)
-    local _modifier = 1
-    local sticker_poll = pseudorandom(pseudoseed(_key or 'sticker_generic')) -- Generate the poll value
-    local available_stickers = {}
-    local rates_flag = false
-
-    if not _options then
-        --VANILLA PRESETS--
-        if _key == "vanilla" then
-            _options = { 'eternal', 'perishable', 'rental', 'pinned' }
-        elseif _key == "black" then
-            _options = { 'eternal' }
-        elseif _key == "orange" then
-            _options = { 'eternal', 'perishable' }
-        elseif _key == "gold" then
-            _options = { 'eternal', 'perishable', 'rental' }
-        else
-            _options = SMODS.Sticker.obj_buffer
+--key: the seed for generation (presets: black, orange, gold, vanilla)
+--mod: chance to apply the sticker
+--no_pin: boolean to ignore pinned because PINNED IS A STICKER #JUSTICEFORPINNED
+--guaranteed: boolean to guarantee a sticker actually gets applied.
+--options: a list of keys (default is SMODS.Stickers.obj_buffer (all stickers known to SMODS))
+--rates: modify the rates of the stickers for this specific poll. (default uses the self.rate for each sticker (except pinned, which gets the rate of 1)) (requires options to exist)
+--card: card (used to perform card specific compat)
+function poll_sticker(args)
+    local key = args.key or 'sticker_generic'
+    local type_key = args.type_key or key.."type"..G.GAME.round_resets.ante
+    local mod = args.mod or 1
+    local no_pin = args.no_pin or false
+    local guaranteed = args.guaranteed or false
+    local options
+    local rates
+    local card = args.card or nil
+    key = key .. G.GAME.round_resets.ante
+    
+    if type(args.options) == 'string' then
+        if args.options == "vanilla" then
+            options = { 'eternal', 'perishable', 'rental', 'pinned' }
+        elseif args.options == "black" then
+            options = { 'eternal' }
+        elseif args.options == "orange" then
+            options = { 'eternal', 'perishable' }
+        elseif args.options == "gold" then
+            options = { 'eternal', 'perishable', 'rental' }
         end
-    elseif _rates then
-        assert(#_rates == #_options,
-            "poll_sticker options and rates length mismatch, every sticker needs a rate provided")
-        rates_flag = true
+    elseif type(args.options) == 'table' then
+        options = args.options
+    else
+        options = SMODS.Sticker.obj_buffer
     end
 
-    for _, v in ipairs(_options) do
+    if args.rates then
+        assert(#args.rates == options, "poll_sticker options and rates length mismatch, every sticker needs a rate provided")
+        rates = args.rates
+    end
+
+    local available_stickers = {}
+    local total_weight = 0
+    
+
+    for _, v in ipairs(options) do
         local sticker_option = {}
-        local sticker = SMODS.Stickers[v]
+        local sticker
+        if type(v) == 'string' then
+            assert(SMODS.Stickers[v], ("Could not find sticker \"%s\"."):format(v))
+            sticker = SMODS.Stickers[v]
+        elseif type(v) == 'table' then
+            assert(SMODS.Stickers[v.key], ("Could not find sticker \"%s\"."):format(v.key))
+            sticker = SMODS.Stickers[v.key]
+        end
 
-        if not (v == 'pinned' and _no_pin) then
-            if _card then
-                local center = _card.config.center
-                if (center[sticker.key .. '_compat'] or (center[sticker.key .. '_compat'] == nil and ((sticker.default_compat and not sticker.compat_exceptions[center.key]) or -- default yes with no exception
-                        (not sticker.default_compat and sticker.compat_exceptions[center.key])))) then --default no with exceptions
-                    
-                    if not _card.ability[v] then --dont apply what you already have
-                        if _card.pinned and v == 'pinned' then
 
-                        elseif not (_card.ability['perishable'] and v == 'eternal' or _card.ability['eternal'] and v == 'perishable') then --vanilla exclusivity check, idk if theres a proper way to do it
-                            if rates_flag then
-                                sticker_option = { name = v, weight = _rates[_] }
-                            else
-                                sticker_option = { name = v, weight = v ~= 'pinned' and sticker.rate * 10 or 1 }
-                            end
-                            table.insert(available_stickers, sticker_option)
-                        end
-                    end
-                end
-            else --if no card, just do generic polling
-                if rates_flag then
-                    sticker_option = { name = v, weight = _rates[_] }
+        if not (v == 'pinned' and no_pin) then
+            if not card or can_apply(sticker, card) then
+                if rates then
+                    sticker_option = { name = v, weight = rates[_] }
                 else
                     sticker_option = { name = v, weight = v ~= 'pinned' and sticker.rate * 10 or 1 }
                 end
-                table.insert(available_stickers, sticker_option)
+                if sticker_option.weight > 0 then
+                    table.insert(available_stickers, sticker_option)
+                    total_weight = total_weight + sticker_option.weight
+                end
+                
             end
         end
     end
+    total_weight = total_weight + (total_weight / 40 * 60)
 
-    local total_weight = 0 --weight calculation (thank you poll_edition for allowing me to ignore math)
-    for _, v in ipairs(available_stickers) do
-        total_weight = total_weight + (v.weight)
+    local type_weight = 0 -- if sticker ever get rate modifiers, implement it here
+    for _,v in ipairs(available_stickers) do
+        type_weight = type_weight + v.weight
     end
-
-    if not _guaranteed then
-        _modifier = _mod or 1
-        total_weight = total_weight + (total_weight / 3 * 2) -- Find total weight with base_card_rate as ~66%
-    end
-
-    local weight_i = 0 --and roll
-    for _, v in ipairs(available_stickers) do
-        weight_i = weight_i + v.weight * _modifier
-        if sticker_poll > 1 - (weight_i) / total_weight then
-            return v.name
+ 
+---@diagnostic disable-next-line: ambiguity-1
+    local sticker_poll = pseudorandom(pseudoseed(key or 'sticker_generic'..G.GAME.round_resets.ante ))
+    if sticker_poll > 1 - (type_weight*mod / total_weight) or guaranteed then
+        local sticker_type_poll = pseudorandom(pseudoseed(type_key))
+        local weight_i = 0 --and roll
+        for _, v in ipairs(available_stickers) do
+            weight_i = weight_i + v.weight
+            if sticker_type_poll > 1 - (weight_i) / type_weight then
+               return v.name
+            end
         end
     end
-
     return nil
+end
+
+function can_apply(sticker, card)
+    local center = card.config.center
+    if (center[sticker.key .. '_compat'] or (center[sticker.key .. '_compat'] == nil and ((sticker.default_compat and not sticker.compat_exceptions[center.key]) or -- default yes with no exception
+            (not sticker.default_compat and sticker.compat_exceptions[center.key])))) then                                                                          --default no with exceptions
+        if not card.ability[sticker.key] then
+            if card.pinned and sticker.key == 'pinned' then
+                --#JUSTICEFORPINNED
+            elseif not (card.ability['perishable'] and sticker.key == 'eternal' or card.ability['eternal'] and sticker.key == 'perishable') then --vanilla sticker exclusivity check, idk if theres a proper way to do it
+                return true
+            end
+        end
+    end
+    return false
 end
