@@ -33,7 +33,7 @@ function poll_sticker(args)
     end
 
     if args.rates then
-        assert(#args.rates == options, "poll_sticker options and rates length mismatch, every sticker needs a rate provided")
+        assert(#args.rates == #options, "poll_sticker options and rates length mismatch, every sticker needs a rate provided")
         rates = args.rates
     end
 
