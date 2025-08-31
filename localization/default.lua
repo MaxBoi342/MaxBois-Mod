@@ -89,9 +89,9 @@ return {
             j_maxboism_ghostbuster = {
                 name = 'Ghost Buster',
                 text = {
-                    '{X:mult,C:white}+X0.1{} per {C:spectral}Spectral{}',
-                    'card used this run',
-                    '{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive}){}'
+                    '{C:money}+#1#${} at the end of a round',
+                    'per {C:spectral}Spectral{} card used this run',
+                    '{C:inactive}(Currently {C:money}+#2#${}{C:inactive}){}'
                 }
             }
         },
