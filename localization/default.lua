@@ -86,6 +86,14 @@ return {
                     '{C:attention}Sleeves{} a random non-scoring playing card',
                 }
             },
+            j_maxboism_ghostbuster = {
+                name = 'Ghost Buster',
+                text = {
+                    '{X:mult,C:white}+X0.1{} per {C:spectral}Spectral{}',
+                    'card used this run',
+                    '{C:inactive}(Currently {X:mult,C:white}X#1#{}{C:inactive}){}'
+                }
+            }
         },
         page = {
             c_maxboism_page1 = {
