@@ -37,36 +37,42 @@ SMODS.Joker { --Homophobic Slenderman
         if not context.blueprint then
             if context.buying_card then
                 if context.card and (context.card.ability.set == 'page' or context.card.ability.set == 'page') then
-                    if not G.GAME.homophobic_inflation then
-                        G.GAME.homophobic_inflation = card.ability.extra.costIncrease
-                    else
-                        G.GAME.homophobic_inflation = G.GAME.homophobic_inflation + card.ability.extra.costIncrease
-                    end
-                    for _,v in ipairs(G.I.CARD) do
-                        if v.set_cost then v:set_cost() end
-                    end
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            if not G.GAME.homophobic_inflation then
+                                G.GAME.homophobic_inflation = card.ability.extra.costIncrease
+                            else
+                                G.GAME.homophobic_inflation = G.GAME.homophobic_inflation +
+                                card.ability.extra.costIncrease
+                            end
+                            for _, v in ipairs(G.I.CARD) do
+                                if v.set_cost then v:set_cost() end
+                            end
+                            return true
+                        end
+                    }))
                 end
             end
-        --     if context.using_consumeable then
-        --         if context.consumeable and (context.consumeable.ability.set == 'page' or context.consumeable.ability.set == 'page') then
-        --             return {
-        --                 func = function()
-        --                     card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
-        --                     return true
-        --                 end,
-        --                 message = localize("maxboism_joker_homophobicslenderman_lost")
-        --             }
-        --         end
-        --     end
-        --     if context.selling_card and (context.card.config.center.set == 'page' or context.card.config.center.set == 'page') then --modify existing sell rules
-        --         return {
-        --             func = function()
-        --                 card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
-        --                 return true
-        --             end,
-        --             message = localize("maxboism_joker_homophobicslenderman_lost")
-        --         }
-        --     end
+            --     if context.using_consumeable then
+            --         if context.consumeable and (context.consumeable.ability.set == 'page' or context.consumeable.ability.set == 'page') then
+            --             return {
+            --                 func = function()
+            --                     card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
+            --                     return true
+            --                 end,
+            --                 message = localize("maxboism_joker_homophobicslenderman_lost")
+            --             }
+            --         end
+            --     end
+            --     if context.selling_card and (context.card.config.center.set == 'page' or context.card.config.center.set == 'page') then --modify existing sell rules
+            --         return {
+            --             func = function()
+            --                 card.ability.extra.heldPages = math.max(0, (card.ability.extra.heldPages) - 1)
+            --                 return true
+            --             end,
+            --             message = localize("maxboism_joker_homophobicslenderman_lost")
+            --         }
+            --     end
             -- if context.buying_card or context.using_consumable or context.selling_card then --fix when selling it actually go down mfer
             --     local newCount = 0
             --     for _, v in ipairs(G.consumeables.cards) do
@@ -115,9 +121,9 @@ SMODS.Joker { --Homophobic Slenderman
                     }
                 else
                     return {
-                        xchips = math.max(1,card.ability.extra.heldPages),
-                        xmult = math.max(1,card.ability.extra.heldPages),
-                    }   
+                        xchips = math.max(1, card.ability.extra.heldPages),
+                        xmult = math.max(1, card.ability.extra.heldPages),
+                    }
                 end
             end
             if context.setting_blind and (card.ability.extra.heldPages or 0) >= 7 then
@@ -155,22 +161,22 @@ SMODS.Joker { --Homophobic Slenderman
             func = function()
                 G.GAME.page_rate = card.ability.extra.rate
                 local created_consumable = false
-                        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                            created_consumable = true
-                            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                            G.E_MANAGER:add_event(Event({
-                                func = function()
-                                    SMODS.add_card { set = 'page', key = nil, key_append = 'joker_forge_page' }
-                                    G.GAME.consumeable_buffer = 0
-                                    return true
-                                end
-                            }))
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    created_consumable = true
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card { set = 'page', key = nil, key_append = 'joker_forge_page' }
+                            G.GAME.consumeable_buffer = 0
+                            return true
                         end
-                        if created_consumable then
-                            card_eval_status_text(card, 'extra', nil, nil, nil,
-                                { message = localize("maxboism_joker_homophobicslenderman_freebie"), colour = G.C.PURPLE })
-                        end
-                    return true
+                    }))
+                end
+                if created_consumable then
+                    card_eval_status_text(card, 'extra', nil, nil, nil,
+                        { message = localize("maxboism_joker_homophobicslenderman_freebie"), colour = G.C.PURPLE })
+                end
+                return true
             end
         }))
     end,
@@ -193,7 +199,7 @@ SMODS.Joker { --Homophobic Slenderman
                 { text = "/7)" }
 
             },
-        text_config = { colour = G.C.GREY }
+            text_config = { colour = G.C.GREY }
         }
     end
 }

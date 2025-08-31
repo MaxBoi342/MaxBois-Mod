@@ -125,20 +125,9 @@ SMODS.Consumable {
                 trigger = 'after',
                 delay = 0.2,
                 func = function()
-                    local stickerTable = copy_table(SMODS.Sticker.obj_buffer)
-                    pseudoshuffle(stickerTable, 10219)
-
-                    for i = 1, #stickerTable do
-                        if not joker.ability[stickerTable[i]] then
-                            if ((stickerTable[i] == 'pinned' and joker.pinned)) then
-
-                            else
-                                --TODO: PROPER CHECKS BECAUSE FUCK SMODS ON THIS ONE PARTICLAR ISSUE I LOVE IT OTHERWISE
-                                joker:add_sticker(stickerTable[i], true)
-                                return true
-
-                            end
-                        end
+                    local sticker = poll_sticker('vanilla', nil, false, true, nil, nil, joker)
+                    if sticker then
+                        joker:add_sticker(sticker, true)
                     end
                     return true
                 end
