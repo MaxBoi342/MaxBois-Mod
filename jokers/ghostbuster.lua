@@ -29,7 +29,7 @@ SMODS.Joker { --No Entry
             }
         end
         if context.using_consumeable then
-            if context.consumeable.ability.set and context.consumeable.ability.set == 'Spectral' then
+            if context.consumeable.ability.set and context.consumeable.ability.set == 'Spectral' and not context.blueprint then
                 card.ability.extra.dollars = card.ability.extra.increment *
                     ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.spectral and G.GAME.consumeable_usage_total.spectral > 0 and G.GAME.consumeable_usage_total.spectral) or 0)
                 return {

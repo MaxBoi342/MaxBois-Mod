@@ -180,6 +180,25 @@ return {
                 }
             },
         },
+        rune = {
+            c_maxboism_feru = {
+                name = 'Feru',
+                text = {
+                    'This card stops all {C:money}money{} gain when held.',
+                    'After 5 rounds of holding this card, use it to double all',
+                    '{C:money}money{} earned for {C:attention}the rest of the run{}',
+                    '{C:inactive}(Currently #1#/5){}'
+                }
+            },
+            c_maxboism_algiz = {
+                name = 'Algiz',
+                text = {
+                    'This card can only be used in the shop.',
+                    'Using this card grants you the choice of 1 out of 4 {C:rare}rare{} jokers,',
+                    'with the {C:rune}Ransom{} sticker',
+                }
+            }
+        },
         Edition = {
             e_maxboism_sepia = {
                 name = 'Sepia',
@@ -204,13 +223,29 @@ return {
                     '{C:attention}Sleeved{} cards can not be {C:red}destroyed{}.',
                     '{C:red}Debuffed{} {C:attention}Sleeved{} cards are {C:red}destroyed{} immediately.'
                 }
+            },
+            maxboism_ferureward = {
+                name = 'Wealth',
+                text = {
+                    '{C:money}x2 money{}',
+                    'earned'
+                }
+            },
+            maxboism_algiztracker = {
+                name = 'Ransom',
+                text = {
+                    'x2 Blind requirement',
+                    'Debuffed until {C:attention}oneshot{}'
+                }
             }
         }
     },
     misc = {
         labels = {
             maxboism_sepia = 'Sepia',
-            maxboism_lockseal_seal = 'Sleeve'
+            maxboism_lockseal_seal = 'Sleeve',
+            maxboism_ferureward = 'Wealth',
+            maxboism_algiztracker = 'Ransom',
         },
         dictionary = {
             maxboism_joker_bluetoothgrenade_explode = 'Explosion.sfx',

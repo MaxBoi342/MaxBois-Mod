@@ -1,6 +1,12 @@
+local NFS = require("nativefs")
+
 ---
 --- Instantiate atlases that need to be used
 ---
+
+to_big = to_big or function(a) return a end
+lenient_bignum = lenient_bignum or function(a) return a end
+to_number = to_number or function(a) return a end
 
 SMODS.Atlas({
     key = "Lingo2Glyphs",
@@ -42,6 +48,14 @@ SMODS.Atlas({
     atlas_table = "ASSET_ATLAS"
 }):register()
 
+SMODS.Atlas({
+    key = "CustomStickers",
+    path = "CustomStickers.png",
+    px = 71,
+    py = 95,
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
 ---
 ---Instantiate MaxBoiSM as global variable storage and related tables
 ---
@@ -57,6 +71,55 @@ end
 if not MaxBoiSM.ENTERED_LINGO2_WORD then --lingo 2 consumable
     MaxBoiSM.ENTERED_LINGO2_WORD = ''
 end
+
+if not MaxBoiSM.DISABLE_MONEY_REPEATS then
+    MaxBoiSM.DISABLE_MONEY_REPEATS = false
+end
+
+SMODS.current_mod.calculate = function(self, context)
+    if not MaxBoiSM.DISABLE_MONEY_REPEATS then
+        if next(SMODS.find_card('c_maxboism_feru')) then return end
+        if context.money_altered and not context.from_scoring and to_big(context.amount) > to_big(0) and G.GAME.MAXBOISM_FERU_COUNT then
+            MaxBoiSM.DISABLE_MONEY_REPEATS = true
+            return {
+                dollars = to_number(context.amount) * G.GAME.MAXBOISM_FERU_COUNT,
+                func = function()
+                    MaxBoiSM.DISABLE_MONEY_REPEATS = false
+                end
+            }
+        end
+    else
+        return {
+            func = function()
+                MaxBoiSM.DISABLE_MONEY_REPEATS = false
+            end
+        }
+    end
+    if context.setting_blind and MaxBoiSM.ALGIZ_HIDE_HAND then
+        MaxBoiSM.ALGIZ_HIDE_HAND = false
+        G.hand.states.visible = true
+    end
+    if context.setting_blind then
+        for _,v in ipairs(G.jokers.cards) do
+            if v.ability['maxboism_algiztracker'] then
+                G.GAME.blind.chips = G.GAME.blind.chips * 2
+                G.GAME.blind.chip_text = G.GAME.blind.chip_text * 2
+            end
+        end
+    end
+    if context.end_of_round and SMODS.last_hand_oneshot then
+            for _,v in ipairs(G.jokers.cards) do
+                if v.ability['maxboism_algiztracker'] then
+                    SMODS.debuff_card(v, false, 'algiz')
+                    SMODS.recalc_debuff(v)
+                    SMODS.Stickers['maxboism_algiztracker']:apply(v, false)
+                    v:juice_up()
+
+                end
+            end
+        end
+end
+
 
 -- lingo 2 glyphs
 
@@ -109,7 +172,7 @@ SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
         self.config = self.config or {}
         assert(not (self.no_suit and self.any_suit),
             "Cannot have both \"no_suit\" and \"any_suit\" defined in a SMODS.Enhancement object.")
-        SMODS.Enhancement.super.register(self)     --only actual difference is the removal of a line here
+        SMODS.Enhancement.super.register(self) --only actual difference is the removal of a line here
     end,
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
         local always_show = self.config and self.config.always_show or {}
@@ -152,12 +215,6 @@ SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
         end
     end,
 }
-
-
-local NFS = require("nativefs")
-to_big = to_big or function(a) return a end
-lenient_bignum = lenient_bignum or function(a) return a end
-
 
 local function load_utils_folder()
     local mod_path = SMODS.current_mod.path
@@ -233,6 +290,18 @@ local function load_seals_folder()
     end
 end
 
+local function load_stickers_folder()
+    local mod_path = SMODS.current_mod.path
+    local stickers_path = mod_path .. "/stickers"
+    local files = NFS.getDirectoryItemsInfo(stickers_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("stickers/" .. file_name))()
+        end
+    end
+end
+
 local function load_misc_folder()
     local mod_path = SMODS.current_mod.path
     local consumables_path = mod_path .. "/misc"
@@ -257,3 +326,4 @@ load_enhancements_folder()
 load_editions_folder()
 load_seals_folder()
 load_misc_folder()
+load_stickers_folder()

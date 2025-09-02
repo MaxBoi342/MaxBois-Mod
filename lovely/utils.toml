@@ -331,3 +331,50 @@ match_indent = false
 # '''
 # overwrite = true
 # match_indent = false
+
+#patch main box out when card is flipped
+[[patches]]
+[patches.pattern]
+target = '''functions/UI_definitions.lua'''
+pattern = '''      if AUT.info then
+        for k, v in ipairs(AUT.info) do
+          info_boxes[#info_boxes+1] =
+          {n=G.UIT.R, config={align = "cm"}, nodes={
+          {n=G.UIT.R, config={align = "cm", colour = lighten(G.C.JOKER_GREY, 0.5), r = 0.1, padding = 0.05, emboss = 0.05}, nodes={
+            info_tip_from_rows(v, v.name),
+          }}
+        }}
+        end
+      end'''
+position = "after"
+payload = '''
+if card.facing == 'back' then
+    return {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
+        {n=G.UIT.C, config={align = "cm", func = 'show_center_infotip', object = Moveable(), ref_table = next(info_boxes) and info_boxes or nil}, nodes={}},
+    }}
+end
+'''
+overwrite = false
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/button_callbacks.lua'''
+pattern = '''
+if card.ability.set == 'Booster' then
+      G.CONTROLLER.locks.use = false
+      G.TAROT_INTERRUPT = nil
+    else
+'''
+position = "at"
+payload = '''
+if card.ability.set == 'Booster' or card.ability.name == 'c_maxboism_algiz' then
+      G.CONTROLLER.locks.use = false
+      G.TAROT_INTERRUPT = nil
+      G.hand.states.visible = false
+      MaxBoiSM.ALGIZ_HIDE_HAND = true
+
+    else
+'''
+overwrite = true
+match_indent = false

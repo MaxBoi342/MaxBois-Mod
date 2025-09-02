@@ -33,3 +33,59 @@ SMODS.ConsumableType {
         collection = "Game Cards",
     }
 }
+
+SMODS.ConsumableType {
+    key = 'rune',
+    primary_colour = HEX('070f2b'),
+    secondary_colour = HEX('1b1a55'),
+    collection_rows = { 5, 6 },
+    shop_rate = 0,
+    cards = {
+        
+    },
+    loc_txt = {
+        name = "Rune",
+        collection = "Rune Cards",
+    }
+}
+
+local function load_pages()
+    local consumables_path = SMODS.current_mod.path .. "/consumables"
+    local pages_path = consumables_path .. "/page"
+    local files = NFS.getDirectoryItemsInfo(pages_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("consumables/" .. "page/" .. file_name))()
+        end
+    end
+end
+
+local function load_games()
+    local consumables_path = SMODS.current_mod.path .. "/consumables"
+    local games_path = consumables_path .. "/game"
+    local files = NFS.getDirectoryItemsInfo(games_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("consumables/" .. "game/" .. file_name))()
+        end
+    end
+end
+
+local function load_runes()
+    local consumables_path = SMODS.current_mod.path .. "/consumables"
+    local runes_path = consumables_path .. "/rune"
+    local files = NFS.getDirectoryItemsInfo(runes_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("consumables/" .. "rune/" .. file_name))()
+        end
+    end
+end
+
+load_pages()
+load_games()
+load_runes()
+
