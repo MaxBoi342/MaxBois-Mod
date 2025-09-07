@@ -56,6 +56,14 @@ SMODS.Atlas({
     atlas_table = "ASSET_ATLAS"
 }):register()
 
+SMODS.Atlas({
+    key = "CustomBoosters",
+    path = "CustomBoosters.png",
+    px = 71,
+    py = 95,
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
 ---
 ---Instantiate MaxBoiSM as global variable storage and related tables
 ---
@@ -79,7 +87,7 @@ end
 SMODS.current_mod.calculate = function(self, context)
     if not MaxBoiSM.DISABLE_MONEY_REPEATS then
         if next(SMODS.find_card('c_maxboism_feru')) then return end
-        if context.money_altered and not context.from_scoring and to_big(context.amount) > to_big(0) and G.GAME.MAXBOISM_FERU_COUNT then
+        if context.money_altered and to_big(context.amount) > to_big(0) and G.GAME.MAXBOISM_FERU_COUNT then
             MaxBoiSM.DISABLE_MONEY_REPEATS = true
             return {
                 dollars = to_number(context.amount) * G.GAME.MAXBOISM_FERU_COUNT,
@@ -95,26 +103,46 @@ SMODS.current_mod.calculate = function(self, context)
             end
         }
     end
-    if context.setting_blind and MaxBoiSM.ALGIZ_HIDE_HAND then
-        MaxBoiSM.ALGIZ_HIDE_HAND = false
-        G.hand.states.visible = true
-    end
-    if context.setting_blind then
-        for _,v in ipairs(G.jokers.cards) do
-            if v.ability['maxboism_algiztracker'] then
-                G.GAME.blind.chips = G.GAME.blind.chips * 2
-                G.GAME.blind.chip_text = G.GAME.blind.chip_text * 2
-            end
+    if G.STATE == nil then --dejankify pseudo_open()
+        if G.shop then
+            G.STATE = G.STATES.SHOP
+        elseif G.blind_select then
+            G.STATE = G.STATES.BLIND_SELECT
+        elseif G.round_eval then
+            G.STATE = G.STATES.ROUND_EVAL
+        else
+            G.STATE = G.STATES.SELECTING_HAND
         end
     end
-    if context.end_of_round and SMODS.last_hand_oneshot then
-            for _,v in ipairs(G.jokers.cards) do
+        if G.GAME.RemovePseudoOpen and G.STATE == 999 then
+            G.play:remove_card(G.play.cards[1])
+            G.GAME.maxboism_pseudo_open_active = false
+        end
+    if G.STATE == G.STATES.SELECTING_HAND then --algiz sticker
+            for _, v in ipairs(G.jokers.cards) do
+                if v.ability['maxboism_algiztracker'] and not v.config.maxboism_algizblind then
+                    SMODS.debuff_card(v, true, 'algiz')
+                    G.GAME.blind.chips = G.GAME.blind.chips * 2
+                    G.GAME.blind.chip_text = tostring(G.GAME.blind.chips)
+                    SMODS.juice_up_blind()
+                    v.config.maxboism_algizblind = true
+                end
+            end
+        end
+        if context.ending_shop then
+            for _, v in ipairs(G.jokers.cards) do
+                if v.ability['maxboism_algiztracker'] then
+                    v.config.maxboism_algizblind = false
+                end
+            end
+        end
+        if context.end_of_round and SMODS.last_hand_oneshot then
+            for _, v in ipairs(G.jokers.cards) do
                 if v.ability['maxboism_algiztracker'] then
                     SMODS.debuff_card(v, false, 'algiz')
                     SMODS.recalc_debuff(v)
                     SMODS.Stickers['maxboism_algiztracker']:apply(v, false)
                     v:juice_up()
-
                 end
             end
         end
@@ -314,6 +342,18 @@ local function load_misc_folder()
     end
 end
 
+local function load_boosters_folder()
+    local mod_path = SMODS.current_mod.path
+    local boosters_path = mod_path .. "/boosters"
+    local files = NFS.getDirectoryItemsInfo(boosters_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("boosters/" .. file_name))()
+        end
+    end
+end
+
 local function load_rarities_file()
     local mod_path = SMODS.current_mod.path
     assert(SMODS.load_file("rarities.lua"))()
@@ -327,3 +367,4 @@ load_editions_folder()
 load_seals_folder()
 load_misc_folder()
 load_stickers_folder()
+load_boosters_folder()

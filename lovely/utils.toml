@@ -368,13 +368,26 @@ if card.ability.set == 'Booster' then
 '''
 position = "at"
 payload = '''
-if card.ability.set == 'Booster' or card.ability.name == 'c_maxboism_algiz' then
+if card.ability.set == 'Booster' or card.config.pseudo_open then
       G.CONTROLLER.locks.use = false
       G.TAROT_INTERRUPT = nil
-      G.hand.states.visible = false
-      MaxBoiSM.ALGIZ_HIDE_HAND = true
-
     else
+'''
+overwrite = true
+match_indent = false
+
+#general pseudo_open function??
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+function Card:open()
+    if self.ability.set == "Booster" then
+'''
+position = "at"
+payload = '''
+function Card:open()
+    if self.ability.set == "Booster" or self.config.pseudo_open then  
 '''
 overwrite = true
 match_indent = false

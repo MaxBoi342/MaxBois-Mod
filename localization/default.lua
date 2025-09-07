@@ -193,11 +193,18 @@ return {
             c_maxboism_algiz = {
                 name = 'Algiz',
                 text = {
-                    'This card can only be used in the shop.',
-                    'Using this card grants you the choice of 1 out of 4 {C:rare}rare{} jokers,',
+                    'Using this card grants you',
+                    'the choice of 1 out of 4 {C:rare}rare{} jokers',
                     'with the {C:rune}Ransom{} sticker',
                 }
-            }
+            },
+            c_maxboism_loop = {
+                name = 'Incremental ???',
+                text = {
+                    '{C:maxboism_friendendary,E:1}#1#{}',
+                    '+#2#',
+                }
+            },
         },
         Edition = {
             e_maxboism_sepia = {
@@ -257,7 +264,8 @@ return {
             maxboism_joker_infiniteparking_parked = 'Parked!',
             maxboism_joker_pickledmask_message = 'Colorful!',
             maxboism_joker_thepeasant_message = 'Reset!',
-            maxboism_joker_sleevedjoker_message = 'Sleeved!'
-        },
+            maxboism_joker_sleevedjoker_message = 'Sleeved!',
+            k_maxboism_what = "???",
+        }
     }
 }

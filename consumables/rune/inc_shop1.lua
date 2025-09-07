@@ -1,0 +1,55 @@
+-- SMODS.Consumable {
+--     key = 'inc_shop1-1',
+--     set = 'rune',
+--     pos = { x = 0, y = 1 },
+--     config = { extra = {
+--     } },
+--     cost = 10,
+--     unlocked = true,
+--     discovered = true,
+--     hidden = false,
+--     can_repeat_soul = false,
+--     atlas = 'CustomConsumables',
+--     can_use = function(self, card)
+--         if G.GAME.maxboism_incremental_points >= G.GAME.maxboism_incremental_upgrade1_price then
+--             return true
+--         end
+--     end,
+--     loc_vars = function(self, info_queue, card)
+--         return { vars = { G.GAME.maxboism_incremental_points or 0, G.GAME.maxboism_incremental_click or 1 } }
+--     end,
+--     calculate = function(self, card, context)
+
+--     end,
+--     use = function(self, card, area, copier)
+--         local used_card = card or copier
+
+--         G.GAME.maxboism_incremental_points = G.GAME.maxboism_incremental_points - 5
+
+--         if not G.GAME.maxboism_incremental_shop1_bought then
+--             G.GAME.maxboism_incremental_click = G.GAME.maxboism_incremental_click + 1
+--             G.GAME.maxboism_incremental_upgrade1_price = 10
+--             G.GAME.maxboism_incremental_shop1_bought = 1
+--         else
+--             G.GAME.maxboism_incremental_click = G.GAME.maxboism_incremental_click + 1
+--             G.GAME.maxboism_incremental_upgrade1_price = G.GAME.maxboism_incremental_upgrade1_price * 1.5
+--         end
+
+--         used_card:pseudo_open({
+--                 draw_hand = false,
+--                 choose = 1,
+--                 extra = G.GAME.maxboism_incremental_extra,
+--                 background_color = { HEX('b22e2e'), HEX('6b2009') },
+--                 create_card = function(
+--                     self, card, i)
+--                     local _card = nil
+--                     if i == 1 then
+--                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_loop", skip_materialize = true })
+--                     elseif i == 2 then
+--                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_inc_shop1-1", skip_materialize = true })
+--                     end
+--                     return _card
+--                 end,
+--             })
+--     end,
+-- }
