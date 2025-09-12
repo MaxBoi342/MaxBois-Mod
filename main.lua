@@ -90,7 +90,7 @@ end
 SMODS.current_mod.calculate = function(self, context)
     if not MaxBoiSM.DISABLE_MONEY_REPEATS then
         if next(SMODS.find_card('c_maxboism_feru')) then return end
-        if context.money_altered and to_big(context.amount) > to_big(0) and G.GAME.backsticker['maxboism_ferureward'] then
+        if context.money_altered and to_big(context.amount) > to_big(0) and G.GAME.backsticker and G.GAME.backsticker['maxboism_ferureward'] then
             MaxBoiSM.DISABLE_MONEY_REPEATS = true
             return {
                 dollars = to_number(context.amount),
