@@ -66,22 +66,7 @@ SMODS.Consumable {
         
     end,
     use = function(self, card, area, copier)
-        if not G.GAME.MAXBOISM_FERU_COUNT then
-            if G.deck.cards[1] then
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.15,
-                    func = function()
-                        play_sound('gold_seal', 1.2, 0.4)
-                        G.deck.cards[1]:juice_up(0.3, 0.3)
-                        G.GAME.MAXBOISM_FERU_COUNT = 1
-                        return true
-                    end
-                }))
-            end
-        else
-            G.GAME.MAXBOISM_FERU_COUNT = G.GAME.MAXBOISM_FERU_COUNT + 1
-        end
+        MaxBoiSM.BackStickers['maxboism_ferureward']:apply(true)
     end,
     
 

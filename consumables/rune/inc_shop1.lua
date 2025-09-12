@@ -1,10 +1,10 @@
 -- SMODS.Consumable {
---     key = 'inc_shop1-1',
+--     key = 'inc_shop1',
 --     set = 'rune',
 --     pos = { x = 0, y = 1 },
 --     config = { extra = {
 --     } },
---     cost = 10,
+--     cost = 0,
 --     unlocked = true,
 --     discovered = true,
 --     hidden = false,
@@ -16,7 +16,7 @@
 --         end
 --     end,
 --     loc_vars = function(self, info_queue, card)
---         return { vars = { G.GAME.maxboism_incremental_points or 0, G.GAME.maxboism_incremental_click or 1 } }
+--         return { vars = { G.GAME.maxboism_incremental_upgrade1_price or 0, G.GAME.maxboism_incremental_click or 1, G.GAME.maxboism_incremental_shop1_bought or 0 } }
 --     end,
 --     calculate = function(self, card, context)
 
@@ -24,7 +24,7 @@
 --     use = function(self, card, area, copier)
 --         local used_card = card or copier
 
---         G.GAME.maxboism_incremental_points = G.GAME.maxboism_incremental_points - 5
+--         G.GAME.maxboism_incremental_points = G.GAME.maxboism_incremental_points - G.GAME.maxboism_incremental_upgrade1_price
 
 --         if not G.GAME.maxboism_incremental_shop1_bought then
 --             G.GAME.maxboism_incremental_click = G.GAME.maxboism_incremental_click + 1
@@ -33,6 +33,7 @@
 --         else
 --             G.GAME.maxboism_incremental_click = G.GAME.maxboism_incremental_click + 1
 --             G.GAME.maxboism_incremental_upgrade1_price = G.GAME.maxboism_incremental_upgrade1_price * 1.5
+--             G.GAME.maxboism_incremental_shop1_bought = G.GAME.maxboism_incremental_shop1_bought + 1
 --         end
 
 --         used_card:pseudo_open({
@@ -46,7 +47,7 @@
 --                     if i == 1 then
 --                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_loop", skip_materialize = true })
 --                     elseif i == 2 then
---                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_inc_shop1-1", skip_materialize = true })
+--                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_inc_shop1", skip_materialize = true })
 --                     end
 --                     return _card
 --                 end,

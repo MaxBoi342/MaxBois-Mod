@@ -24,16 +24,15 @@
 
 --         if not G.GAME.maxboism_pseudo_open_active then
 --             if G.GAME.maxboism_incremental_points then
---                 G.GAME.maxboism_incremental_points = G.GAME.maxboism_incremental_points + 
---                 G.GAME.maxboism_incremental_click
+--                 G.GAME.maxboism_incremental_points = G.GAME.maxboism_incremental_points + (G.GAME.maxboism_incremental_click or 1)
 --             else
 --                 G.GAME.maxboism_incremental_points = 1
 --                 G.GAME.maxboism_incremental_click = 1
 --                 G.GAME.maxboism_incremental_extra = 1
 --             end
 
---             if G.GAME.maxboism_incremental_points >= 5 and not G.GAME.maxboism_incremental_first_shop then
---                 G.GAME.maxboism_incremental_first_shop = true
+--             if G.GAME.maxboism_incremental_points >= 5 and not G.GAME.maxboism_incremental_slot1 then
+--                 G.GAME.maxboism_incremental_slot1 = true
 --                 G.GAME.maxboism_incremental_extra = 2
 --                 G.GAME.maxboism_incremental_upgrade1_price = 5
 --             end
@@ -50,7 +49,7 @@
 --                     if i == 1 then
 --                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_loop", skip_materialize = true })
 --                     elseif i == 2 then
---                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_inc_shop1-1", skip_materialize = true })
+--                         _card = SMODS.create_card({ area = G.pack_cards, key = "c_maxboism_inc_shop1", skip_materialize = true })
 --                     end
 --                     return _card
 --                 end,

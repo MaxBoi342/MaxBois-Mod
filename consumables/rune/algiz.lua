@@ -1,7 +1,7 @@
 SMODS.Consumable {
     key = 'algiz',
     set = 'rune',
-    pos = { x = 0, y = 1 },
+    pos = { x = 1, y = 1 },
     config = { extra = {
 
     } },

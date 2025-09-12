@@ -205,6 +205,14 @@ return {
                     '+#2#',
                 }
             },
+            c_maxboism_inc_shop1 = {
+                name = 'Upgrade 1',
+                text = {
+                    'Cost: #1#',
+                    '{C:maxboism_friendendary,E:1}+#2# points per incremental usage',
+                    '{C:inactive}(Owned: #3#){}'
+                }
+            },
         },
         Edition = {
             e_maxboism_sepia = {
@@ -241,8 +249,10 @@ return {
             maxboism_algiztracker = {
                 name = 'Ransom',
                 text = {
-                    'x2 Blind requirement',
-                    'Debuffed until {C:attention}oneshot{}'
+                    'This card is {C:attention}debuffed{}.',
+                    '{X:chips,C:white}X2{} Blind size',
+                    'This sticker is removed',
+                    'when a blind is {C:attention}oneshot{}.'
                 }
             }
         }

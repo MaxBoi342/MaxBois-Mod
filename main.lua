@@ -83,14 +83,17 @@ end
 if not MaxBoiSM.DISABLE_MONEY_REPEATS then
     MaxBoiSM.DISABLE_MONEY_REPEATS = false
 end
+if not MaxBoiSM.shared_backstickers then
+    MaxBoiSM.shared_backstickers = {}
+end
 
 SMODS.current_mod.calculate = function(self, context)
     if not MaxBoiSM.DISABLE_MONEY_REPEATS then
         if next(SMODS.find_card('c_maxboism_feru')) then return end
-        if context.money_altered and to_big(context.amount) > to_big(0) and G.GAME.MAXBOISM_FERU_COUNT then
+        if context.money_altered and to_big(context.amount) > to_big(0) and G.GAME.backsticker['maxboism_ferureward'] then
             MaxBoiSM.DISABLE_MONEY_REPEATS = true
             return {
-                dollars = to_number(context.amount) * G.GAME.MAXBOISM_FERU_COUNT,
+                dollars = to_number(context.amount),
                 func = function()
                     MaxBoiSM.DISABLE_MONEY_REPEATS = false
                 end
@@ -354,6 +357,18 @@ local function load_boosters_folder()
     end
 end
 
+local function load_backstickers_folder()
+    local mod_path = SMODS.current_mod.path
+    local backstickers_path = mod_path .. "/backstickers"
+    local files = NFS.getDirectoryItemsInfo(backstickers_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("backstickers/" .. file_name))()
+        end
+    end
+end
+
 local function load_rarities_file()
     local mod_path = SMODS.current_mod.path
     assert(SMODS.load_file("rarities.lua"))()
@@ -368,3 +383,4 @@ load_seals_folder()
 load_misc_folder()
 load_stickers_folder()
 load_boosters_folder()
+load_backstickers_folder()

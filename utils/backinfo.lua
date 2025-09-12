@@ -3,9 +3,13 @@ function Card:hover()
     card_hover_ref(self)
     if self.facing == 'back' and (not self.states.drag.is or G.CONTROLLER.HID.touch) and not self.no_ui then
         self.ability_UIBox_table = self:generate_UIBox_ability_table()
+        for i,v in ipairs(MaxBoiSM.BackSticker.obj_buffer) do
+          if G.GAME.backsticker and G.GAME.backsticker[v] and self.ability_UIBox_table then
+            self.ability_UIBox_table = generate_card_ui({key = v, set = 'Other'}, self.ability_UIBox_table)
+          end
+        end
         self.config.h_popup = G.UIDEF.card_h_popup(self)
         self.config.h_popup_config = self:align_h_popup()
-
         Node.hover(self)
     end
 end

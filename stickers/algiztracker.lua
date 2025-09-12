@@ -7,7 +7,7 @@ SMODS.Sticker {
         Joker = true
     },
     atlas = 'CustomStickers',
-    pos = { x = 0, y = 0 },
+    pos = { x = 1, y = 0 },
     set_sticker = function(self, card, val)
         card.ability[self.key] = val
         for _, v in ipairs(G.jokers.cards) do
