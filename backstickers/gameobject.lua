@@ -1,6 +1,6 @@
-MaxBoiSM.BackStickers = {}
-MaxBoiSM.BackSticker = SMODS.GameObject:extend {
-    obj_table = MaxBoiSM.BackStickers,
+MaxBoiSM.Backstickers = {}
+MaxBoiSM.Backsticker = SMODS.GameObject:extend {
+    obj_table = MaxBoiSM.Backstickers,
     obj_buffer = {},
     set = 'BackSticker',
     required_params = {
@@ -23,7 +23,7 @@ MaxBoiSM.BackSticker = SMODS.GameObject:extend {
             sendWarnMessage(('Detected duplicate register call on object %s'):format(self.key), self.set)
             return
         end
-        MaxBoiSM.BackSticker.super.register(self)
+        MaxBoiSM.Backsticker.super.register(self)
         self.order = #self.obj_buffer
     end,
     inject = function(self)
@@ -32,8 +32,8 @@ MaxBoiSM.BackSticker = SMODS.GameObject:extend {
     end,
     apply = function(self, val)
         if not G.GAME.backsticker then
-                G.GAME.backsticker = {}
-            end
+            G.GAME.backsticker = {}
+        end
         G.GAME.backsticker[self.key] = val
         if val and self.config and next(self.config) then
             G.GAME.backsticker[self.key] = {}
@@ -48,7 +48,7 @@ MaxBoiSM.BackSticker = SMODS.GameObject:extend {
     end
 }
 
-MaxBoiSM.BackSticker {
+MaxBoiSM.Backsticker {
     key = 'ferureward',
     rate = 0,
     badge_colour = HEX('1b1a55'),
@@ -61,48 +61,58 @@ MaxBoiSM.BackSticker {
     set_sticker = function(self, card, val)
         card.ability[self.key] = val
     end,
-    calculate = function(self, card, context)
-        if context.money_altered and to_big(context.amount) > to_big(0)then
-            MaxBoiSM.DISABLE_MONEY_REPEATS = true
-            return {
-                dollars = to_number(context.amount),
-                func = function()
-                    MaxBoiSM.DISABLE_MONEY_REPEATS = false
-                end
-            }
-        end
-        if context.individual and context.cardarea == G.play then
-            return {
-                mult = 4
-            }
+    calculate = function(self, context)
+        if not MaxBoiSM.DISABLE_MONEY_REPEATS then
+            if context.money_altered and to_big(context.amount) > to_big(0) then
+                MaxBoiSM.DISABLE_MONEY_REPEATS = true
+                return {
+                    dollars = to_number(context.amount),
+                    func = function()
+                        MaxBoiSM.DISABLE_MONEY_REPEATS = false
+                    end
+                }
+            end
         end
     end
 }
 
-function Card:calculate_backsticker(context, key)
-    local backsticker = MaxBoiSM.BackStickers[key]
-    if self.ability[key] and type(backsticker.calculate) == 'function' then
-        local o = backsticker:calculate(self, context)
-        if o then
-            if not o.card then o.card = self end
-            return o
-        end
-    end
-end
+-- MaxBoiSM.Backsticker {
+--     key = 'teststicker',
+--     rate = 0,
+--     badge_colour = HEX('1b1a55'),
+--     default_compat = false,
+--     sets = {
+--         Default = true
+--     },
+--     atlas = 'CustomStickers',
+--     pos = { x = 0, y = 0 },
+--     set_sticker = function(self, card, val)
+--         card.ability[self.key] = val
+--     end,
+--     calculate = function(self, context)
+--             if context.end_of_round and not context.repetition and not context.individual then
+--                 return {
+--                     dollars = 10
+--                 }
+--             end
+--     end
+-- }
 
 SMODS.DrawStep {
     key = 'back_sticker',
     order = 10,
     func = function(self)
         if G.deck and self == G.deck.cards[1] then
-            for _,v in ipairs(MaxBoiSM.BackSticker.obj_buffer) do
-                local backsticker = MaxBoiSM.BackStickers[v]
+            for _, v in ipairs(MaxBoiSM.Backsticker.obj_buffer) do
+                local backsticker = MaxBoiSM.Backstickers[v]
                 if G.GAME.backsticker and G.GAME.backsticker[backsticker.key] then
-                MaxBoiSM.shared_backstickers[backsticker.key].role.draw_major = self
+                    MaxBoiSM.shared_backstickers[backsticker.key].role.draw_major = self
                     local sticker_offset = self.sticker_offset or {}
-                MaxBoiSM.shared_backstickers['maxboism_ferureward']:draw_shader('dissolve', nil, nil, true, self.children.center, nil,
-                    self.sticker_rotation, sticker_offset.x, sticker_offset.y)
-                MaxBoiSM.shared_backstickers['maxboism_ferureward']:draw_shader('voucher', nil, self.ARGS.send_to_shader,
+                    MaxBoiSM.shared_backstickers[backsticker.key]:draw_shader('dissolve', nil, nil, true,
+                        self.children.center, nil,
+                        self.sticker_rotation, sticker_offset.x, sticker_offset.y)
+                    MaxBoiSM.shared_backstickers[backsticker.key]:draw_shader('voucher', nil,
+                    self.ARGS.send_to_shader,
                         true, self.children.center, nil, self.sticker_rotation, sticker_offset.x, sticker_offset.y)
                 end
             end

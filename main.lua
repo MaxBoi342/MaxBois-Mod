@@ -87,25 +87,19 @@ if not MaxBoiSM.shared_backstickers then
     MaxBoiSM.shared_backstickers = {}
 end
 
-SMODS.current_mod.calculate = function(self, context)
-    if not MaxBoiSM.DISABLE_MONEY_REPEATS then
-        if next(SMODS.find_card('c_maxboism_feru')) then return end
-        if context.money_altered and to_big(context.amount) > to_big(0) and G.GAME.backsticker and G.GAME.backsticker['maxboism_ferureward'] then
-            MaxBoiSM.DISABLE_MONEY_REPEATS = true
-            return {
-                dollars = to_number(context.amount),
-                func = function()
-                    MaxBoiSM.DISABLE_MONEY_REPEATS = false
-                end
-            }
-        end
-    else
-        return {
-            func = function()
-                MaxBoiSM.DISABLE_MONEY_REPEATS = false
+function MaxBoiSM.get_active_backstickers()
+    local ret = {}
+    if G.GAME.backsticker then
+        for _, v in ipairs(MaxBoiSM.Backsticker.obj_buffer) do
+            if G.GAME.backsticker[v] then
+                table.insert(ret, v)
             end
-        }
+        end
     end
+    return ret
+end
+
+SMODS.current_mod.calculate = function(self, context)
     if G.STATE == nil then --dejankify pseudo_open()
         if G.shop then
             G.STATE = G.STATES.SHOP
@@ -117,38 +111,38 @@ SMODS.current_mod.calculate = function(self, context)
             G.STATE = G.STATES.SELECTING_HAND
         end
     end
-        if G.GAME.RemovePseudoOpen and G.STATE == 999 then
-            G.play:remove_card(G.play.cards[1])
-            G.GAME.maxboism_pseudo_open_active = false
-        end
+    if G.GAME.RemovePseudoOpen and G.STATE == 999 then
+        G.play:remove_card(G.play.cards[1])
+        G.GAME.maxboism_pseudo_open_active = false
+    end
     if G.STATE == G.STATES.SELECTING_HAND then --algiz sticker
-            for _, v in ipairs(G.jokers.cards) do
-                if v.ability['maxboism_algiztracker'] and not v.config.maxboism_algizblind then
-                    SMODS.debuff_card(v, true, 'algiz')
-                    G.GAME.blind.chips = G.GAME.blind.chips * 2
-                    G.GAME.blind.chip_text = tostring(G.GAME.blind.chips)
-                    SMODS.juice_up_blind()
-                    v.config.maxboism_algizblind = true
-                end
+        for _, v in ipairs(G.jokers.cards) do
+            if v.ability['maxboism_algiztracker'] and not v.config.maxboism_algizblind then
+                SMODS.debuff_card(v, true, 'algiz')
+                G.GAME.blind.chips = G.GAME.blind.chips * 2
+                G.GAME.blind.chip_text = tostring(G.GAME.blind.chips)
+                SMODS.juice_up_blind()
+                v.config.maxboism_algizblind = true
             end
         end
-        if context.ending_shop then
-            for _, v in ipairs(G.jokers.cards) do
-                if v.ability['maxboism_algiztracker'] then
-                    v.config.maxboism_algizblind = false
-                end
+    end
+    if context.ending_shop then
+        for _, v in ipairs(G.jokers.cards) do
+            if v.ability['maxboism_algiztracker'] then
+                v.config.maxboism_algizblind = false
             end
         end
-        if context.end_of_round and SMODS.last_hand_oneshot then
-            for _, v in ipairs(G.jokers.cards) do
-                if v.ability['maxboism_algiztracker'] then
-                    SMODS.debuff_card(v, false, 'algiz')
-                    SMODS.recalc_debuff(v)
-                    SMODS.Stickers['maxboism_algiztracker']:apply(v, false)
-                    v:juice_up()
-                end
+    end
+    if context.end_of_round and SMODS.last_hand_oneshot then
+        for _, v in ipairs(G.jokers.cards) do
+            if v.ability['maxboism_algiztracker'] then
+                SMODS.debuff_card(v, false, 'algiz')
+                SMODS.recalc_debuff(v)
+                SMODS.Stickers['maxboism_algiztracker']:apply(v, false)
+                v:juice_up()
             end
         end
+    end
 end
 
 

@@ -66,7 +66,7 @@ SMODS.Consumable {
         
     end,
     use = function(self, card, area, copier)
-        MaxBoiSM.BackStickers['maxboism_ferureward']:apply(true)
+        MaxBoiSM.Backstickers['maxboism_ferureward']:apply(true)
     end,
     
 

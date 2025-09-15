@@ -1,8 +1,8 @@
---key: the seed for generation (presets: black, orange, gold, vanilla)
+--key: the seed for generation
 --mod: chance to apply the sticker
 --no_pin: boolean to ignore pinned because PINNED IS A STICKER #JUSTICEFORPINNED
 --guaranteed: boolean to guarantee a sticker actually gets applied.
---options: a list of keys (default is SMODS.Stickers.obj_buffer (all stickers known to SMODS))
+--options: a list of keys (default is SMODS.Stickers.obj_buffer (all stickers known to SMODS)) or a string indicating a preset
 --rates: modify the rates of the stickers for this specific poll. (default uses the self.rate for each sticker (except pinned, which gets the rate of 1)) (requires options to exist)
 --card: card (used to perform card specific compat)
 function poll_sticker(args)

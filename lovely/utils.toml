@@ -391,3 +391,19 @@ function Card:open()
 '''
 overwrite = true
 match_indent = false
+
+#implementation of backstickers
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/utils.lua"]'''
+pattern = '''
+-- TARGET: add your own individual scoring targets
+'''
+position = "before"
+payload = '''
+    for _, key in ipairs(MaxBoiSM.get_active_backstickers()) do
+        t[#t + 1] = { object = MaxBoiSM.Backstickers[key], scored_card = G.deck.cards[1] or G.deck }
+    end
+'''
+overwrite = false
+match_indent = false

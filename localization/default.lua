@@ -246,6 +246,13 @@ return {
                     'earned'
                 }
             },
+            maxboism_teststicker = {
+                name = 'Bonus',
+                text = {
+                    '{C:money}+10 dollars{}',
+                    'at end of round'
+                }
+            },
             maxboism_algiztracker = {
                 name = 'Ransom',
                 text = {
@@ -263,6 +270,7 @@ return {
             maxboism_lockseal_seal = 'Sleeve',
             maxboism_ferureward = 'Wealth',
             maxboism_algiztracker = 'Ransom',
+            maxboism_teststicker = 'Bonus',
         },
         dictionary = {
             maxboism_joker_bluetoothgrenade_explode = 'Explosion.sfx',
