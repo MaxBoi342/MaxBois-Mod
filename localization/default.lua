@@ -93,6 +93,12 @@ return {
                     'per {C:spectral}Spectral{} card used this run',
                     '{C:inactive}(Currently {C:money}+#2#${}{C:inactive}){}'
                 }
+            },
+            j_maxboism_merged = {
+                name = 'Merged',
+                text = {
+                    {'1'}, {'2'}
+                }
             }
         },
         page = {
@@ -283,6 +289,7 @@ return {
             maxboism_joker_pickledmask_message = 'Colorful!',
             maxboism_joker_thepeasant_message = 'Reset!',
             maxboism_joker_sleevedjoker_message = 'Sleeved!',
+            maxboism_joker_merged_rarity = 'Merge',
             k_maxboism_what = "???",
         }
     }

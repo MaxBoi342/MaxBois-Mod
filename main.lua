@@ -87,6 +87,12 @@ if not MaxBoiSM.shared_backstickers then
     MaxBoiSM.shared_backstickers = {}
 end
 
+SMODS.current_mod.reset_game_globals = function(run_start)
+  if (run_start) then
+    G.GAME.backsticker = {}
+  end
+end
+
 function MaxBoiSM.get_active_backstickers()
     local ret = {}
     if G.GAME.backsticker then
@@ -99,6 +105,20 @@ function MaxBoiSM.get_active_backstickers()
     return ret
 end
 
+function MaxBoiSM.recursiveMerge(boxes)
+    local returnTable = {}
+    for i,v in ipairs(boxes) do
+        if G.maxboism_merged_area.cards[v].ability and G.maxboism_merged_area.cards[v].ability.extra and type(G.maxboism_merged_area.cards[v].ability.extra) == 'table' and G.maxboism_merged_area.cards[v].ability.extra.maxboism_multi_boxes then
+            local moreBoxes = MaxBoiSM.recursiveMerge(G.maxboism_merged_area.cards[v].ability.extra.maxboism_multi_boxes)
+            for ii,vv in ipairs(moreBoxes) do
+                table.insert(returnTable, vv)
+            end
+        else
+            table.insert(returnTable, v)
+        end
+    end
+    return returnTable
+end
 SMODS.current_mod.calculate = function(self, context)
     if G.STATE == nil then --dejankify pseudo_open()
         if G.shop then
@@ -240,6 +260,23 @@ SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
         end
     end,
 }
+
+local game_start_run_ref = Game.start_run
+function Game:start_run(args)
+    self.maxboism_merged_area = CardArea(
+        0,
+        0,
+        self.CARD_W * 1.9,
+        self.CARD_H * 0.95,
+        {
+            card_limit = 2,
+            type = 'extra_deck',
+            highlight_limit = 1,
+        }
+    )
+    self.maxboism_merged_area.states.visible = false
+    game_start_run_ref(self, args)
+end
 
 local function load_utils_folder()
     local mod_path = SMODS.current_mod.path

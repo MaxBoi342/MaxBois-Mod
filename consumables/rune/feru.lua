@@ -26,6 +26,7 @@ SMODS.Consumable {
                         dollars = -to_number(context.amount),
                         message = 'Blocked!',
                         colour = G.C.RED,
+                        remove_default_message = true
                     }
             end
         end
