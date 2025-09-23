@@ -119,6 +119,35 @@ function MaxBoiSM.recursiveMerge(boxes)
     end
     return returnTable
 end
+
+function MaxBoiSM.merge(joker1, joker2)
+    G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            func = function()
+                local joker1_copy = copy_card(joker1)
+                local joker2_copy = copy_card(joker2)
+                G.maxboism_merged_area:emplace(joker1_copy)
+                G.maxboism_merged_area:emplace(joker2_copy)
+
+                local copied_joker = SMODS.create_card({ set = 'Joker', key = 'j_maxboism_merged', no_edition = true })
+
+                for i, v in ipairs(G.maxboism_merged_area.cards) do
+                    if v == joker1_copy or v == joker2_copy then
+                        table.insert(copied_joker.ability.extra.maxboism_multi_boxes, 1, i)
+                    end
+                end
+
+                joker1:start_dissolve(nil, _first_dissolve)
+                joker2:start_dissolve(nil, _first_dissolve)
+
+                copied_joker:start_materialize()
+                copied_joker:add_to_deck()
+                G.jokers:emplace(copied_joker)
+                _first_dissolve = true
+                return true
+            end
+        }))
+end
 SMODS.current_mod.calculate = function(self, context)
     if G.STATE == nil then --dejankify pseudo_open()
         if G.shop then
@@ -400,6 +429,18 @@ local function load_backstickers_folder()
     end
 end
 
+local function load_decks_folder()
+    local mod_path = SMODS.current_mod.path
+    local decks_path = mod_path .. "/decks"
+    local files = NFS.getDirectoryItemsInfo(decks_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("decks/" .. file_name))()
+        end
+    end
+end
+
 local function load_rarities_file()
     local mod_path = SMODS.current_mod.path
     assert(SMODS.load_file("rarities.lua"))()
@@ -415,3 +456,4 @@ load_misc_folder()
 load_stickers_folder()
 load_boosters_folder()
 load_backstickers_folder()
+load_decks_folder()

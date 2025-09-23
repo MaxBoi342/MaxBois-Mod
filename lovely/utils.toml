@@ -348,7 +348,7 @@ pattern = '''      if AUT.info then
       end'''
 position = "after"
 payload = '''
-if card.facing == 'back' then
+if card.facing == 'back' and card.area == G.deck then
     return {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
         {n=G.UIT.C, config={align = "cm", func = 'show_center_infotip', object = Moveable(), ref_table = next(info_boxes) and info_boxes or nil}, nodes={}},
     }}

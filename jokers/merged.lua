@@ -7,8 +7,8 @@ SMODS.Joker {
         }
     },
     pos = {
-        x = 9,
-        y = 0
+        x = -1,
+        y = -1
     },
     no_collection = true,
     cost = 0,
@@ -27,9 +27,15 @@ SMODS.Joker {
         local all_boxes = MaxBoiSM.recursiveMerge(card.ability.extra.maxboism_multi_boxes)
         for i, v in ipairs(all_boxes) do
             local partreturn = SMODS.blueprint_effect(card, G.maxboism_merged_area.cards[v], context)
-            totalreturn = SMODS.merge_effects({ totalreturn, partreturn })
+            if type(partreturn) == "table" then
+                totalreturn = SMODS.merge_effects({ totalreturn, partreturn })
+            end
         end
-        return totalreturn
+        if next(totalreturn)  ~= nil then
+            return totalreturn
+        else
+            return false
+        end
     end,
     remove_from_deck = function(self, card, from_debuff)
         if next(SMODS.find_card('j_maxboism_merged')) then return end
@@ -57,7 +63,8 @@ SMODS.DrawStep {
 
                 local key = G.maxboism_merged_area.cards[v].config.center.key
                 if G.P_CENTERS[key].pos and not G.shared_fractioned_cards[fractions][fraction][key] then
-                    G.shared_fractioned_cards[fractions][fraction][key] = G.shared_fractioned_cards[fractions][fraction][key] or {}
+                    G.shared_fractioned_cards[fractions][fraction][key] = G.shared_fractioned_cards[fractions][fraction]
+                        [key] or {}
                     G.shared_fractioned_cards[fractions][fraction][key].center = Sprite(0, 0, 71, 95,
                         G.ASSET_ATLAS[G.P_CENTERS[key].atlas or G.P_CENTERS[key].set or 'Joker'], G.P_CENTERS[key].pos)
                     local x, y, w, h = G.shared_fractioned_cards[fractions][fraction][key].center.sprite:getViewport()
@@ -65,11 +72,23 @@ SMODS.DrawStep {
                     G.shared_fractioned_cards[fractions][fraction][key].center.sprite = love.graphics.newQuad(
                         x + (fractionedw * (fraction - 1)), y, fractionedw, h,
                         unpack(G.shared_fractioned_cards[fractions][fraction][key].center.image_dims))
-                        G.shared_fractioned_cards[fractions][fraction][key].center:set_role({major = self, role_type = 'Glued', draw_major = self})
-                        G.shared_fractioned_cards[fractions][fraction][key].center:draw_shader('dissolve', nil, nil, nil, self.children.center, nil, nil, ((G.CARD_W/fractions)*(fraction-1)))
+                    G.shared_fractioned_cards[fractions][fraction][key].center:set_role({
+                        major = self,
+                        role_type =
+                        'Glued',
+                        draw_major = self
+                    })
+                    G.shared_fractioned_cards[fractions][fraction][key].center:draw_shader('dissolve', nil, nil, nil,
+                        self.children.center, nil, nil, ((G.CARD_W / fractions) * (fraction - 1)))
                 elseif G.shared_fractioned_cards[fractions][fraction][key] then
-                    G.shared_fractioned_cards[fractions][fraction][key].center:set_role({major = self, role_type = 'Glued', draw_major = self})
-                    G.shared_fractioned_cards[fractions][fraction][key].center:draw_shader('dissolve', nil, nil, nil, self.children.center, nil, nil, ((G.CARD_W/fractions)*(fraction-1)))
+                    G.shared_fractioned_cards[fractions][fraction][key].center:set_role({
+                        major = self,
+                        role_type =
+                        'Glued',
+                        draw_major = self
+                    })
+                    G.shared_fractioned_cards[fractions][fraction][key].center:draw_shader('dissolve', nil, nil, nil,
+                        self.children.center, nil, nil, ((G.CARD_W / fractions) * (fraction - 1)))
                 end
             end
         end

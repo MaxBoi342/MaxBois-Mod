@@ -204,19 +204,11 @@ return {
                     'with the {C:rune}Ransom{} sticker',
                 }
             },
-            c_maxboism_loop = {
-                name = 'Incremental ???',
+            c_maxboism_ingwaz = {
+                name = 'Ingwaz',
                 text = {
-                    '{C:maxboism_friendendary,E:1}#1#{}',
-                    '+#2#',
-                }
-            },
-            c_maxboism_inc_shop1 = {
-                name = 'Upgrade 1',
-                text = {
-                    'Cost: #1#',
-                    '{C:maxboism_friendendary,E:1}+#2# points per incremental usage',
-                    '{C:inactive}(Owned: #3#){}'
+                    '[WIP]',
+                    '{C:attention}Merge{} two jokers.',
                 }
             },
         },
@@ -268,6 +260,17 @@ return {
                     'when a blind is {C:attention}oneshot{}.'
                 }
             }
+        },
+        Back = {
+            b_maxboism_conglomerate = {
+                name = "Conglomerate Deck",
+                text = {
+                    "{C:attention}-2{} Joker slots",
+                    "After defeating each",
+                    "{C:attention}Boss Blind{}, {C:attention}merge{}",
+                    "two random jokers"
+                }
+            }
         }
     },
     misc = {
@@ -290,7 +293,10 @@ return {
             maxboism_joker_thepeasant_message = 'Reset!',
             maxboism_joker_sleevedjoker_message = 'Sleeved!',
             maxboism_joker_merged_rarity = 'Merge',
+
             k_maxboism_what = "???",
+
+            maxboism_deck_conglomerate_merge = 'Merged!'
         }
     }
 }
