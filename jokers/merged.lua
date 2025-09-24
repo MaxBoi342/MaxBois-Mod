@@ -78,14 +78,35 @@ SMODS.Joker {
                 local key = v[1]
                 local partreturn = G.maxboism_savedjokercards[card.sort_id][key]:calculate_dollar_bonus()
                 if partreturn then
-                    card.ability.extra.totalreturn = card.ability.extra.totalreturn + G.maxboism_savedjokercards[card.sort_id][key]:calculate_dollar_bonus()
+                    card.ability.extra.totalreturn = card.ability.extra.totalreturn +
+                    G.maxboism_savedjokercards[card.sort_id][key]:calculate_dollar_bonus()
                 end
-                
             end
             if card.ability.extra.totalreturn == 0 then
-                
+
             else
                 return card.ability.extra.totalreturn
+            end
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if G.shared_fractioned_cards then
+            local keepTable = {}
+            for i, v in ipairs(SMODS.find_card('k_maxboism_merged')) do
+                if v.ability.extra.maxboism_multi_boxes then
+                    table.insert(keepTable, #v.ability.extra.maxboism_multi_boxes)
+                end
+            end
+            for i, v in pairs(G.shared_fractioned_cards) do
+                local keep = false
+                for ii, vv in ipairs(keepTable) do
+                    if vv == i then
+                        keep = true
+                    end
+                end
+                if not keep then
+                    G.shared_fractioned_cards[i] = nil
+                end
             end
         end
     end
@@ -124,7 +145,8 @@ SMODS.DrawStep {
                     })
                     G.shared_fractioned_cards[fractions][fraction][key].center:draw_shader('dissolve', nil, nil, nil,
                         self.children.center, nil, nil, ((G.CARD_W / fractions) * (fraction - 1)))
-                elseif G.shared_fractioned_cards[fractions][fraction][key] then
+                end
+                if G.shared_fractioned_cards[fractions][fraction][key] then
                     G.shared_fractioned_cards[fractions][fraction][key].center:set_role({
                         major = self,
                         role_type =

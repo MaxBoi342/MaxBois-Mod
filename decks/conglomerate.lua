@@ -13,9 +13,7 @@ SMODS.Back{
         if context.ante_change and context.ante_end then
             local eligible_jokers = {}
             for i,v in ipairs(G.jokers.cards) do
-                if v.config.center.blueprint_compat then
                     table.insert(eligible_jokers, v)
-                end
             end
             if #eligible_jokers < 2 then return end
 

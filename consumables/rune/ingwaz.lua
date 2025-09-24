@@ -46,7 +46,7 @@ SMODS.Consumable {
             trigger = 'before',
             delay = 0.75,
             func = function()
-                MaxBoiSM.merge({joker1, joker2})
+                MaxBoiSM.merge({joker2, joker1})
                 return true
             end
         }))
