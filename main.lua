@@ -108,9 +108,9 @@ end
 function MaxBoiSM.recursiveMerge(boxes)
     local returnTable = {}
     for i,v in ipairs(boxes) do
-        if G.maxboism_merged_area.cards[v].ability and G.maxboism_merged_area.cards[v].ability.extra and type(G.maxboism_merged_area.cards[v].ability.extra) == 'table' and G.maxboism_merged_area.cards[v].ability.extra.maxboism_multi_boxes then
-            local moreBoxes = MaxBoiSM.recursiveMerge(G.maxboism_merged_area.cards[v].ability.extra.maxboism_multi_boxes)
-            for ii,vv in ipairs(moreBoxes) do
+        if v[2] and v[2].extra and type(v[2].extra) == 'table' and v[2].extra.maxboism_multi_boxes then
+            local morejokers = MaxBoiSM.recursiveMerge(v[2].extra.maxboism_multi_boxes)
+            for ii,vv in ipairs(morejokers) do
                 table.insert(returnTable, vv)
             end
         else
@@ -120,25 +120,22 @@ function MaxBoiSM.recursiveMerge(boxes)
     return returnTable
 end
 
-function MaxBoiSM.merge(joker1, joker2)
+function MaxBoiSM.merge(jokers)
     G.E_MANAGER:add_event(Event({
             trigger = 'before',
             func = function()
-                local joker1_copy = copy_card(joker1)
-                local joker2_copy = copy_card(joker2)
-                G.maxboism_merged_area:emplace(joker1_copy)
-                G.maxboism_merged_area:emplace(joker2_copy)
 
                 local copied_joker = SMODS.create_card({ set = 'Joker', key = 'j_maxboism_merged', no_edition = true })
 
-                for i, v in ipairs(G.maxboism_merged_area.cards) do
-                    if v == joker1_copy or v == joker2_copy then
-                        table.insert(copied_joker.ability.extra.maxboism_multi_boxes, 1, i)
-                    end
+                --local alljokers = MaxBoiSM.recursiveMerge(jokers)
+                for i,v in ipairs(jokers) do
+                    table.insert(copied_joker.ability.extra.maxboism_multi_boxes, {v.config.center.key, copy_table(v.ability)})
+                end
+                for i,v in ipairs(jokers) do
+                    v:start_dissolve(nil, _first_dissolve)
                 end
 
-                joker1:start_dissolve(nil, _first_dissolve)
-                joker2:start_dissolve(nil, _first_dissolve)
+                copied_joker.ability.extra.maxboism_multi_boxes = MaxBoiSM.recursiveMerge(copied_joker.ability.extra.maxboism_multi_boxes)
 
                 copied_joker:start_materialize()
                 copied_joker:add_to_deck()
@@ -289,23 +286,6 @@ SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
         end
     end,
 }
-
-local game_start_run_ref = Game.start_run
-function Game:start_run(args)
-    self.maxboism_merged_area = CardArea(
-        0,
-        0,
-        self.CARD_W * 1.9,
-        self.CARD_H * 0.95,
-        {
-            card_limit = 2,
-            type = 'extra_deck',
-            highlight_limit = 1,
-        }
-    )
-    self.maxboism_merged_area.states.visible = false
-    game_start_run_ref(self, args)
-end
 
 local function load_utils_folder()
     local mod_path = SMODS.current_mod.path

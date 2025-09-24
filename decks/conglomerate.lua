@@ -21,7 +21,7 @@ SMODS.Back{
 
 
             pseudoshuffle(eligible_jokers, 'acquisition')
-            MaxBoiSM.merge(eligible_jokers[1], eligible_jokers[2])
+            MaxBoiSM.merge({eligible_jokers[1], eligible_jokers[2]})
             return {
                 message = localize("maxboism_deck_conglomerate_merge"),
                 colour = G.C.MONEY

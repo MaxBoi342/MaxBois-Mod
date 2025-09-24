@@ -3,7 +3,8 @@ SMODS.Joker {
     config = {
         extra = {
             maxboism_multi_boxes = {
-            }
+            },
+            totalreturn = 0
         }
     },
     pos = {
@@ -12,7 +13,7 @@ SMODS.Joker {
     },
     no_collection = true,
     cost = 0,
-    rarity = 3,
+    rarity = "maxboism_merged",
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,
@@ -20,28 +21,71 @@ SMODS.Joker {
     discovered = true,
     atlas = 'CustomJokers',
     loc_vars = function(self, info_queue, card)
-        local all_boxes = MaxBoiSM.recursiveMerge(card.ability.extra.maxboism_multi_boxes)
+        --local all_boxes = MaxBoiSM.recursiveMerge(card.ability.extra.maxboism_multi_boxes)
     end,
     calculate = function(self, card, context)
         local totalreturn = {}
-        local all_boxes = MaxBoiSM.recursiveMerge(card.ability.extra.maxboism_multi_boxes)
-        for i, v in ipairs(all_boxes) do
-            local partreturn = SMODS.blueprint_effect(card, G.maxboism_merged_area.cards[v], context)
-            if type(partreturn) == "table" then
-                totalreturn = SMODS.merge_effects({ totalreturn, partreturn })
+        if context.end_of_round then
+            card.ability.extra.totalreturn = 0
+        end
+        if card.ability.extra.maxboism_multi_boxes then
+            for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
+                local key = v[1]
+                G.maxboism_savedjokercards = G.maxboism_savedjokercards or {}
+                G.maxboism_savedjokercards[card.sort_id] = G.maxboism_savedjokercards[card.sort_id] or {}
+                if not G.maxboism_savedjokercards[card.sort_id][key] then
+                    local old_ability = copy_table(card.ability)
+                    local old_center = card.config.center
+                    local old_center_key = card.config.center_key
+                    card:set_ability(key, nil, 'quantum')
+                    card:update(0.016)
+                    card.ability = v[2]
+                    G.maxboism_savedjokercards[card.sort_id][key] = SMODS.shallow_copy(card)
+                    G.maxboism_savedjokercards[card.sort_id][key].ability = copy_table(G.maxboism_savedjokercards
+                        [card.sort_id][key].ability)
+                    for i, v in ipairs({ "T", "VT", "CT" }) do
+                        G.maxboism_savedjokercards[card.sort_id][key][v] = copy_table(G.maxboism_savedjokercards
+                            [card.sort_id][key][v])
+                    end
+                    G.maxboism_savedjokercards[card.sort_id][key].config = SMODS.shallow_copy(G
+                        .maxboism_savedjokercards
+                        [card.sort_id][key].config)
+                    card.ability = old_ability
+                    card.config.center = old_center
+                    card.config.center_key = old_center_key
+                    for i, v in ipairs({ 'juice_up', 'start_dissolve', 'remove', 'flip' }) do
+                        G.maxboism_savedjokercards[card.sort_id][key][v] = function(_, ...)
+                            return card[v](card, ...)
+                        end
+                    end
+                end
+                local partreturn = G.maxboism_savedjokercards[card.sort_id][key]:calculate_joker(context)
+                card.ability.extra.maxboism_multi_boxes[i][2] = G.maxboism_savedjokercards[card.sort_id][key].ability
+                if type(partreturn) == 'table' then
+                    totalreturn = SMODS.merge_effects({ totalreturn, partreturn })
+                end
+            end
+            if next(totalreturn) ~= nil then
+                return totalreturn
+            else
+                return false
             end
         end
-        if next(totalreturn)  ~= nil then
-            return totalreturn
-        else
-            return false
-        end
     end,
-    remove_from_deck = function(self, card, from_debuff)
-        if next(SMODS.find_card('j_maxboism_merged')) then return end
-        if G.maxboism_merged_area.cards then
-            for _, v in ipairs(SMODS.shallow_copy(G.maxboism_merged_area.cards)) do
-                v:remove()
+    calc_dollar_bonus = function(self, card)
+        if card.ability.extra.maxboism_multi_boxes then
+            for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
+                local key = v[1]
+                local partreturn = G.maxboism_savedjokercards[card.sort_id][key]:calculate_dollar_bonus()
+                if partreturn then
+                    card.ability.extra.totalreturn = card.ability.extra.totalreturn + G.maxboism_savedjokercards[card.sort_id][key]:calculate_dollar_bonus()
+                end
+                
+            end
+            if card.ability.extra.totalreturn == 0 then
+                
+            else
+                return card.ability.extra.totalreturn
             end
         end
     end
@@ -52,16 +96,16 @@ SMODS.DrawStep {
     order = 29,
     func = function(self, layer)
         if self.config.center.key == 'j_maxboism_merged' then
-            local total_jokers = MaxBoiSM.recursiveMerge(self.ability.extra.maxboism_multi_boxes)
-            local fractions = #total_jokers
-            for i, v in ipairs(total_jokers) do
+            local keys = self.ability.extra.maxboism_multi_boxes
+            local fractions = #keys
+            for i, v in ipairs(keys) do
                 local fraction = i
 
                 G.shared_fractioned_cards = G.shared_fractioned_cards or {}
                 G.shared_fractioned_cards[fractions] = G.shared_fractioned_cards[fractions] or {}
                 G.shared_fractioned_cards[fractions][fraction] = G.shared_fractioned_cards[fractions][fraction] or {}
 
-                local key = G.maxboism_merged_area.cards[v].config.center.key
+                local key = v[1]
                 if G.P_CENTERS[key].pos and not G.shared_fractioned_cards[fractions][fraction][key] then
                     G.shared_fractioned_cards[fractions][fraction][key] = G.shared_fractioned_cards[fractions][fraction]
                         [key] or {}

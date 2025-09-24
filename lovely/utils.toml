@@ -416,18 +416,21 @@ pattern = "if AUT.info then"
 position = "before"
 payload = """
 if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.maxboism_multi_boxes then
-multi_boxes = {}
-local _first = true
-local boxes = SMODS.shallow_copy(card.ability.extra.maxboism_multi_boxes)
-local trueboxes = MaxBoiSM.recursiveMerge(boxes)
-    for key, value in ipairs(trueboxes) do
-        local fusion_ui = Card.generate_UIBox_ability_table(G.maxboism_merged_area.cards[value])
-        if _first then
-            AUT.main = fusion_ui.main
-            AUT.main.main_box_flag = true
-            _first = false
-        else
-           multi_boxes[#multi_boxes + 1] = desc_from_rows(fusion_ui.main)
+    multi_boxes = {}
+    local _first = true
+    if card.ability.extra.maxboism_multi_boxes then
+        local boxes = SMODS.shallow_copy(card.ability.extra.maxboism_multi_boxes)
+        for i, v in ipairs(boxes) do
+            local key = v[1]
+            if not G.maxboism_savedjokercards[card.sort_id] then break end
+            local fusion_ui = Card.generate_UIBox_ability_table(G.maxboism_savedjokercards[card.sort_id][key])
+            if _first then
+               AUT.main = fusion_ui.main
+               AUT.main.main_box_flag = true
+               _first = false
+            else
+                multi_boxes[#multi_boxes + 1] = desc_from_rows(fusion_ui.main)
+            end
         end
     end
 end

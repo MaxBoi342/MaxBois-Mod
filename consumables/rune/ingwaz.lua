@@ -16,9 +16,7 @@ SMODS.Consumable {
                 if G.jokers.cards[i] == G.jokers.highlighted[1] then
                     if i ~= 1 then
 
-                        if G.jokers.cards[i-1].config.center.blueprint_compat and G.jokers.highlighted[1].config.center.blueprint_compat then
-                            return true
-                        end
+                        return true
                         
                     end
                 end
@@ -48,7 +46,7 @@ SMODS.Consumable {
             trigger = 'before',
             delay = 0.75,
             func = function()
-                MaxBoiSM.merge(joker1, joker2)
+                MaxBoiSM.merge({joker1, joker2})
                 return true
             end
         }))
