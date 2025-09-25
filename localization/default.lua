@@ -97,7 +97,7 @@ return {
             j_maxboism_merged = {
                 name = 'Merged',
                 text = {
-                    {'1'}, {'2'}
+                    { 'This joker is... just {C:mult}wrong{}', 'A wretched abomination' }, { 'A result of pure greed and gluttony' }
                 }
             }
         },
@@ -222,7 +222,7 @@ return {
         },
         Enhanced = {
             m_maxboism_sand = {
-                name= 'Sand Card',
+                name = 'Sand Card',
                 text = {
                     '{X:chips,C:white}X#1#{} chips',
                     'no suit or rank'
@@ -296,7 +296,27 @@ return {
 
             k_maxboism_what = "???",
 
-            maxboism_deck_conglomerate_merge = 'Merged!'
+            maxboism_deck_conglomerate_merge = 'Merged!',
+
+            maxboism_showdesc = 'Show merged cards\' descriptions',
+            maxboism_showdesc_desc = {
+                'Merge cards descriptions are laggy as of now',
+                'So this is the solution for now'
+            },
+            maxboism_mergerenderlimit = 'Merged card render limit',
+            maxboism_mergerenderlimit_desc = {
+                'This stops the merge card rendering at the specified value',
+                'Lower this setting if you are on a lower end system'
+            },
+            maxboism_mergerenderlimit_info = {
+                "2",
+                "4",
+                "8",
+                "16",
+                "32",
+                "64",
+                "128",
+            }
         }
     }
 }

@@ -87,7 +87,11 @@ if not MaxBoiSM.shared_backstickers then
     MaxBoiSM.shared_backstickers = {}
 end
 
-SMODS.current_mod.reset_game_globals = function(run_start)
+MaxBoiSM.config = SMODS.current_mod.config
+
+MaxBoiSM.SMODSref = SMODS.current_mod
+
+MaxBoiSM.SMODSref.reset_game_globals = function(run_start)
   if (run_start) then
     G.GAME.backsticker = {}
   end
@@ -145,7 +149,7 @@ function MaxBoiSM.merge(jokers)
             end
         }))
 end
-SMODS.current_mod.calculate = function(self, context)
+MaxBoiSM.SMODSref.calculate = function(self, context)
     if G.STATE == nil then --dejankify pseudo_open()
         if G.shop then
             G.STATE = G.STATES.SHOP
@@ -194,7 +198,25 @@ end
 
 -- lingo 2 glyphs
 
-
+MaxBoiSM.SMODSref.config_tab = function()
+    return {n = G.UIT.ROOT, config = {r = 0.1, minw = 4, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes = {
+            {n=G.UIT.R, config = {align = 'cm'}, nodes={
+    
+            }},
+            {n=G.UIT.R, config={minh=0.1}},
+            {n=G.UIT.R, config = {minh = 0.04, minw = 4.5, colour = G.C.L_BLACK}},
+            {n=G.UIT.R, nodes = {
+                {n=G.UIT.C, config={minw = 3, padding=0.2}, nodes={
+                    create_toggle({label = localize('maxboism_showdesc'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'showmergedesc', info = localize('maxboism_showdesc_desc'), active_colour = G.C.RED, right = true}),
+                }},
+                {n=G.UIT.C, config={minw = 3, padding=0.1}, nodes={
+                    {n=G.UIT.R, config={minh=0.1}},
+                    create_option_cycle({label = localize('maxboism_mergerenderlimit'), current_option = MaxBoiSM.SMODSref.config.mergerenderlimit, options = localize('maxboism_mergerenderlimit_info'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'mergerenderlimit', info = localize('maxboism_mergerenderlimit_desc'), colour = G.C.RED, w = 3.7*0.65/(5/6), h=0.8*0.65/(5/6), text_scale=0.5*0.65/(5/6), scale=5/6, no_pips = true, opt_callback = 'cycle_update'}),
+                }}
+            }},
+            
+    }}
+end
 
 
 -- lingo 1 colors
