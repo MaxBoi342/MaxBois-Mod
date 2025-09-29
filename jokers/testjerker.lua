@@ -3,7 +3,7 @@
 --     key = "testjerker",
 --     config = {
 --         extra = {
---             debt_amount = 20
+--             Xmult = 3
 --         }
 --     },
 --     -- loc_txt = {
@@ -30,32 +30,43 @@
 --     end,
 
 --     calculate = function(self, card, context)
---         if context.hand_drawn then
---             if G.playing_cards then
---                 local valid_debuffRank_cards = {}
---                 for _, v in ipairs(G.playing_cards) do
---                     if not SMODS.has_no_rank(v) then
---                         valid_debuffRank_cards[#valid_debuffRank_cards + 1] = v
---                     end
+--         -- give xmult 
+--         if context.joker_main then
+--             local cardswithfaces = {}
+--             -- local jackCount = 0
+--             -- local queenCount = 0
+--             -- local kingCount = 0
+
+--             for _, card in ipairs(context.scoring_hand) do
+--                 if card:is_face() then
+--                     local id = card:get_id()
+--                         if cardswithfaces[id] then
+--                             cardswithfaces[id] = cardswithfaces[id] + 1
+--                         else
+--                             cardswithfaces[id] = 1
+--                         end
 --                 end
---                 if valid_debuffRank_cards[1] then
---                     local debuffRank_card = pseudorandom_element(valid_debuffRank_cards,
---                         pseudoseed('debuffRank' .. G.GAME.round_resets.ante))
---                     G.GAME.current_round.debuffRank_card.rank = debuffRank_card.base.value
---                     G.GAME.current_round.debuffRank_card.id = debuffRank_card.base.id
+
+--                 -- if card:get_id() == 11 then --counting jacks
+--                 --     jackCount = jackCount + 1
+--                 -- end
+--                 -- if card:get_id() == 12 then -- counting queens
+--                 --     queenCount = queenCount + 1
+--                 -- end
+--                 -- if card:get_id() == 13 then -- counting queens
+--                 --     kingCount = kingCount + 1
+--                 -- end
+--             end
+
+--             -- if jackCount >= 3 or queenCount >= 3 or kingCount >= 3 then
+--             for id, numberofcards in pairs(cardswithfaces) do
+--                 print('come on ' .. numberofcards)
+--                 if numberofcards >= 3 then
+--                     return {
+--                         xmult = card.ability.extra.Xmult
+--                     }
 --                 end
 --             end
---             return {
---                 message = 'Debuff!'
---             }
 --         end
 --     end,
-
---     add_to_deck = function(self, card, from_debuff)
---         G.GAME.bankrupt_at = G.GAME.bankrupt_at - (card.ability.extra.debt_amount)
---     end,
-
---     remove_from_deck = function(self, card, from_debuff)
---         G.GAME.bankrupt_at = G.GAME.bankrupt_at + (card.ability.extra.debt_amount)
---     end
 -- }

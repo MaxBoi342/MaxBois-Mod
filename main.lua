@@ -64,6 +64,14 @@ SMODS.Atlas({
     atlas_table = "ASSET_ATLAS"
 }):register()
 
+SMODS.Atlas({
+    key = "CustomDecks",
+    path = "CustomDecks.png",
+    px = 71,
+    py = 95,
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
 ---
 ---Instantiate MaxBoiSM as global variable storage and related tables
 ---
@@ -195,6 +203,10 @@ MaxBoiSM.SMODSref.calculate = function(self, context)
     end
 end
 
+MaxBoiSM.fusionTable = {
+    {{"j_photograph", "j_hanging_chad"}, "j_maxboism_photochad"},
+}
+
 
 -- lingo 2 glyphs
 
@@ -211,7 +223,7 @@ MaxBoiSM.SMODSref.config_tab = function()
                 }},
                 {n=G.UIT.C, config={minw = 3, padding=0.1}, nodes={
                     {n=G.UIT.R, config={minh=0.1}},
-                    create_option_cycle({label = localize('maxboism_mergerenderlimit'), current_option = MaxBoiSM.SMODSref.config.mergerenderlimit, options = localize('maxboism_mergerenderlimit_info'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'mergerenderlimit', info = localize('maxboism_mergerenderlimit_desc'), colour = G.C.RED, w = 3.7*0.65/(5/6), h=0.8*0.65/(5/6), text_scale=0.5*0.65/(5/6), scale=5/6, no_pips = true, opt_callback = 'cycle_update'}),
+                    create_option_cycle({label = localize('maxboism_mergerenderlimit'), current_option = MaxBoiSM.SMODSref.config.mergerenderlimit, options = localize('maxboism_mergerenderlimit_info'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'mergerenderlimit', info = localize('maxboism_mergerenderlimit_desc'), colour = G.C.RED, w = 3.7*0.65/(5/6), h=0.8*0.65/(5/6), text_scale=0.5*0.65/(5/6), scale=5/6, no_pips = true}),
                 }}
             }},
             

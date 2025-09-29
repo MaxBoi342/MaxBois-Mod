@@ -6,6 +6,7 @@ SMODS.Back{
     config = {
         joker_slot = -2
 	},
+    atlas = 'CustomDecks',
     apply = function(self)
 
     end,
