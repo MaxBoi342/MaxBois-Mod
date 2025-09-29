@@ -9,7 +9,7 @@ SMODS.Joker { --Cheat Sheet
         y = 0
     },
     cost = 4,
-    rarity = 1,
+    rarity = "maxboism_fusion",
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,

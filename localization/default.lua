@@ -316,7 +316,13 @@ return {
                 "32",
                 "64",
                 "128",
-            }
+            },
+            maxboism_fusionrecipes = 'Enable fusion recipes',
+            maxboism_fusionrecipes_desc = {
+                'Certain joker merges create unique fusion jokers',
+                'THIS FEATURE IS VERY ALPHA',
+                'Disable unless specifically testing the feature'
+            },
         }
     }
 }

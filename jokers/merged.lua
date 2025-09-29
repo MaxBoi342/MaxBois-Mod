@@ -28,7 +28,9 @@ SMODS.Joker {
             card.ability.extra.totalreturn = 0
         end
         if card.ability.extra.maxboism_multi_boxes then
-            MaxBoiSM.fusionCheck(card.ability.extra.maxboism_multi_boxes)
+            if MaxBoiSM.config.fusionrecipes then
+                MaxBoiSM.fusionCheck(card.ability.extra.maxboism_multi_boxes)
+            end
             if next(card.ability.extra.maxboism_multi_boxes) == nil then
                 G.E_MANAGER:add_event(Event({
                             trigger = 'after',

@@ -205,6 +205,7 @@ end
 
 MaxBoiSM.fusionTable = {
     {{"j_photograph", "j_hanging_chad"}, "j_maxboism_photochad"},
+    {{"j_greedy_joker", "j_lusty_joker", "j_wrathful_joker", "j_gluttenous_joker"}, "j_maxboism_photochad"}
 }
 
 
@@ -220,6 +221,7 @@ MaxBoiSM.SMODSref.config_tab = function()
             {n=G.UIT.R, nodes = {
                 {n=G.UIT.C, config={minw = 3, padding=0.2}, nodes={
                     create_toggle({label = localize('maxboism_showdesc'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'showmergedesc', info = localize('maxboism_showdesc_desc'), active_colour = G.C.RED, right = true}),
+                    create_toggle({label = localize('maxboism_fusionrecipes'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'fusionrecipes', info = localize('maxboism_fusionrecipes_desc'), active_colour = G.C.RED, right = true}),
                 }},
                 {n=G.UIT.C, config={minw = 3, padding=0.1}, nodes={
                     {n=G.UIT.R, config={minh=0.1}},
