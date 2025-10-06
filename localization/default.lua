@@ -97,7 +97,7 @@ return {
             j_maxboism_merged = {
                 name = 'Merged',
                 text = {
-                    'This joker does',
+                    'This joker has',
                     'the following {C:attention}effects{}'
                 }
             }
