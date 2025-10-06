@@ -409,33 +409,68 @@ overwrite = false
 match_indent = false
 
 # Add fusion ability to multibox -credit SDM_0
+# [[patches]]
+# [patches.pattern]
+# target = "functions/UI_definitions.lua"
+# pattern = "if AUT.info then"
+# position = "before"
+# payload = """
+# if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.maxboism_multi_boxes and MaxBoiSM.config.showmergedesc then
+#     multi_boxes = {}
+#     local _first = true
+#     if card.ability.extra.maxboism_multi_boxes then
+#         for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
+#             local key = v[1]
+#             if not G.maxboism_savedjokercards then break end
+#             if not G.maxboism_savedjokercards[card.sort_id] then break end
+#             local fusion_ui = Card.generate_UIBox_ability_table(G.maxboism_savedjokercards[card.sort_id][key])
+#             if _first then
+#                AUT.main = fusion_ui.main
+#                AUT.main.main_box_flag = true
+#                _first = false
+#             else
+#                 multi_boxes[#multi_boxes + 1] = desc_from_rows(fusion_ui.main)
+#             end
+#         end
+#     end
+# end
+# """
+# match_indent = true
+
 [[patches]]
 [patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "if AUT.info then"
+target = 'functions/common_events.lua'
+pattern = '''elseif _c.set == 'Joker' then'''
+position = 'before'
+match_indent = true
+payload = '''
+elseif _c.maxboism_fusion then
+    localize{type = 'descriptions', set = 'Joker', key = _c.key, nodes = desc_nodes, vars = specific_vars or _c.vars, specific_vars = {is_info_queue = true}, AUT = full_UI_table}
+'''
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''for _, v in ipairs(info_queue) do'''
 position = "before"
-payload = """
-if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.maxboism_multi_boxes and MaxBoiSM.config.showmergedesc then
-    multi_boxes = {}
-    local _first = true
-    if card.ability.extra.maxboism_multi_boxes then
-        for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
+match_indent = true
+payload = '''
+if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.maxboism_multi_boxes then
+    for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
             local key = v[1]
             if not G.maxboism_savedjokercards then break end
             if not G.maxboism_savedjokercards[card.sort_id] then break end
-            local fusion_ui = Card.generate_UIBox_ability_table(G.maxboism_savedjokercards[card.sort_id][key])
-            if _first then
-               AUT.main = fusion_ui.main
-               AUT.main.main_box_flag = true
-               _first = false
-            else
-                multi_boxes[#multi_boxes + 1] = desc_from_rows(fusion_ui.main)
-            end
+        local _vars = {}
+        if G.maxboism_savedjokercards[card.sort_id][key].config.center.loc_vars then
+                _vars = (G.maxboism_savedjokercards[card.sort_id][key].config.center:loc_vars(info_queue, G.maxboism_savedjokercards[card.sort_id][key]))
+                _vars = (_vars and _vars.vars) or {}
+        end
+        if is_info_queue then
+            info_queue[#info_queue+1] = {maxboism_fusion = true, set = 'Joker', key = key, vars = _vars or {}}
         end
     end
 end
-"""
-match_indent = true
+'''
 
 #seals you bastard son of a bitch i love you
 [[patches]]

@@ -33,14 +33,14 @@ SMODS.Joker {
             end
             if next(card.ability.extra.maxboism_multi_boxes) == nil then
                 G.E_MANAGER:add_event(Event({
-                            trigger = 'after',
-                            delay = 0.0,
-                            func = function()
-                                card:remove()
-                                return true
-                            end
-                        }))
-                        return
+                    trigger = 'after',
+                    delay = 0.0,
+                    func = function()
+                        card:remove()
+                        return true
+                    end
+                }))
+                return
             end
             for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
                 local key = v[1]
@@ -81,7 +81,8 @@ SMODS.Joker {
             if next(totalreturn) ~= nil then
                 for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
                     local key = v[1]
-                    card.ability.extra.maxboism_multi_boxes[i][2] = copy_table(G.maxboism_savedjokercards[card.sort_id][key].ability)
+                    card.ability.extra.maxboism_multi_boxes[i][2] = copy_table(G.maxboism_savedjokercards[card.sort_id]
+                    [key].ability)
                 end
                 return totalreturn
             else
@@ -138,7 +139,7 @@ SMODS.DrawStep {
         if self.config.center.key == 'j_maxboism_merged' then
             local keys = self.ability.extra.maxboism_multi_boxes
             local fractions = #keys
-            if fractions <= (2^MaxBoiSM.config.mergerenderlimit) then
+            if fractions <= (2 ^ MaxBoiSM.config.mergerenderlimit) then
                 for i, v in ipairs(keys) do
                     local fraction = i
 
@@ -186,3 +187,46 @@ SMODS.DrawStep {
     end,
     conditions = { vortex = false, facing = 'front' },
 }
+
+local gcu = generate_card_ui
+function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
+    local ui = gcu(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
+    if card and card.ability and card.ability.extra and type(card.ability.extra) == 'table' and card.ability.extra.maxboism_multi_boxes then
+        local maxboism_fusion = {}
+        local vars = {}
+        for i, v in ipairs(card.ability.extra.maxboism_multi_boxes) do
+            local key = v[1]
+            maxboism_fusion[i] = {}
+            if not G.maxboism_savedjokercards then break end
+            if not G.maxboism_savedjokercards[card.sort_id] then break end
+
+
+
+            if G.maxboism_savedjokercards[card.sort_id][key].config.center.loc_vars then
+                vars = (G.maxboism_savedjokercards[card.sort_id][key].config.center:loc_vars({}, G.maxboism_savedjokercards[card.sort_id][key]) or {})
+                vars = (vars and vars.vars) or {}
+            else
+                vars = Card.generate_UIBox_ability_table(
+                { ability = G.maxboism_savedjokercards[card.sort_id][key].ability, config = G.maxboism_savedjokercards
+                [card.sort_id][key].config, bypass_lock = true }, true)
+            end
+            localize { type = 'descriptions', set = 'Joker', key = key, nodes = maxboism_fusion[i], vars = vars or {}, AUT = { info = { "I HATE GENERATE_CARD_UI" } } }
+        end
+        ui.maxboism_fusion = maxboism_fusion
+    end
+    return ui
+end
+
+local card_h_popup = G.UIDEF.card_h_popup
+function G.UIDEF.card_h_popup(card)
+    local ret_val = card_h_popup(card)
+    local AUT = card.ability_UIBox_table
+    if AUT.maxboism_fusion and MaxBoiSM.config.showmergedesc then
+        for i,v in ipairs(AUT.maxboism_fusion) do
+        table.insert(ret_val.nodes[1].nodes[1].nodes[1].nodes,
+            #ret_val.nodes[1].nodes[1].nodes[1].nodes + (card.config.center.discovered and 0 or 1),
+            desc_from_rows(AUT.maxboism_fusion[i]))
+        end
+    end
+    return ret_val
+end

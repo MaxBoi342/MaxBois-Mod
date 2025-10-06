@@ -158,21 +158,6 @@ function MaxBoiSM.merge(jokers)
         }))
 end
 MaxBoiSM.SMODSref.calculate = function(self, context)
-    if G.STATE == nil then --dejankify pseudo_open()
-        if G.shop then
-            G.STATE = G.STATES.SHOP
-        elseif G.blind_select then
-            G.STATE = G.STATES.BLIND_SELECT
-        elseif G.round_eval then
-            G.STATE = G.STATES.ROUND_EVAL
-        else
-            G.STATE = G.STATES.SELECTING_HAND
-        end
-    end
-    if G.GAME.RemovePseudoOpen and G.STATE == 999 then
-        G.play:remove_card(G.play.cards[1])
-        G.GAME.maxboism_pseudo_open_active = false
-    end
     if G.STATE == G.STATES.SELECTING_HAND then --algiz sticker
         for _, v in ipairs(G.jokers.cards) do
             if v.ability['maxboism_algiztracker'] and not v.config.maxboism_algizblind then

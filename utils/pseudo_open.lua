@@ -1,6 +1,8 @@
 ---@diagnostic disable: unused-local, redefined-local, missing-fields, inject-field
+
+--DO NOTE that group_key with name/kind are used for the locatization file for text information
 function Card:pseudo_open(args)
-    G.GAME.maxboism_pseudo_open_active = true
+    --assert everyhing is provided (look into SMODS booster packs and base game booster pack code how some of these need to look like)
     assert(type(args.choose) == 'number', "Provide how many cards are picked with 'choose = x'")
     assert(type(args.extra) == 'number', "Provide how many cards are chosen from with 'extra = x'")
     assert(type(args.create_card) == 'function',
@@ -12,17 +14,17 @@ function Card:pseudo_open(args)
 
     local functiontoBe
     if args.sparkles and assert(type(args.sparkles) == 'function', "args.sparkles must be a function") then
-        functiontoBe = args.sparklses
+        functiontoBe = args.sparkles
     else
-        functiontoBe = function()
+        functiontoBe = function() --lol
 
         end
     end
-    self.config.center = {
+    self.config.center = { --the slightly jank option, pretend that something is a booster pack by injecting booster pack properties
         group_key = "k_maxboism_what",
         name = "???",
         kind = '???',
-        key = 'p_arcana_normal_1',
+        key = 'p_arcana_normal_1', --this should be fine this is just to trick SMODS into letting this run, it doesn't actually count as opening an arcana pack
         draw_hand = args.draw_hand,
         update_pack = SMODS.Booster.update_pack,
         ease_background_colour = function(self)
@@ -45,15 +47,17 @@ function Card:pseudo_open(args)
         choose = args.choose
     }
 
-    draw_card(self.area, G.play, 1, 'up', true, self, nil, true)
-    if G.hand and #G.hand.cards > 0 then
+    draw_card(self.area, G.play, 1, 'up', true, self, nil, true) -- draw the card to the middle
+    if G.hand and #G.hand.cards > 0 then --hide playing cards if opened in middle of round
         G.FUNCS.draw_from_hand_to_deck()
         delay(0.65)
     end
 
-    self:open()
+    self:open() -- open the card :clueless:
 
-    if G.shop and not G.shop.alignment.offset.py then
+
+    --fix the UI back
+    if G.shop and not G.shop.alignment.offset.py then 
         G.shop.alignment.offset.py = G.shop.alignment.offset.y
         G.shop.alignment.offset.y = G.ROOM.T.y + 29
     end
@@ -66,12 +70,32 @@ function Card:pseudo_open(args)
         G.round_eval.alignment.offset.y = G.ROOM.T.y + 29
     end
 
-
-    G.E_MANAGER:add_event(Event({
-        delay = 5.0,
+    local event --god bless smods documentation for this loop I need to exist.
+    event = Event {
+        blockable = false,
+        blocking = false,
+        pause_force = true,
+        no_delete = true,
+        trigger = "after",
+        delay = 0.5,
+        timer = "UPTIME",
         func = function()
-            G.GAME.RemovePseudoOpen = true
-            return true
-        end,
-    }))
+            if G.STATE == nil then --fix state machine obliterating itself
+                if G.shop then
+                    G.STATE = G.STATES.SHOP
+                elseif G.blind_select then
+                    G.STATE = G.STATES.BLIND_SELECT
+                elseif G.round_eval then
+                    G.STATE = G.STATES.ROUND_EVAL
+                else
+                    G.STATE = G.STATES.SELECTING_HAND
+                end
+                G.play:remove_card(G.play.cards[1]) --fix G.play issue
+                return true
+            else
+                event.start_timer = false
+            end
+        end
+    }
+    G.E_MANAGER:add_event(event)
 end
