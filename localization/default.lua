@@ -200,16 +200,19 @@ return {
             c_maxboism_algiz = {
                 name = 'Algiz',
                 text = {
-                    'Using this card grants you',
-                    'the choice of 1 out of 4 {C:rare}rare{} jokers',
+                    'Grants you the choice of',
+                    '1 out of 4 {C:rare}rare{} jokers',
                     'with the {C:rune}Ransom{} sticker',
                 }
             },
             c_maxboism_ingwaz = {
                 name = 'Ingwaz',
                 text = {
-                    '[WIP]',
-                    '{C:attention}Merge{} two jokers.',
+                    'This card is only usable before',
+                    'the small blind of the ante has started.',
+                    'Applies the {C:rune}Calibrating{} sticker',
+                    'to a {C:attention}selected Joker{} and',
+                    'the {C:attention}Joker to the left of it{}',
                 }
             },
         },
@@ -260,6 +263,16 @@ return {
                     'This sticker is removed',
                     'when a blind is {C:attention}oneshot{}.'
                 }
+            },
+            maxboism_ingwaztracker = {
+                name = 'Calibrating',
+                text = {
+                    'This card is {C:attention}debuffed{}.',
+                    'This card will {C:attention}merge{}',
+                    'with paired cards',
+                    'when the {C:attention}boss blind{}',
+                    'is defeated'
+                }
             }
         },
         Back = {
@@ -280,6 +293,7 @@ return {
             maxboism_lockseal_seal = 'Sleeve',
             maxboism_ferureward = 'Wealth',
             maxboism_algiztracker = 'Ransom',
+            maxboism_ingwaztracker = 'Calibrating',
             maxboism_teststicker = 'Bonus',
         },
         dictionary = {

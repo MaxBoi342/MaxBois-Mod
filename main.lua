@@ -132,60 +132,7 @@ function MaxBoiSM.recursiveMerge(boxes)
     return returnTable
 end
 
-function MaxBoiSM.merge(jokers)
-    G.E_MANAGER:add_event(Event({
-            trigger = 'before',
-            func = function()
-
-                local copied_joker = SMODS.create_card({ set = 'Joker', key = 'j_maxboism_merged', no_edition = true })
-
-                --local alljokers = MaxBoiSM.recursiveMerge(jokers)
-                for i,v in ipairs(jokers) do
-                    table.insert(copied_joker.ability.extra.maxboism_multi_boxes, {v.config.center.key, copy_table(v.ability)})
-                end
-                for i,v in ipairs(jokers) do
-                    v:start_dissolve(nil, _first_dissolve)
-                end
-
-                copied_joker.ability.extra.maxboism_multi_boxes = MaxBoiSM.recursiveMerge(copied_joker.ability.extra.maxboism_multi_boxes)
-
-                copied_joker:start_materialize()
-                copied_joker:add_to_deck()
-                G.jokers:emplace(copied_joker)
-                _first_dissolve = true
-                return true
-            end
-        }))
-end
 MaxBoiSM.SMODSref.calculate = function(self, context)
-    if G.STATE == G.STATES.SELECTING_HAND then --algiz sticker
-        for _, v in ipairs(G.jokers.cards) do
-            if v.ability['maxboism_algiztracker'] and not v.config.maxboism_algizblind then
-                SMODS.debuff_card(v, true, 'algiz')
-                G.GAME.blind.chips = G.GAME.blind.chips * 2
-                G.GAME.blind.chip_text = tostring(G.GAME.blind.chips)
-                SMODS.juice_up_blind()
-                v.config.maxboism_algizblind = true
-            end
-        end
-    end
-    if context.ending_shop then
-        for _, v in ipairs(G.jokers.cards) do
-            if v.ability['maxboism_algiztracker'] then
-                v.config.maxboism_algizblind = false
-            end
-        end
-    end
-    if context.end_of_round and SMODS.last_hand_oneshot then
-        for _, v in ipairs(G.jokers.cards) do
-            if v.ability['maxboism_algiztracker'] then
-                SMODS.debuff_card(v, false, 'algiz')
-                SMODS.recalc_debuff(v)
-                SMODS.Stickers['maxboism_algiztracker']:apply(v, false)
-                v:juice_up()
-            end
-        end
-    end
 end
 
 MaxBoiSM.fusionTable = {
@@ -216,6 +163,7 @@ MaxBoiSM.SMODSref.config_tab = function()
             
     }}
 end
+
 
 
 -- lingo 1 colors

@@ -500,3 +500,31 @@ love.graphics.translate(
     (offset and offset.y or 0) + ((moveable.layered_parallax and moveable.layered_parallax.y) or ((moveable.parent and moveable.parent.layered_parallax and moveable.parent.layered_parallax.y)) or 0))
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+if card.ability.rental then
+            local ret = {}
+            ret[SMODS.Stickers.rental] = card:calculate_sticker(context, 'rental')
+            return ret, {}
+        end
+        return {}, {}
+'''
+position = "at"
+payload = '''
+local ret = {}
+for _,k in ipairs(SMODS.Sticker.obj_buffer) do
+    local v = SMODS.Stickers[k]
+    if k == 'rental' or v.ignore_debuff then
+        local sticker = card:calculate_sticker(context, k)
+        if sticker then
+            ret[v] = sticker
+        end
+    end
+end
+return ret, {}
+'''
+match_indent = true
+overwrite = true
