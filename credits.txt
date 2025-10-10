@@ -1,3 +1,5 @@
+Coding Assistance (AKA get out of jail free card):
+
 N' (Discord, general assistance)
 Somethingcom515 (Discord, for the return to hand lovely snippet from "Seals On Everything" + general assistance)
 N' (Discord, general assistance)
@@ -7,3 +9,13 @@ N' (Discord general assistance)
 Somethigncom515(Discord, merged card rendering support)
 Somethigncom515(Discord, merged card implementation support)
 SDM_0 (Discord, multibox hook but fixed)
+
+Art:
+AngularEmily - Peasant Joker
+evil.seal - Conglomerate Deck (WIP)
+
+Playtesting
+AngularEmily
+MoreMenderbugLore
+evil.seal
+autumint  (maybe do a bit where the username changes every game launch lol)
