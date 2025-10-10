@@ -82,21 +82,11 @@ SMODS.Consumable {
     set_ability = function(self, card, initial)
         card:set_edition("e_negative", true)
     end,
-        add_to_deck = function(self, card, from_debuff)
+    add_to_deck = function(self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
-                local newCount = 0
-                for _, v in ipairs(G.consumeables.cards) do
-                    if v.ability.set == 'page' then
-                        newCount = newCount + 1
-                    end
-                end
-                for _, v in ipairs(SMODS.find_card('j_maxboism_homophobicslenderman', true)) do
-                    v.ability.extra.heldPages = newCount
-                    card_eval_status_text(v, 'extra', nil, nil, nil,
-                                { message = localize("maxboism_joker_homophobicslenderman_found"), colour = G.C.GREEN })
-                end
-                    return true
+                G.GAME.maxboism_pagecount = G.GAME.maxboism_pagecount and G.GAME.maxboism_pagecount + 1 or 1
+                return true
             end
         }))
     end,
@@ -104,17 +94,7 @@ SMODS.Consumable {
     remove_from_deck = function(self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
-                local newCount = 0
-                for _, v in ipairs(G.consumeables.cards) do
-                    if v.ability.set == 'page' then
-                        newCount = newCount + 1
-                    end
-                end
-                for _, v in ipairs(SMODS.find_card('j_maxboism_homophobicslenderman', true)) do
-                    v.ability.extra.heldPages = newCount
-                    card_eval_status_text(v, 'extra', nil, nil, nil,
-                                { message = localize("maxboism_joker_homophobicslenderman_lost"), colour = G.C.RED })
-                end
+                G.GAME.maxboism_pagecount = G.GAME.maxboism_pagecount and G.GAME.maxboism_pagecount > 0 and G.GAME.maxboism_pagecount - 1 or 0
                     return true
             end
         }))

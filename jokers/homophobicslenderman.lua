@@ -2,11 +2,10 @@ SMODS.Joker { --Homophobic Slenderman
     key = "homophobicslenderman",
     config = {
         extra = {
-            heldPages = 0,
             echips = 7,
             emult = 7,
             costIncrease = 5,
-            rate = 1
+            rate = 2
         }
     },
     -- loc_txt = {
@@ -30,7 +29,7 @@ SMODS.Joker { --Homophobic Slenderman
     atlas = 'CustomJokers',
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.heldPages, math.max(1, card.ability.extra.heldPages) } }
+        return { vars = { G.GAME.maxboism_pagecount and G.GAME.maxboism_pagecount > 0 and G.GAME.maxboism_pagecount or 0, math.max(1, G.GAME.maxboism_pagecount and G.GAME.maxboism_pagecount > 0 and G.GAME.maxboism_pagecount or 0) } }
     end,
 
     calculate = function(self, card, context)
@@ -111,7 +110,7 @@ SMODS.Joker { --Homophobic Slenderman
             --     end
             -- end
             if context.cardarea == G.jokers and context.joker_main then
-                if (card.ability.extra.heldPages or 0) >= 7 then
+                if (G.GAME.maxboism_pagecount or 0) >= 7 then
                     return {
                         e_chips = card.ability.extra.echips,
                         extra = {
@@ -121,12 +120,12 @@ SMODS.Joker { --Homophobic Slenderman
                     }
                 else
                     return {
-                        xchips = math.max(1, card.ability.extra.heldPages),
-                        xmult = math.max(1, card.ability.extra.heldPages),
+                        xchips = math.max(1, (G.GAME.maxboism_pagecount or 0)),
+                        xmult = math.max(1, (G.GAME.maxboism_pagecount or 0)),
                     }
                 end
             end
-            if context.setting_blind and (card.ability.extra.heldPages or 0) >= 7 then
+            if context.setting_blind and (G.GAME.maxboism_pagecount or 0) >= 7 then
                 local function juice_card_until_(card, eval_func, first, delay) -- balatro function doesn't allow for custom scale and rotation
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
@@ -159,7 +158,7 @@ SMODS.Joker { --Homophobic Slenderman
     add_to_deck = function(self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
-                G.GAME.page_rate = card.ability.extra.rate
+                G.GAME.page_rate = card.ability.extra.rate and card.ability.extra.rate or G.GAME.page_rate and G.GAME.page_rate or 0
                 local created_consumable = false
                 if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                     created_consumable = true
@@ -195,7 +194,7 @@ SMODS.Joker { --Homophobic Slenderman
         return {
             text = {
                 { text = "(" },
-                { ref_table = "card.ability.extra", ref_value = "heldPages" },
+                { ref_table = "G.GAME", ref_value = "maxboism_pagecount" },
                 { text = "/7)" }
 
             },
