@@ -137,7 +137,8 @@ end
 
 MaxBoiSM.fusionTable = {
     {{"j_photograph", "j_hanging_chad"}, "j_maxboism_photochad"},
-    {{"j_greedy_joker", "j_lusty_joker", "j_wrathful_joker", "j_gluttenous_joker"}, "j_maxboism_photochad"}
+    {{"j_greedy_joker", "j_lusty_joker", "j_wrathful_joker", "j_gluttenous_joker"}, "j_maxboism_photochad"},
+    {{"j_scary_face", "j_smiley"}, "j_maxboism_slimeyface"}
 }
 
 

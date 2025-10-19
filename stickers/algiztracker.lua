@@ -50,6 +50,7 @@ local get_blind_amount_orig = get_blind_amount
 function get_blind_amount(ante)
     local normal_amount = get_blind_amount_orig(ante)
     local count = 1
+    if not G.jokers or not G.jokers.cards then return end
     for i,v in ipairs(G.jokers.cards) do
         if v.ability.maxboism_algiztracker then
             count = count * 2

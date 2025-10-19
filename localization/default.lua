@@ -277,7 +277,7 @@ return {
         },
         Back = {
             b_maxboism_conglomerate = {
-                name = "Conglomerate Deck A",
+                name = "Conglomerate Deck (TBD)",
                 text = {
                     "{C:attention}-2{} Joker slots",
                     "After defeating each",
@@ -286,14 +286,14 @@ return {
                 }
             },
             b_maxboism_conglomerateB = {
-                name = "Conglomerate Deck B",
+                name = "Conglomerate Deck",
                 text = {
                     "After defeating each",
                     "{C:attention}Boss Blind{}, {C:attention}merge{}",
                     "two random jokers",
                     "{C:attention}Blind{} size scales with",
                     "{C:attention}Joker slots{} occupied",
-                    "{C:inactive}(1.2^x){}"
+                    "{C:inactive}( (1.2 + Ante/10) ^ Slots){}"
                 }
             }
         }

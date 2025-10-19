@@ -32,7 +32,7 @@ function MaxBoiSM.fusionCheck(multiboxes)
         for _, pos in ipairs(positions) do
             table.remove(multiboxes, pos)
         end
-        SMODS.add_card({key = "j_maxboism_photochad"})
+        SMODS.add_card({key = result})
     end
 end
 end

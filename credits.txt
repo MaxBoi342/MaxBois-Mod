@@ -13,6 +13,8 @@ SDM_0 (Discord, multibox hook but fixed)
 Art:
 AngularEmily - Peasant Joker
 evil.seal - Conglomerate Deck (WIP)
+Awkward.wav - Slimey Face
+
 
 Playtesting
 AngularEmily

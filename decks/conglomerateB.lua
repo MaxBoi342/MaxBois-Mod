@@ -31,5 +31,6 @@ SMODS.Back{
 local get_blind_amount_orig = get_blind_amount
 function get_blind_amount(ante)
     local normal_amount = get_blind_amount_orig(ante)
-    return G.GAME.selected_back.effect.center.key == "b_maxboism_conglomerateB" and (normal_amount * (1.2^#G.jokers.cards)) or normal_amount
+    local ante = G.GAME.round_resets.ante or 1
+    return G.GAME.selected_back.effect.center.key == "b_maxboism_conglomerateB" and (normal_amount * ((1.2 + (0.05*ante))^#G.jokers.cards)) or normal_amount
 end
