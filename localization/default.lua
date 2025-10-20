@@ -100,7 +100,17 @@ return {
                     'This joker has',
                     'the following {C:attention}effects{}'
                 }
-            }
+            },
+            j_maxboism_optimizedpacking = {
+                name = 'Optimized Packing',
+                text = {
+                    'Cards that {C:attention}always score',
+                    'can be played even if',
+                    'the highlight limit is reached',
+                    '{C:inactive}(Discards are unaffected){}'
+
+                }
+            },
         },
         page = {
             c_maxboism_page1 = {
