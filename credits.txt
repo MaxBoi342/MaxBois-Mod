@@ -6,9 +6,10 @@ N' (Discord, general assistance)
 survivalaren (Discord, balance percent from "All in Jest")
 SDM_0 (Discord, multibox hook)
 N' (Discord general assistance)
-Somethigncom515(Discord, merged card rendering support)
-Somethigncom515(Discord, merged card implementation support)
+Somethingcom515(Discord, merged card rendering support)
+Somethingcom515(Discord, merged card implementation support)
 SDM_0 (Discord, multibox hook but fixed)
+icyethics (Curse Of Ra fix)
 
 Art:
 AngularEmily - Peasant Joker

@@ -133,8 +133,8 @@ SMODS.Joker {
 }
 
 SMODS.DrawStep {
-    key = 'sand_overlay',
-    order = 29,
+    key = 'merged_joker',
+    order = 1,
     func = function(self, layer)
         if self.config.center.key == 'j_maxboism_merged' then
             local keys = self.ability.extra.maxboism_multi_boxes
