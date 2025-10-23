@@ -283,6 +283,13 @@ return {
                     'when the {C:attention}boss blind{}',
                     'is defeated'
                 }
+            },
+            maxboism_sowiloreward = {
+                name = 'Shine',
+                text = {
+                    'Rarer Jokers',
+                    'are more common'
+                }
             }
         },
         Back = {

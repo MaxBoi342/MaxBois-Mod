@@ -31,14 +31,35 @@ MaxBoiSM.Backsticker = SMODS.GameObject:extend {
         MaxBoiSM.shared_backstickers[self.key] = self.backsticker_sprite
     end,
     apply = function(self, val)
-        G.GAME.backsticker[self.key] = val
-        if val and self.config and next(self.config) then
+        if not self.config then
+            G.GAME.backsticker[self.key] = val
+        elseif val and self.config and next(self.config) and not G.GAME.backsticker[self.key] then
             G.GAME.backsticker[self.key] = {}
             for k, v in pairs(self.config) do
                 if type(v) == 'table' then
                     G.GAME.backsticker[self.key][k] = copy_table(v)
                 else
                     G.GAME.backsticker[self.key][k] = v
+                end
+            end
+        elseif val and self.config and next(self.config) and G.GAME.backsticker[self.key] then
+            for k, v in pairs(self.config) do
+                if type(v) == 'table' then
+                    G.GAME.backsticker[self.key][k] = copy_table(v)
+                else
+                    G.GAME.backsticker[self.key][k] = G.GAME.backsticker[self.key][k] + v
+                end
+            end
+        elseif not val and self.config and next(self.config) and G.GAME.backsticker[self.key] then
+            for k, v in pairs(self.config) do
+                if type(v) == 'table' then
+                    G.GAME.backsticker[self.key][k] = copy_table(v)
+                else
+                    G.GAME.backsticker[self.key][k] = G.GAME.backsticker[self.key][k] - v
+                end
+                if G.GAME.backsticker[self.key][k] == 0 then
+                    G.GAME.backsticker[self.key] = false
+                    break
                 end
             end
         end

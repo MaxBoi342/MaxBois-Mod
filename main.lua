@@ -199,6 +199,9 @@ SMODS.current_mod.optional_features = {
     }
 }
 
+-------------------------
+---JANKY SMODS HOOKS
+-------------------------
 
 --janky hack to let sand cards show their rank (otherwise same as SMODS.Enhancement)
 SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
@@ -256,6 +259,51 @@ SMODS.MaxBoi_Enhancement = SMODS.Center:extend {
         end
     end,
 }
+
+-- hooks rarity polling for direct modification of joker rarity polling
+local poll_rarity_old = SMODS.poll_rarity
+function SMODS.poll_rarity(_pool_key, _rand_key)
+    if G.STATE ~= G.STATES.SHOP then
+        return poll_rarity_old(_pool_key, _rand_key)
+    end
+    local weight_exponent = G.GAME.maxboism_sowilomod or 1
+    
+    local rarity_poll = pseudorandom(pseudoseed(_rand_key or ('rarity'..G.GAME.round_resets.ante))) -- Generate the poll value
+    local available_rarities = copy_table(SMODS.ObjectTypes[_pool_key].rarities) -- Table containing a list of rarities and their rates
+    local vanilla_rarities = {["Common"] = 1, ["Uncommon"] = 2, ["Rare"] = 3, ["Legendary"] = 4}
+
+    -- Calculate total rates of rarities
+    local total_weight = 0
+    for _, v in ipairs(available_rarities) do
+        v.mod = G.GAME[tostring(v.key):lower().."_mod"] or 1
+        -- Should this fully override the v.weight calcs?
+        if SMODS.Rarities[v.key] and SMODS.Rarities[v.key].get_weight and type(SMODS.Rarities[v.key].get_weight) == "function" then
+            v.weight = SMODS.Rarities[v.key]:get_weight(v.weight, SMODS.ObjectTypes[_pool_key])
+        end
+        v.weight = v.weight * v.mod
+        -- Apply a power function to mod rarities
+        v.weight = v.weight ^ weight_exponent
+        total_weight = total_weight + v.weight
+    end
+    -- recalculate rarities to account for v.mod
+    for _, v in ipairs(available_rarities) do
+        v.weight = v.weight / total_weight
+    end
+
+    -- Calculate selected rarity
+    local weight_i = 0
+    for _, v in ipairs(available_rarities) do
+        weight_i = weight_i + v.weight
+        if rarity_poll < weight_i then
+            if vanilla_rarities[v.key] then
+                return vanilla_rarities[v.key]
+            else
+                return v.key
+            end
+        end
+    end
+    return nil
+end
 
 local function load_utils_folder()
     local mod_path = SMODS.current_mod.path
