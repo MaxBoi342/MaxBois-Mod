@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 SMODS.Joker {
     key = "merged",
     config = {

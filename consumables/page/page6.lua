@@ -125,7 +125,7 @@ SMODS.Consumable {
                 trigger = 'after',
                 delay = 0.2,
                 func = function()
-                    local sticker = poll_sticker({options = 'vanilla', guaranteed = true, card = joker})
+                    local sticker = MaxBoiSM.poll_sticker({options = 'vanilla', guaranteed = true, card = joker})
                     if sticker then
                         joker:add_sticker(sticker, true)
                     end

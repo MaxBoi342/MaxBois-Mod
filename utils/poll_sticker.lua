@@ -5,7 +5,7 @@
 --options: a list of keys (default is SMODS.Stickers.obj_buffer (all stickers known to SMODS)) or a string indicating a preset
 --rates: modify the rates of the stickers for this specific poll. (default uses the self.rate for each sticker (except pinned, which gets the rate of 1)) (requires options to exist)
 --card: card (used to perform card specific compat)
-function poll_sticker(args)
+function MaxBoiSM.poll_sticker(args)
     local key = args.key or 'sticker_generic'
     local type_key = args.type_key or key.."type"..G.GAME.round_resets.ante
     local mod = args.mod or 1
@@ -54,7 +54,7 @@ function poll_sticker(args)
 
 
         if not (v == 'pinned' and no_pin) then
-            if not card or can_apply(sticker, card) then
+            if not card or MaxBoiSM.can_apply_sticker(sticker, card) then
                 if rates then
                     sticker_option = { name = v, weight = rates[_] }
                 else
@@ -90,7 +90,7 @@ function poll_sticker(args)
     return nil
 end
 
-function can_apply(sticker, card)
+function MaxBoiSM.can_apply_sticker(sticker, card)
     if type(sticker.should_apply) == 'function' then
         return sticker:should_apply(card, card.config.center, _, true)
     end
