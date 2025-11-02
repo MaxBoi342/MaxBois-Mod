@@ -1,4 +1,4 @@
----@diagnostic disable: unused-local, redefined-local, missing-fields, inject-field
+---@diagnostic disable: unused-local, redefined-local, missing-fields, inject-field, missing-return
 
 --DO NOTE that group_key with name/kind are used for the locatization file for text information
 function Card:pseudo_open(args)

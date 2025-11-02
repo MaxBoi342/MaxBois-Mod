@@ -1,4 +1,4 @@
----@diagnostic disable: missing-fields
+---@diagnostic disable: missing-fields, cast-local-type, redundant-return-value
 SMODS.Joker {
     key = "merged",
     config = {
