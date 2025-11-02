@@ -111,6 +111,17 @@ return {
 
                 }
             },
+            j_maxboism_damocles = {
+                name = 'Damocles',
+                text = {
+                    '{C:attention}Doubles{} shop size',
+                    '{C:green}#1# in #2#{} chance to',
+                    'lose the game on hand played',
+                    'Doubles {C:green}numerator{}',
+                    'if blind is not beaten in one hand'
+
+                }
+            },
         },
         page = {
             c_maxboism_page1 = {
@@ -202,8 +213,8 @@ return {
                 name = 'Feru',
                 text = {
                     'This card stops all {C:money}money{} gain when held.',
-                    'After 5 rounds of holding this card, use it to double all',
-                    '{C:money}money{} earned for {C:attention}the rest of the run{}',
+                    'After 5 rounds of holding this card, use it to',
+                    'apply a {C:rune}Wealth{} sticker to your deck',
                     '{C:inactive}(Currently #1#/5){}'
                 }
             },
@@ -223,6 +234,16 @@ return {
                     'Applies the {C:rune}Calibrating{} sticker',
                     'to a {C:attention}selected Joker{} and',
                     'the {C:attention}Joker to the left of it{}',
+                }
+            },
+            c_maxboism_sowilo = {
+                name = 'Sowilo',
+                text = {
+                    'This card decreases the average {C:green}rarity{}',
+                    'of {C:attention}newly found jokers{} when held',
+                    'After 3 rounds of holding this card, use it to ',
+                    'apply a {C:rune}Shine{} sticker to your deck',
+                    '{C:inactive}(Currently #1#/3){}',
                 }
             },
         },
@@ -312,6 +333,12 @@ return {
                     "{C:attention}Joker slots{} occupied",
                     "{C:inactive}( (1.2 + Ante/10) ^ Slots){}"
                 }
+            },
+            b_maxboism_bribe = {
+                name = "Bribery Deck",
+                text = {
+                    "[WIP]"
+                }
             }
         }
     },
@@ -328,6 +355,7 @@ return {
             maxboism_joker_bluetoothgrenade_explode = 'Explosion.sfx',
             maxboism_joker_bluetoothgreande_buy = 'Throwing!',
             maxboism_joker_curseofra_message = 'They crumble...',
+            maxboism_joker_damocles_increase = 'Swing.',
             maxboism_joker_homophobicslenderman_freebie = 'Freebie!',
             maxboism_joker_homophobicslenderman_found = 'Found!',
             maxboism_joker_homophobicslenderman_lost = 'Lost...',

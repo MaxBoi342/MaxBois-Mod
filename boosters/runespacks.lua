@@ -13,7 +13,6 @@ SMODS.Booster {
     pos = { x = 0, y = 0 },
     kind = 'Rune',
     group_key = "k_maxboism_rune_normal1",
-    select_card = "consumeables",
     discovered = true,
     loc_vars = function(self, info_queue, card)
         local cfg = (card and card.ability) or self.config

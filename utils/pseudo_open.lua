@@ -10,7 +10,7 @@ function Card:pseudo_open(args)
     assert(type(args.background_color) == 'table' and #args.background_color == 2,
         "Provide colors with a table with 2 entries with 'background_color = {x,y}'")
     assert(type(args.draw_hand) == 'boolean',
-        "Plrase provide if the hand should be drawn or not with 'draw_hand == true or false'")
+        "Please provide if the hand should be drawn or not with 'draw_hand == true or false'")
 
     local functiontoBe
     if args.sparkles and assert(type(args.sparkles) == 'function', "args.sparkles must be a function") then

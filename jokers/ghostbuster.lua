@@ -40,7 +40,7 @@ SMODS.Joker { --No Entry
         end
     end,
     set_ability = function(self, card, initial, delay_sprites)
-        card.ability.extra.xmult = card.ability.extra.increment *
+        card.ability.extra.dollars = card.ability.extra.increment *
             ((G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.spectral and G.GAME.consumeable_usage_total.spectral > 0 and G.GAME.consumeable_usage_total.spectral) or 0)
     end,
     joker_display_def = function(JokerDisplay)

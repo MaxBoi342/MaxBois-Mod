@@ -9,7 +9,7 @@ MaxBoiSM.Backsticker {
     config = {
         count = 1
     },
-    atlas = 'CustomStickers',
+    atlas = 'CustomBackstickers',
     pos = { x = 0, y = 0 },
     set_sticker = function(self, card, val)
         card.ability[self.key] = val
@@ -22,7 +22,7 @@ MaxBoiSM.Backsticker {
             if context.money_altered and to_big(context.amount) > to_big(0) then
                 MaxBoiSM.DISABLE_MONEY_REPEATS = true
                 return {
-                    dollars = to_number(context.amount) * G.GAME.backsticker[self.key]["count"],
+                    dollars = to_number(context.amount) * G.GAME.backsticker[self.key].count,
                     func = function()
                         MaxBoiSM.DISABLE_MONEY_REPEATS = false
                     end

@@ -26,6 +26,7 @@ SMODS.Consumable {
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'maxboism_ingwaztracker', set = 'Other' }
     end,
+    select_card = "consumeables",
     calculate = function(self, card, context)
 
     end,

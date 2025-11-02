@@ -57,6 +57,14 @@ SMODS.Atlas({
 }):register()
 
 SMODS.Atlas({
+    key = "CustomBackstickers",
+    path = "CustomBackstickers.png",
+    px = 29,
+    py = 29,
+    atlas_table = "ASSET_ATLAS"
+}):register()
+
+SMODS.Atlas({
     key = "CustomBoosters",
     path = "CustomBoosters.png",
     px = 71,

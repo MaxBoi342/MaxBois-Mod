@@ -17,8 +17,10 @@ SMODS.Consumable {
         end
     end,
     loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'maxboism_ferureward', set = 'Other' }
         return { vars = { card.ability.extra.counter } }
     end,
+    select_card = "consumeables",
     calculate = function(self, card, context)
         if context.money_altered and not context.from_shop then
             if to_big(context.amount) > to_big(0) then
@@ -37,34 +39,6 @@ SMODS.Consumable {
                 end
             }
         end
-        if context.setting_blind and (card.ability.extra.counter or 0) >= 5 then
-                local function juice_card_until_(card, eval_func, first, delay) -- balatro function doesn't allow for custom scale and rotation
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = delay or 0.1,
-                        blocking = false,
-                        blockable = false,
-                        timer = 'REAL',
-                        func = (function()
-                            if eval_func(card) then
-                                if not first or first then
-                                    card:juice_up(card.ability.extra.scale,
-                                        card.ability.extra.rotation)
-                                end; juice_card_until_(card, eval_func, nil, 0.8)
-                            end
-                            return true
-                        end)
-                    }))
-                end
-                return {
-                    func = function()
-                        local eval = function() return not G.RESET_JIGGLES end
-                        juice_card_until_(card, eval, true)
-                        return true
-                    end
-                }
-            end
-        
     end,
     use = function(self, card, area, copier)
         MaxBoiSM.Backstickers['maxboism_ferureward']:apply(true)

@@ -63,6 +63,11 @@ MaxBoiSM.Backsticker = SMODS.GameObject:extend {
                 end
             end
         end
+
+        if val and G.deck and G.deck.cards and G.deck.cards[1] then
+            play_sound('tarot1')
+            G.deck.cards[1]:juice_up(0.3, 0.5)
+        end
     end
 }
 
@@ -88,6 +93,11 @@ MaxBoiSM.Backsticker = SMODS.GameObject:extend {
 --     end
 -- }
 
+local function randomFloat(lower, greater)
+    return lower + math.random()  * (greater - lower);
+end
+
+
 SMODS.DrawStep {
     key = 'back_sticker',
     order = 10,
@@ -97,13 +107,19 @@ SMODS.DrawStep {
                 local backsticker = MaxBoiSM.Backstickers[v]
                 if G.GAME.backsticker and G.GAME.backsticker[backsticker.key] then
                     MaxBoiSM.shared_backstickers[backsticker.key].role.draw_major = self
-                    local sticker_offset = self.sticker_offset or {}
-                    MaxBoiSM.shared_backstickers[backsticker.key]:draw_shader('dissolve', nil, nil, true,
-                        self.children.center, nil,
-                        self.sticker_rotation, sticker_offset.x, sticker_offset.y)
-                    MaxBoiSM.shared_backstickers[backsticker.key]:draw_shader('voucher', nil,
-                    self.ARGS.send_to_shader,
-                        true, self.children.center, nil, self.sticker_rotation, sticker_offset.x, sticker_offset.y)
+                    for count = 1, G.GAME.backsticker[backsticker.key].count, 1 do
+                        G.GAME.backsticker[backsticker.key].countPosList = G.GAME.backsticker[backsticker.key].countPosList or {}
+                        if not G.GAME.backsticker[backsticker.key].countPosList[count] then
+                            G.GAME.backsticker[backsticker.key].countPosList[count] = {x = randomFloat(0, 1.2),y = randomFloat(0, 1.9)}
+                        end
+                        local sticker_offset = self.sticker_offset or G.GAME.backsticker[backsticker.key].countPosList[count]
+                        MaxBoiSM.shared_backstickers[backsticker.key]:draw_shader('dissolve', nil, nil, true,
+                            self.children.center, nil,
+                            self.sticker_rotation, sticker_offset.x, sticker_offset.y)
+                        MaxBoiSM.shared_backstickers[backsticker.key]:draw_shader('voucher', nil,
+                            self.ARGS.send_to_shader,
+                            true, self.children.center, nil, self.sticker_rotation, sticker_offset.x, sticker_offset.y)
+                    end
                 end
             end
         end
