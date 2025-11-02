@@ -92,7 +92,7 @@ end
 
 function MaxBoiSM.can_apply_sticker(sticker, card)
     if type(sticker.should_apply) == 'function' then
-        return sticker:should_apply(card, card.config.center, _, true)
+        return sticker:should_apply(card, card.config.center, nil, true)
     end
     local center = card.config.center
     if (center[sticker.key .. '_compat'] or (center[sticker.key .. '_compat'] == nil and ((sticker.default_compat and not sticker.compat_exceptions[center.key]) or -- default yes with no exception
