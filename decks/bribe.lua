@@ -66,10 +66,10 @@ SMODS.Scoring_Calculation({
 				SMODS.GUI.operator(scale * 0.75),
 				{
 					n = G.UIT.C,
-					config = { align = 'cm', id = 'hand_maxboism_bribe' },
+					config = { align = 'cm', id = 'hand_' .. self.mod.prefix .. '_bribe' },
 					nodes = {
 						SMODS.GUI.score_container({
-							type = 'maxboism_bribe',
+							type = self.mod.prefix .. '_bribe',
 							align = 'cl',
 							w = 1.1,
 							scale = scale
@@ -126,8 +126,6 @@ SMODS.Back {
 -- 	end
 -- 	cash_out_orig(e)
 -- end
-
-
 
 SMODS.Scoring_Parameter({
   key = 'juice',
@@ -207,5 +205,4 @@ SMODS.Scoring_Calculation({
 		}}
 	end
 })
-
 

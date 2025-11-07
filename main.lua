@@ -80,6 +80,15 @@ SMODS.Atlas({
     atlas_table = "ASSET_ATLAS"
 }):register()
 
+SMODS.Atlas({
+    key = "CustomBlinds",
+    path = "CustomBlinds.png",
+    px = 34,
+    py = 34,
+    frames = 21,
+    atlas_table = "ANIMATION_ATLAS"
+}):register()
+
 ---
 ---Instantiate MaxBoiSM as global variable storage and related tables
 ---
@@ -313,6 +322,9 @@ function SMODS.poll_rarity(_pool_key, _rand_key)
     return nil
 end
 
+loc_colour()
+G.ARGS.LOC_COLOURS.maxboism_thesky = HEX("8b0307")
+
 local function load_utils_folder()
     local mod_path = SMODS.current_mod.path
     local consumables_path = mod_path .. "/utils"
@@ -447,6 +459,18 @@ local function load_decks_folder()
     end
 end
 
+local function load_blinds_folder()
+    local mod_path = SMODS.current_mod.path
+    local blinds_path = mod_path .. "/blinds"
+    local files = NFS.getDirectoryItemsInfo(blinds_path)
+    for i = 1, #files do
+        local file_name = files[i].name
+        if file_name:sub(-4) == ".lua" then
+            assert(SMODS.load_file("blinds/" .. file_name))()
+        end
+    end
+end
+
 local function load_rarities_file()
     local mod_path = SMODS.current_mod.path
     assert(SMODS.load_file("rarities.lua"))()
@@ -463,3 +487,4 @@ load_stickers_folder()
 load_boosters_folder()
 load_backstickers_folder()
 load_decks_folder()
+load_blinds_folder()

@@ -583,4 +583,102 @@ end
 match_indent = false
 overwrite = false
 
+# patches so The Sky works
 
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+position = 'after'
+pattern = '''
+elseif self.name == "Big Blind" then 
+        return 'Big'
+'''
+payload = '''
+elseif self.name == "bl_maxboism_theskysmall" then 
+        return 'Small'
+elseif self.name == "bl_maxboism_theskybig" then 
+    return 'Big'
+'''
+match_indent = true
+overwrite = false
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+position = 'after'
+pattern = '''
+                            G.GAME.round_resets.blind_states.Boss = 'Defeated'
+                            for k, v in ipairs(G.playing_cards) do
+                                v.ability.played_this_ante = nil
+                            end
+                        end
+'''
+payload = '''
+end
+'''
+match_indent = true
+overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+position = 'before'
+pattern = '''
+if G.GAME.round_resets.blind == G.P_BLINDS.bl_small then
+                            G.GAME.round_resets.blind_states.Small = 'Defeated'
+'''
+payload = '''
+if G.GAME.round_resets.blind == G.P_BLINDS.bl_maxboism_theskysmall then
+    G.GAME.round_resets.blind_states.Small = 'Defeated'
+elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_maxboism_theskybig then
+    G.GAME.round_resets.blind_states.Big = 'Defeated'
+elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_maxboism_theskyboss then
+    G.GAME.current_round.voucher = SMODS.get_next_vouchers()
+    G.GAME.round_resets.blind_states.Boss = 'Defeated'
+    for k, v in ipairs(G.playing_cards) do
+        v.ability.played_this_ante = nil
+    end
+else
+'''
+match_indent = true
+overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+position = 'after'
+pattern = '''
+                            blhash = 'L'
+            end
+'''
+payload = '''
+end
+'''
+match_indent = true
+overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+position = 'before'
+pattern = '''
+if G.GAME.round_resets.blind == G.P_BLINDS.bl_small then
+                G.GAME.round_resets.blind_states.Small = 'Current'
+'''
+payload = '''
+if G.GAME.round_resets.blind == G.P_BLINDS.bl_maxboism_theskysmall then
+    G.GAME.round_resets.blind_states.Small = 'Current'
+                G.GAME.current_boss_streak = 0
+                blhash = 'S'
+elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_maxboism_theskybig then
+    G.GAME.round_resets.blind_states.Big = 'Current'
+                G.GAME.current_boss_streak = 0
+                blhash = 'B'
+elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_maxboism_theskyboss then
+    G.GAME.round_resets.blind_states.Boss = 'Current'
+                blhash = 'L'
+else
+'''
+match_indent = true
+overwrite = false

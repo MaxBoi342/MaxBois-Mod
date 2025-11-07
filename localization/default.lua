@@ -122,6 +122,13 @@ return {
 
                 }
             },
+            j_maxboism_maketheskyfall = {
+                name = 'Make The Sky Fall',
+                text = {
+                    "Replaces all blinds",
+                    "with {C:maxboism_thesky}The Sky"
+                }
+            },
         },
         page = {
             c_maxboism_page1 = {
@@ -311,7 +318,13 @@ return {
                     'Rarer Jokers',
                     'are more common'
                 }
-            }
+            },
+            maxboism_blindindicator_theskyboss = {
+				name = "maxboism_blindindicator_theskyboss",
+				text = {
+					"test",
+				}
+			},
         },
         Back = {
             b_maxboism_conglomerate = {
@@ -337,10 +350,24 @@ return {
             b_maxboism_bribe = {
                 name = "Bribery Deck",
                 text = {
-                    "[WIP]"
+                    '[WIP]'
                 }
             }
-        }
+        },
+        Blind = {
+            bl_maxboism_theskysmall = {
+                name = "The Sky",
+            },
+            bl_maxboism_theskybig = {
+                name = "The Sky",
+            },
+            bl_maxboism_theskyboss = {
+                name = "The Sky",
+                text = {
+                    "Is it worth it?",
+                },
+            },
+        },
     },
     misc = {
         labels = {

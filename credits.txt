@@ -10,6 +10,7 @@ Somethingcom515(Discord, merged card rendering support)
 Somethingcom515(Discord, merged card implementation support)
 SDM_0 (Discord, multibox hook but fixed)
 icyethics (Curse Of Ra fix)
+Victin (Blind info queue)
 
 Art:
 AngularEmily - Peasant Joker
