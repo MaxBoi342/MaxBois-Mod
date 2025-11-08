@@ -10,8 +10,8 @@ SMODS.Joker { --Homophobic Slenderman
         x = 3,
         y = 0
     },
-    cost = 4,
-    rarity = 1,
+    cost = 5,
+    rarity = 2,
     blueprint_compat = false,
     eternal_compat = true,
     perishable_compat = true,
