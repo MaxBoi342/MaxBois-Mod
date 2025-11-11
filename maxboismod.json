@@ -4,14 +4,14 @@
   "author": [
     "MaxBoi"
   ],
-  "description": "silly content mod made using Joker Forge, both as a learning tool for myself and as a easy of use.\n",
+  "description": "Vanilla-esque balancing but shenanigans-esque content mod. Find my pages\n",
   "prefix": "maxboism",
   "main_file": "main.lua",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "priority": 0,
   "badge_colour": "666665",
   "badge_text_colour": "FFFFFF",
   "dependencies": [
-    "Steamodded (>=1.0.0~BETA-0827c)"
+    "Steamodded (>=1.0.0~BETA-1016c)"
   ]
 }
