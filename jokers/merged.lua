@@ -140,7 +140,7 @@ SMODS.DrawStep {
         if self.config.center.key == 'j_maxboism_merged' then
             local keys = self.ability.extra.maxboism_multi_boxes
             local fractions = #keys
-            if fractions <= (2 ^ MaxBoiSM.config.mergerenderlimit) then
+            if MaxBoiSM.config.mergerenderlimit == 1000 or fractions <= MaxBoiSM.config.mergerenderlimit then
                 for i, v in ipairs(keys) do
                     local fraction = i
 

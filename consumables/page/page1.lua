@@ -8,17 +8,9 @@ SMODS.Consumable {
             mult = 0
     } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.m_mult
         info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
         return { vars = { localize { type = 'name_text', set = 'Enhanced', key = 'm_mult' } } }
     end,
-    -- loc_txt = {
-    --     name = 'Page 1',
-    --     text = {
-    --         [1] = '{C:inactive}Passive:{} All {X:mult,C:white}#1#s{} only provide {C:red}+2{} Mult',
-    --         [2] = '{C:default}Active:{} Make a random joker {C:dark_edition}Holographic{}'
-    --     }
-    -- },
     cost = 5,
     unlocked = true,
     discovered = true,

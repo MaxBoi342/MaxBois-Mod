@@ -175,7 +175,7 @@ MaxBoiSM.SMODSref.config_tab = function()
                 }},
                 {n=G.UIT.C, config={minw = 3, padding=0.1}, nodes={
                     {n=G.UIT.R, config={minh=0.1}},
-                    create_option_cycle({label = localize('maxboism_mergerenderlimit'), current_option = MaxBoiSM.SMODSref.config.mergerenderlimit, options = localize('maxboism_mergerenderlimit_info'), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'mergerenderlimit', info = localize('maxboism_mergerenderlimit_desc'), colour = G.C.RED, w = 3.7*0.65/(5/6), h=0.8*0.65/(5/6), text_scale=0.5*0.65/(5/6), scale=5/6, no_pips = true}),
+                    create_slider({label = localize('maxboism_mergerenderlimit'), w = 3.7*0.65/(5/6), h=0.8*0.65/(5/6), ref_table = MaxBoiSM.SMODSref.config, ref_value = 'mergerenderlimit', min = 0, max = 1000, scale=5/6})
                 }}
             }},
             

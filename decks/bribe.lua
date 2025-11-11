@@ -88,12 +88,13 @@ SMODS.Back {
 	discovered = true,
 	config = {
 		-- extra_hand_bonus = 0,
-		maxboism_interest = 7,
+		maxboism_interest = 3,
 		reset_round = true
 	},
 	atlas = 'CustomDecks',
 	apply = function(self)
 		G.GAME.current_scoring_calculation = SMODS.Scoring_Calculations['maxboism_bribe']:new()
+		G.GAME.modifiers.maxboism_invert_hand_money = true
 	end,
 	calculate = function(self, back, context)
 		if context.final_scoring_step then

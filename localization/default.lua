@@ -134,54 +134,54 @@ return {
             c_maxboism_page1 = {
                 name = 'Page 1',
                 text = {
-                    '{C:inactive}Passive:{} All {C:mult}+Mult{} from {C:attention}Enhancements{} is set to {C:attention}0{}',
-                    '{C:default}Active:{} Make a random joker {C:dark_edition}Holographic{}'
+                    {'{C:inactive}When held:{} All {C:mult}+Mult{} from', '{C:attention}Enhancements{} is set to {C:attention}0{}'},
+                    {'{C:default}Make a random joker {C:dark_edition}Holographic{}'}
                 }
             },
             c_maxboism_page2 = {
                 name = 'Page 2',
                 text = {
-                    '{C:inactive}Passive:{} Lose {C:money}$1{} per hand played',
-                    '{C:default}Active:{} Create a {C:attention}#1#{}',
-                    '{C:inactive}(If used inside shop, mimic the effect of the tag instead){}'
+                    {'{C:inactive}When held:{} Lose {C:money}$1{}', 'per hand played'},
+                    {'Create a {C:attention}#1#{}',
+                    '{C:inactive}(If used inside shop,', 'mimic the effect of the tag instead){}'}
                 }
             },
             c_maxboism_page3 = {
                 name = 'Page 3',
                 text = {
-                    '{C:inactive}Passive:{} {C:red}-1{} hand size',
-                    '{C:default}Active:{} {C:attention}+1{} hand size'
+                    {'{C:inactive}When held:{}', '{C:red}-1{} hand size'},
+                    {'{C:attention}+1{} hand size'}
                 }
             },
             c_maxboism_page4 = {
                 name = 'Page 4',
                 text = {
-                    '{C:inactive}Passive:{} {C:green}#1# in #2#{} chance to decrease level of played hand',
-                    '{C:default}Active:{} Level up {C:attention}most played hand{} 6 times'
+                    {'{C:inactive}When held:{} {C:green}#1# in #2#{}','chance to decrease', 'level of played hand'},
+                    {'Level up {C:attention}most played', '{C:attention}hand{} 6 times'}
                 }
             },
             c_maxboism_page5 = {
                 name = 'Page 5',
                 text = {
-                    '{C:inactive}Passive:{} Apply {X:chips,C:white}X#1#{} {C:blue}Chips{} before scoring concludes',
-                    '{C:default}Active:{} Apply {C:dark_edition}Foil{} to all cards held in hand',
-                    '{C:inactive}(Overrides existing editions){}'
+                    {'{C:inactive}When held:{} Apply {X:chips,C:white}X#1#{} {C:blue}Chips{}', 'before scoring concludes'},
+                    {'Apply {C:dark_edition}Foil{} to' , 'all cards held in hand',
+                    '{C:inactive}(Overrides existing editions){}'}
                 }
             },
             c_maxboism_page6 = {
                 name = 'Page 6',
                 text = {
-                    '{C:inactive}Passive:{} {C:attention}Shuffle{} all jokers when a hand is played',
-                    '{C:default}Active:{} Apply {C:dark_edition}Negative{} to a random joker',
-                    'Apply a random {C:attention}sticker{} to {C:attention}#1#{} joker(s)'
+                    {'{C:inactive}When held:{} {C:attention}Shuffle{} all jokers', 'when a hand is played'},
+                    {'Apply {C:dark_edition}Negative{}','to a random joker',
+                    'Apply a random {C:attention}sticker{}', 'to {C:attention}#1#{} joker(s)'}
                 }
             },
             c_maxboism_page7 = {
                 name = 'Page 7',
                 text = {
-                    '{C:inactive}Passive:{} Debuff a random card {C:attention}rank{}',
-                    '{C:default}Active:{} Give {C:attention}2{} {C:dark_edition}Negative{} cards of the given {C:attention}rank{}',
-                    '{C:inactive}(Resets every hand; Currently {C:attention}#1#s{}){}'
+                    {'{C:inactive}When held:{} Debuff','a random card {C:attention}rank{}'},
+                    {'{C:default}Give {C:attention}2{} {C:dark_edition}Negative{} cards','of the given {C:attention}rank{}',
+                    '{C:inactive}(Resets every hand; Currently {C:attention}#1#s{}){}'}
                 }
             },
 
@@ -321,9 +321,6 @@ return {
             },
             maxboism_blindindicator_theskyboss = {
 				name = "maxboism_blindindicator_theskyboss",
-				text = {
-					"test",
-				}
 			},
         },
         Back = {
@@ -350,7 +347,11 @@ return {
             b_maxboism_bribe = {
                 name = "Bribery Deck",
                 text = {
-                    '[WIP]'
+                    'Score is determined by',
+                    '({C:chips}Chips{} + {C:mult}Mult{}) * {C:money}Money{}',
+                    'Interest is gained per 3 dollars',
+                    '{C:attention}Remaining Hands{} are replaced',
+                    'with {C:attention}Played Hands{} at end of round'
                 }
             }
         },
@@ -421,6 +422,9 @@ return {
                 'THIS FEATURE IS VERY ALPHA',
                 'Disable unless specifically testing the feature'
             },
+        },
+        v_dictionary = {
+            maxboism_inverted_hand_money = "Played Hands ($#1# each)"
         }
     }
 }
