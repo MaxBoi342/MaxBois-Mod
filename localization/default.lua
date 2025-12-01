@@ -253,6 +253,16 @@ return {
                     '{C:inactive}(Currently #1#/3){}',
                 }
             },
+            c_maxboism_naudiz = {
+                name = 'Naudiz',
+                text = {
+                    'The {C:money}Shop{} is disabled',
+                    'while this card is held',
+                    'After 3 rounds of holding this card, use it to',
+                    'apply a {C:rune}Shield{} sticker to your deck',
+                    '{C:inactive}(Currently #1#/3){}',
+                }
+            },
         },
         Edition = {
             e_maxboism_sepia = {
@@ -310,7 +320,14 @@ return {
                     'with paired cards',
                     'when the {C:attention}boss blind{}',
                     'is defeated'
-                }
+                },
+            },
+            maxboism_naudizshield = {
+                name = 'Shield',
+                text = {
+                    'Saves from',
+                    'losing once'
+                },
             },
             maxboism_sowiloreward = {
                 name = 'Shine',
@@ -378,6 +395,7 @@ return {
             maxboism_algiztracker = 'Ransom',
             maxboism_ingwaztracker = 'Calibrating',
             maxboism_teststicker = 'Bonus',
+            maxboism_naudizshield = 'Shield',
         },
         dictionary = {
             maxboism_joker_bluetoothgrenade_explode = 'Explosion.sfx',
@@ -392,6 +410,8 @@ return {
             maxboism_joker_thepeasant_message = 'Reset!',
             maxboism_joker_sleevedjoker_message = 'Sleeved!',
             maxboism_joker_merged_rarity = 'Merge',
+
+            maxboism_naudizshield = "Saved by your Shield",
 
             k_maxboism_what = "???",
 

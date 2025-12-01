@@ -732,3 +732,20 @@ elseif config.name == 'hands' then
 '''
 match_indent = true
 overwrite = false
+
+# naudiz functionality
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+G.STATE = G.STATES.SHOP
+'''
+position = "at"
+payload = '''
+if next(SMODS.find_card('c_maxboism_naudiz')) then
+    G.STATE = G.STATES.BLIND_SELECT
+else
+    G.STATE = G.STATES.SHOP
+end
+'''
+match_indent = true

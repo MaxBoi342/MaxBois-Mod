@@ -89,6 +89,8 @@ SMODS.Atlas({
     atlas_table = "ANIMATION_ATLAS"
 }):register()
 
+SMODS.Shader({ key = 'background_replace', path = 'background_replace.fs' })
+
 ---
 ---Instantiate MaxBoiSM as global variable storage and related tables
 ---

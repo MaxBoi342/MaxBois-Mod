@@ -49,6 +49,17 @@ SMODS.ConsumableType {
     }
 }
 
+-- SMODS.DrawStep {
+--     key = 'card_type_shader',
+--     order = 11,
+--     func = function(self)
+--         if (self.ability.set == 'rune') and self:should_draw_base_shader() then
+--             self.children.center:draw_shader('booster', nil, self.ARGS.send_to_shader)
+--         end
+--     end,
+--     conditions = { vortex = false, facing = 'front' },
+-- }
+
 local function load_pages()
     local consumables_path = SMODS.current_mod.path .. "/consumables"
     local pages_path = consumables_path .. "/page"

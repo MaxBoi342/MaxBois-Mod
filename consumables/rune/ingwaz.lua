@@ -60,4 +60,52 @@ SMODS.Consumable {
             end
         }))
     end,
+    set_sprites = function(self, card, front)
+        if self.discovered or card.bypass_discovery_center then
+            card.children['maxboism_ingwaz_eye'] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h,
+                G.ASSET_ATLAS[card.config.center.atlas], {
+                    x = 3,
+                    y = 1
+                })
+            card.children['maxboism_ingwaz_eye'].role.draw_major = card
+            card.children['maxboism_ingwaz_eye'].states.hover.can = false
+            card.children['maxboism_ingwaz_eye'].states.click.can = false
+        end
+    end,
+    soul_pos = nil
 }
+
+SMODS.DrawStep {
+    key = 'ingwazeye',
+    order = -15,
+    func = function(card, layer)
+        if card.config.center_key == 'c_maxboism_ingwaz' then
+            if card.children.maxboism_ingwaz_eye then
+                local cursor_pos = { G.CURSOR.T.x, G.CURSOR.T.y }
+                local card_eye_pos = { (card.VT.x + (card.VT.w / 2) + G.ROOM.T.x), (card.VT.y + (card.VT.h / 2) + G.ROOM.T.y) }
+
+                local raw_dx = cursor_pos[1] - card_eye_pos[1]
+                local raw_dy = cursor_pos[2] - card_eye_pos[2]
+
+                local max_radius = math.min(card.VT.w / 71 * 5, card.VT.h / 95 * 5)
+
+                local distance = math.sqrt(raw_dx ^ 2 + raw_dy ^ 2)
+                local dx = 0
+                local dy = 0
+                if distance > max_radius * 2 then
+                    dx = (raw_dx / distance) * max_radius
+                    dy = (raw_dy / distance) * max_radius
+                else
+                    dx = raw_dx / 2
+                    dy = raw_dy / 2
+                end
+                
+                card.children.maxboism_ingwaz_eye:draw_shader('dissolve', nil, nil, nil, card.children.center, nil, nil, dx, dy,
+                    nil, nil)
+            end
+        end
+    end,
+    conditions = { vortex = false, facing = 'front' },
+}
+
+SMODS.draw_ignore_keys.maxboism_ingwaz_eye = true

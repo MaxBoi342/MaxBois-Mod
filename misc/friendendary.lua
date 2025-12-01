@@ -31,7 +31,7 @@ SMODS.DrawStep {
     key = 'card_type_shader',
     order = 11,
     func = function(self)
-        if (self.ability.set == 'friend' or self.ability.set == 'rune') and self:should_draw_base_shader() then
+        if (self.ability.set == 'friend') and self:should_draw_base_shader() then
             self.children.center:draw_shader('booster', nil, self.ARGS.send_to_shader)
         end
     end,

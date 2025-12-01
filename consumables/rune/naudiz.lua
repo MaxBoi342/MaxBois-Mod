@@ -1,10 +1,9 @@
 SMODS.Consumable {
-    key = 'sowilo',
+    key = 'naudiz',
     set = 'rune',
-    pos = { x = 4, y = 1 },
+    pos = { x = 1, y = 1 },
     config = { extra = {
-            oldmod = 0,
-            counter = 0
+        counter = 0,
     } },
     cost = 10,
     unlocked = true,
@@ -13,15 +12,12 @@ SMODS.Consumable {
     can_repeat_soul = false,
     atlas = 'CustomConsumables',
     can_use = function(self, card)
-        if card.ability.extra.counter >= 3 then
-            return true
-        end
+        return card.ability.extra.counter >= 3
     end,
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'maxboism_sowiloreward', set = 'Other' }
+        info_queue[#info_queue + 1] = { key = 'maxboism_naudizshield', set = 'Other' }
         return { vars = { card.ability.extra.counter } }
     end,
-    select_card = "consumeables",
     calculate = function(self, card, context)
         if context.end_of_round and context.cardarea == G.consumeables then
             return {
@@ -32,13 +28,6 @@ SMODS.Consumable {
         end
     end,
     use = function(self, card, area, copier)
-        MaxBoiSM.Backstickers['maxboism_sowiloreward']:apply(true)
+        MaxBoiSM.Backstickers['maxboism_naudizshield']:apply(true)
     end,
-    remove_from_deck = function(self, card, from_debuff)
-        G.GAME.maxboism_sowilomod = card.ability.extra.oldmod or 1.0
-    end,
-    add_to_deck = function(self, card, from_debuff)
-        card.ability.extra.oldmod = G.GAME.maxboism_sowilomod or 1.0
-        G.GAME.maxboism_sowilomod = 2.0
-    end
 }
